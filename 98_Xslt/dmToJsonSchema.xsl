@@ -1053,6 +1053,7 @@
           <xsl:choose>
             <xsl:when test="$value eq 'IdRef'">GUID</xsl:when>
             <xsl:when test="$value eq 'RefId'">GUID</xsl:when>
+            <xsl:when test="$value eq 'LearningResourcePackage'">AbstractContentElement</xsl:when>
             <xsl:otherwise><xsl:value-of select="$value"/></xsl:otherwise>
           </xsl:choose>
         </xsl:function>
