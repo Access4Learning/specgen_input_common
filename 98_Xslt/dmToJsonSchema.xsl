@@ -256,12 +256,12 @@
 			<xsl:apply-templates select="specgen:Item[1]/specgen:Description"/>
 		</xsl:variable>
 		<xsl:if test="string-length($desc) gt 0">
-			<xsl:value-of select="concat('      - description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
+			<xsl:value-of select="concat('      description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
 		</xsl:if>
 
 		<!-- Translate xs:* type into json schema type -->
 		<xsl:apply-templates select="specgen:Item[1]/specgen:Type">
-			<xsl:with-param name="indent" select="'      '"/>
+			<xsl:with-param name="indent" select="'    '"/>
 		</xsl:apply-templates>
 
 		<!-- Add the attributes -->
@@ -275,7 +275,7 @@
                              not(specgen:Item[1]/specgen:Type/@complex) and
                                                  (specgen:Item[1]/specgen:Type/@ref =  'CodeSets') and
                                                  count(specgen:Item[position() gt 1]) eq count(specgen:Item[specgen:Attribute]) ]" priority="2">
-                <xsl:text>&#x0a;  # //////////////////////// xs:* with attrs /////////////////////////////////////&#x0a;</xsl:text>
+                <xsl:text>&#x0a;  # //////////////////////// codeset with attrs /////////////////////////////////////&#x0a;</xsl:text>
                 <xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
                                                                          '    type: object&#x0a;',
                                                                          '    properties:&#x0a;',
@@ -286,12 +286,12 @@
                         <xsl:apply-templates select="specgen:Item[1]/specgen:Description"/>
                 </xsl:variable>
                 <xsl:if test="string-length($desc) gt 0">
-                        <xsl:value-of select="concat('      - description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
+                        <xsl:value-of select="concat('      description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
                 </xsl:if>
 
                 <!-- Translate xs:* type into json schema type -->
                 <xsl:apply-templates select="specgen:Item[1]/specgen:Type">
-                        <xsl:with-param name="indent" select="'        '"/>
+                        <xsl:with-param name="indent" select="'      '"/>
                 </xsl:apply-templates>
 
                 <!-- Add the attributes -->
@@ -300,6 +300,35 @@
                 </xsl:apply-templates>
         </xsl:template>
 
+        <!-- NN 20221216: Common type is an IdRef value with attributes (no extension) -->
+        <xsl:template match="specgen:CommonElement[count(specgen:Item) gt 1 and
+                             not(specgen:Item[1]/specgen:Type/@complex) and
+                                                 (specgen:Item[1]/specgen:Type/@name =  'IdRef') and
+                                                 count(specgen:Item[position() gt 1]) eq count(specgen:Item[specgen:Attribute]) ]" priority="2">
+                <xsl:text>&#x0a;  # //////////////////////// IdRef with attrs /////////////////////////////////////&#x0a;</xsl:text>
+                <xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
+                                                                         '    type: object&#x0a;',
+                                                                         '    properties:&#x0a;',
+                                                                         '      value:&#x0a;')"/>
+
+                <!-- There might be a description -->
+                <xsl:variable name="desc">
+                        <xsl:apply-templates select="specgen:Item[1]/specgen:Description"/>
+                </xsl:variable>
+                <xsl:if test="string-length($desc) gt 0">
+                        <xsl:value-of select="concat('      description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
+                </xsl:if>
+
+                <!-- Translate xs:* type into json schema type -->
+                <xsl:apply-templates select="specgen:Item[1]/specgen:Type">
+                        <xsl:with-param name="indent" select="'      '"/>
+                </xsl:apply-templates>
+
+                <!-- Add the attributes -->
+                <xsl:apply-templates select="specgen:Item[position() gt 1]">
+                        <xsl:with-param name="indent" select="'      '"/>
+                </xsl:apply-templates>
+        </xsl:template>
 
 	<!-- Common type is single item, with inline values -->
 	<xsl:template match="specgen:CommonElement[count(specgen:Item) eq 1 and
