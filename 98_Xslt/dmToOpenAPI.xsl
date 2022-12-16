@@ -16,6 +16,7 @@
 	<xsl:param name="sifObjectGroupList" select="''"/> <!-- Default to empty list -->
 	<xsl:param name="includeAllHeaders" select="'false'" as="xs:string"/> <!-- If false we only show minimum number of headers -->
 	<xsl:param name="includeAdminDirectives" select="'false'" as="xs:string"/> <!-- If true admin directives endpoints will be included. -->
+	<xsl:param name="omitVersionInExamplesFileName" select="'false'" as="xs:string"/> <!-- If true admin directives endpoints will be included. -->
 
     <!-- Get the Data Model URL from the Title Page -->
 	<xsl:variable name="extDocUrlRoot">
@@ -30,8 +31,13 @@
 		<xsl:value-of select="not(xfn:empty($includeAdminDirectives)) and $includeAdminDirectives = 'true'"/>
 	</xsl:variable>
 
-	<xsl:variable name="exampleFileName">
-          	<xsl:value-of select="concat('examples_', $sifLocale, '_' , $sifVersion, '.yaml')"/>
+        <xsl:variable name="exampleFileName">
+                 <xsl:if test="$omitVersionInExamplesFileName = 'true'">
+                   <xsl:value-of select="concat('examples_', $sifLocale, '.yaml')"/>
+                 </xsl:if>
+                 <xsl:if test="not($omitVersionInExamplesFileName = 'true')">
+                   <xsl:value-of select="concat('examples_', $sifLocale, '_' , $sifVersion, '.yaml')"/>
+                 </xsl:if>
         </xsl:variable>
 	<xsl:variable name="generationTimestamp">
 		<xsl:value-of select="current-dateTime()"/>
