@@ -809,7 +809,7 @@
 	</xsl:template>
 
 	<!-- Instead of 'enum' we are using 'oneOf' with array of 'const' so we can put 
-		title & description alongside the code value;  can't do that with 'enum' -->
+        title & description alongside the code value;  can't do that with 'enum' -->
 	<xsl:template match="specgen:Values">
 		<xsl:param name="indent"/>
 		<xsl:value-of select="concat($indent, 'oneOf:&#x0a;')"/>

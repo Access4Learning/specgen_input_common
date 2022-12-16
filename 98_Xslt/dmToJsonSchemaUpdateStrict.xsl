@@ -22,8 +22,8 @@
 	<xsl:param name="strictJSON">true</xsl:param>
 
 	<!-- Where is the SIF HTML documentation available for links -->
-	<xsl:variable name="extDocURLBase">
-		<xsl:value-of select="concat('http://specification.sifassociation.org/Implementation/NZ/', translate(replace($sifVersion, ' \(', '-'), ') ', ''), '/')"/>
+        <xsl:variable name="extDocURLBase">
+          <xsl:value-of select="concat('http://specification.sifassociation.org/Implementation/', $sifLocale, '/', translate(replace($sifVersion, ' \(', '-'), ') ', ''), '/')"/>
 	</xsl:variable>
 
     <!-- Now that we've configured all the options -->
