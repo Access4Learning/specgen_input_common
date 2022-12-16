@@ -60,7 +60,7 @@
 	
 	<xsl:template match="specgen:DataObject" mode="rootObj">
 		<xsl:value-of select="concat('  ', @name, ':&#x0a;')"/>
-		<xsl:value-of select="concat('    $ref: ''#/definitions/', @name, '''&#x0a;')"/>
+		<xsl:value-of select="concat('    $ref: ''#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 
@@ -73,7 +73,7 @@
 									 '      ', @name , ':&#x0a;',
 									 '        type: array&#x0a;',
 									 '        items:&#x0a;',
-									 '          $ref: ''#/definitions/', @name, '''&#x0a;')"/>
+									 '          $ref: ''#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
 
 
 		<!-- Now do the actual dataObject definition --> 
@@ -104,10 +104,10 @@
 			                             '    description: &gt;-&#x0a;',
 			                             '      ', $desc, '&#x0a;',
 										 '#   allOfA:&#x0a;',
-										 '    $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;')"/>
+										 '    $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;')"/>
 			<!--xsl:value-of select="concat('    type: object&#x0a;',
 										 '    allOfA:&#x0a;',
-										 '    - $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;',
+										 '    - $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;',
 										 '    - properties:&#x0a;')"/-->
 		</xsl:if>
 
@@ -166,13 +166,13 @@
 										 '      type: object&#x0a;',
 										 '      description: &gt;-&#x0a;',
 										 '        ', $desc, '&#x0a;',
-								         '      $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;')"/>
+								         '      $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;')"/>
 		</xsl:if>
 		<xsl:if test="string-length($desc) eq 0">
 			<xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
 										 '#     allOfB:&#x0a;',
 										 '      type: object&#x0a;',
-								         '      $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;')"/>
+								         '      $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;')"/>
 		</xsl:if>
 	</xsl:template>
 
@@ -205,7 +205,7 @@
 
         <xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
                                                                          '    allOf:&#x0a;',
-                                                                         '      - $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;',
+                                                                         '      - $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;',
                                                                          '      - type: object&#x0a;',
                                                                          '        properties:&#x0a;')"/>
 
@@ -216,7 +216,7 @@
 									 '    properties:&#x0a;',
 									 '      value:&#x0a;',
 									 '#        allOfC:&#x0a;',
-                '        $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;')"/>
+                '        $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;')"/>
                 -->
 
 		<!--xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
@@ -224,7 +224,7 @@
 									 '    properties:&#x0a;',
 									 '      value:&#x0a;',
 									 '        allOf:&#x0a;',
-									 '          - $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;')"/-->
+									 '          - $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;')"/-->
 
 		<xsl:apply-templates select="specgen:Item[position() gt 1]">
 			<xsl:with-param name="indent" select="'          '"/>
@@ -463,9 +463,9 @@
 			<xsl:otherwise>
 				<!--  Some types are listed in a <Union> element. In this case we take the first one -->
 				<xsl:variable name="typeName" select="xfn:getNoneEmptyValue(specgen:Item[2]/specgen:Type/@name,specgen:Item[2]/specgen:Union/specgen:Type[1]/@name)"/>
-				<xsl:value-of select="concat('          $ref: ''#/definitions/', xfn:chopType($typeName), '''&#x0a;')"/>
+				<xsl:value-of select="concat('          $ref: ''#/definitions/', xfn:refresolve(xfn:chopType($typeName)), '''&#x0a;')"/>
 <!--
-				<xsl:value-of select="concat('          $ref: ''#/definitions/', xfn:chopType(specgen:Item[2]/specgen:Type/@name), '''&#x0a;')"/>
+				<xsl:value-of select="concat('          $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[2]/specgen:Type/@name)), '''&#x0a;')"/>
 -->
 			</xsl:otherwise>
 		</xsl:choose>
@@ -484,7 +484,7 @@
 		</xsl:if>
 
 		<xsl:text>    allOf:&#x0a;</xsl:text>
-		<xsl:value-of select="concat('    - $ref: ''#/definitions/', xfn:chopType(@name), '''&#x0a;')"/>
+		<xsl:value-of select="concat('    - $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(@name)), '''&#x0a;')"/>
 		<xsl:text>    - type: object&#x0a;</xsl:text>
 		<xsl:if test="$mandatoryFields = 'required'">
 			<xsl:if test="specgen:Item[contains(specgen:Characteristics, 'M')]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[contains(specgen:Characteristics, 'M')]">
@@ -802,7 +802,7 @@
 	<!-- Type is of named type -->
 	<xsl:template match="specgen:Type[not(@complex) and @name ne '' and not(starts-with(@name, 'xs:'))]">
 		<xsl:param name="indent"/>
-		<xsl:value-of select="concat($indent,'$ref: ''#/definitions/', xfn:chopType(@name), '''&#x0a;')"/>
+		<xsl:value-of select="concat($indent,'$ref: ''#/definitions/', xfn:refresolve(xfn:chopType(@name)), '''&#x0a;')"/>
 	</xsl:template>
 
 	<!-- Un-named type, so inline object -->
@@ -1017,6 +1017,15 @@
 		<xsl:param name="value"/>
 		<xsl:sequence select="not($value != '')" />
 	</xsl:function>
-	
-	
+
+        <!-- NN 20221216 deal with recursively defined IdRef and RefId, which JSON Reference does not tolerate -->A
+        <xsl:function name="xfn:refresolve" as="xs:string">
+          <xsl:param name="value"/>
+          <xsl:choose>
+            <xsl:when test="param eq 'IdRef'">GUID</xsl:when>
+            <xsl:when test="param eq 'RefId'">GUID</xsl:when>
+            <xsl:otherwise><xsl:value-of select="$value"/></xsl:otherwise>
+          </xsl:choose>
+        </xsl:function>
+
 </xsl:stylesheet>
