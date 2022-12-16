@@ -594,8 +594,18 @@
 					</xsl:if>
 				</xsl:if>
 			</xsl:when>
-			<xsl:otherwise>
-				<xsl:value-of select="concat($indent, '  type: object&#x0a;')"/>
+                        <xsl:otherwise>
+                                <!-- NN 20221216: ref=CommonTypes are type: object, but ref=CodeSets are type: string -->
+                          <!--<xsl:value-of select="concat($indent, '  type: object&#x0a;')"/> -->
+                          <xsl:choose>
+                            <xsl:when test="specgen:Type/@ref eq 'CodeSets'">
+                              <xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <xsl:value-of select="concat($indent, '  type: object&#x0a;')"/>
+                            </xsl:otherwise>
+                            </xsl:choose>
+
 				<xsl:if test="normalize-space(specgen:Description) ne ''">
 					<xsl:value-of select="concat($indent, '  description: &gt;-&#x0a;', $indent, '    ')"/>
 					<xsl:apply-templates select="specgen:Description"/><xsl:text>&#x0a;</xsl:text>
