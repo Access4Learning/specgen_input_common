@@ -1022,8 +1022,8 @@
         <xsl:function name="xfn:refresolve" as="xs:string">
           <xsl:param name="value"/>
           <xsl:choose>
-            <xsl:when test="param eq 'IdRef'">GUID</xsl:when>
-            <xsl:when test="param eq 'RefId'">GUID</xsl:when>
+            <xsl:when test="$value eq 'IdRef'">GUID</xsl:when>
+            <xsl:when test="$value eq 'RefId'">GUID</xsl:when>
             <xsl:otherwise><xsl:value-of select="$value"/></xsl:otherwise>
           </xsl:choose>
         </xsl:function>
