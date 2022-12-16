@@ -291,7 +291,7 @@
 
                 <!-- Translate xs:* type into json schema type -->
                 <xsl:apply-templates select="specgen:Item[1]/specgen:Type">
-                        <xsl:with-param name="indent" select="'      '"/>
+                        <xsl:with-param name="indent" select="'        '"/>
                 </xsl:apply-templates>
 
                 <!-- Add the attributes -->
