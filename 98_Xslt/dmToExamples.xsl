@@ -92,10 +92,11 @@
 		<xsl:value-of select="concat('  ', @name, 's:&#x0a;')"/>
 		<xsl:text>    pesc:&#x0a;</xsl:text>
 		<xsl:value-of select="concat('      summary: PESC notation for ', @name, 's&#x0a;')"/>
-		<xsl:text>      value:&#x0a;</xsl:text>
-		<xsl:value-of select="concat('        {', $q, @name, 's', $q, ': {')"/>
-		<xsl:apply-templates select="xhtml:Example[lower-case(@intl)=lower-case($sifLocale) or not(@intl)][1]/*" mode="detect"/>
-		<xsl:text>}}</xsl:text>
+                <xsl:text>      value:&#x0a;</xsl:text>
+                <!-- NN 20221111: Make collection object contain array of objects: this is not coming through from pesc stylesheet because of how it is being invoked here -->
+		<xsl:value-of select="concat('        {', $q, @name, 's', $q, ': {', $q, @name, $q, ': [')"/>
+ 		<xsl:apply-templates select="xhtml:Example[lower-case(@intl)=lower-case($sifLocale) or not(@intl)][1]/*" mode="obj-content"/>
+ 		<xsl:text>]}}</xsl:text>
 		<xsl:text>&#x0a;</xsl:text>
 		<xsl:text>    goessner:&#x0a;</xsl:text>
 		<xsl:value-of select="concat('      summary: Goessner notation for ', @name, 's&#x0a;')"/>
@@ -217,8 +218,10 @@
 					<xsl:otherwise>
 						<!--xsl:value-of select="concat($pfx2, '&lt;', name(), '&gt;', normalize-space(.),'&lt;/', name(), '&gt;&#x0a;')"/--> 
 						<xsl:value-of select="concat($pfx2, '&lt;', name())"/> 
-						<xsl:apply-templates select="@*[not(namespace-uri() = 'http://json.org/')]" mode="attribs" />
-						<xsl:value-of select="concat('&gt;', normalize-space(.),'&lt;/', name(), '&gt;&#x0a;')"/> 
+                                                <xsl:apply-templates select="@*[not(namespace-uri() = 'http://json.org/')]" mode="attribs" />
+                                                <!-- NN 20221121: do not resolve &lt; &gt; embedded in XML markup to < > -->
+                                                <xsl:value-of select="concat('&gt;', xfn:preserve-entities(normalize-space(.)),'&lt;/', name(), '&gt;&#x0a;')"/>
+
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>
@@ -274,4 +277,11 @@
 		<xsl:sequence select="xfn:empty($listOfValues) or contains($listOfValues, $valueToCheck)" />
 	</xsl:function>
 
+        <!-- NN 20221121. Yes, I do feel dirty for doing this... I can't use xsl:character-map and xsl:output,
+ because &lt; &gt; is being used elsewhere in this stylesheet to build up XML markup. -->
+ 	<xsl:function name="xfn:preserve-entities">
+   <xsl:param name="pText" as="xs:string"/>
+   <xsl:sequence select=
+   "replace(replace(replace($pText, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;')"/>
+  </xsl:function>
 </xsl:stylesheet>

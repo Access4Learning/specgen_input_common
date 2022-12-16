@@ -199,13 +199,23 @@
 	<xsl:template match="specgen:CommonElement[count(specgen:Item) gt 1 and
 	                     specgen:Item[1]/specgen:Type/@complex eq 'extension' and
 						 count(specgen:Item[position() gt 1]) eq count(specgen:Item[specgen:Attribute]) ]" priority="2">
-		<xsl:text>&#x0a;  # //////////////////////// attr extn /////////////////////////////////////&#x0a;</xsl:text>
+        <xsl:text>&#x0a;  # //////////////////////// attr extn /////////////////////////////////////&#x0a;</xsl:text>
+
+        <xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
+                                                                         '    allOf:&#x0a;',
+                                                                         '      - $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;',
+                                                                         '      - type: object&#x0a;',
+                                                                         '        properties:&#x0a;')"/>
+
+
+        <!-- NN 20221110: this is what Stuart had done, commenting out the block beneath. allOfC is spurious (it's a debug statement), and so is "value" in this context (it's a display-only attribute.) Redoc is still putting "value" in, but that is display only, and will not form part of spec. 
 		<xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
 									 '    type: object&#x0a;',
 									 '    properties:&#x0a;',
 									 '      value:&#x0a;',
 									 '#        allOfC:&#x0a;',
-									 '        $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;')"/>
+                '        $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;')"/>
+                -->
 
 		<!--xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
 									 '    type: object&#x0a;',
@@ -215,7 +225,7 @@
 									 '          - $ref: ''#/definitions/', xfn:chopType(specgen:Item[1]/specgen:Type/@name), '''&#x0a;')"/-->
 
 		<xsl:apply-templates select="specgen:Item[position() gt 1]">
-			<xsl:with-param name="indent" select="'      '"/>
+			<xsl:with-param name="indent" select="'          '"/>
 		</xsl:apply-templates>
 
 		<xsl:variable name="desc">
