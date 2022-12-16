@@ -18,7 +18,8 @@
 	<!-- How many enumeration values to include in descriptions ? -->
 	<xsl:param name="enumCount">12</xsl:param>
 
-	<!-- Include all the vendor extensions ?? -->
+        <!-- Include all the vendor extensions ?? -->
+        <!-- Whether we are compliant with OpenAPI 3.0 JSON Schema (true), or full JSON Schema, i.e. OpenAPI 3.1 (false). -->
 	<xsl:param name="strictJSON">false</xsl:param>
 	
 	<!-- Where is the SIF HTML documentation available for links -->

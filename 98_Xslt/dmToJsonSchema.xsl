@@ -11,6 +11,8 @@
 	<!-- Take a SIF_DataModel.input.xml file and produce a matching Json Schema -->
 	<xsl:output method="text" omit-xml-declaration="yes" indent="no"/>
 	
+        <!-- variable $strictJSON: Whether we are compliant with OpenAPI 3.0 JSON Schema (true), or full JSON Schema, i.e. OpenAPI 3.1 (false). -->
+
 
 	<!-- Shorthand to get a quote character into the output -->
 	<xsl:variable name="q"><xsl:text>"</xsl:text></xsl:variable>
