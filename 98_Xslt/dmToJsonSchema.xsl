@@ -300,10 +300,10 @@
                 </xsl:apply-templates>
         </xsl:template>
 
-        <!-- NN 20221216: Common type is an IdRef value with attributes (no extension) -->
+        <!-- NN 20221216: Common type is an IdRef or MonetaryAmount value with attributes (no extension) -->
         <xsl:template match="specgen:CommonElement[count(specgen:Item) gt 1 and
                              not(specgen:Item[1]/specgen:Type/@complex) and
-                                                 (specgen:Item[1]/specgen:Type/@name =  'IdRefType') and
+                                                 (specgen:Item[1]/specgen:Type/@name =  'IdRefType' or specgen:Item[1]/specgen:Type/@name =  'MonetaryAmountType') and
                                                  count(specgen:Item[position() gt 1]) eq count(specgen:Item[specgen:Attribute]) ]" priority="2">
                 <xsl:text>&#x0a;  # //////////////////////// IdRef with attrs /////////////////////////////////////&#x0a;</xsl:text>
                 <xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
