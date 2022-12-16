@@ -1018,7 +1018,7 @@
 		<xsl:sequence select="not($value != '')" />
 	</xsl:function>
 
-        <!-- NN 20221216 deal with recursively defined IdRef and RefId, which JSON Reference does not tolerate -->A
+        <!-- NN 20221216 deal with recursively defined IdRef and RefId, which JSON Reference does not tolerate -->
         <xsl:function name="xfn:refresolve" as="xs:string">
           <xsl:param name="value"/>
           <xsl:choose>
