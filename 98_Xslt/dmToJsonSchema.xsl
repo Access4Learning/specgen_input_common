@@ -256,12 +256,12 @@
 			<xsl:apply-templates select="specgen:Item[1]/specgen:Description"/>
 		</xsl:variable>
 		<xsl:if test="string-length($desc) gt 0">
-			<xsl:value-of select="concat('      description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
+			<xsl:value-of select="concat('        description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
 		</xsl:if>
 
 		<!-- Translate xs:* type into json schema type -->
 		<xsl:apply-templates select="specgen:Item[1]/specgen:Type">
-			<xsl:with-param name="indent" select="'    '"/>
+			<xsl:with-param name="indent" select="'      '"/>
 		</xsl:apply-templates>
 
 		<!-- Add the attributes -->
@@ -286,12 +286,12 @@
                         <xsl:apply-templates select="specgen:Item[1]/specgen:Description"/>
                 </xsl:variable>
                 <xsl:if test="string-length($desc) gt 0">
-                        <xsl:value-of select="concat('      description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
+                        <xsl:value-of select="concat('        description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
                 </xsl:if>
 
                 <!-- Translate xs:* type into json schema type -->
                 <xsl:apply-templates select="specgen:Item[1]/specgen:Type">
-                        <xsl:with-param name="indent" select="'      '"/>
+                        <xsl:with-param name="indent" select="'        '"/>
                 </xsl:apply-templates>
 
                 <!-- Add the attributes -->
@@ -316,12 +316,12 @@
                         <xsl:apply-templates select="specgen:Item[1]/specgen:Description"/>
                 </xsl:variable>
                 <xsl:if test="string-length($desc) gt 0">
-                        <xsl:value-of select="concat('      description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
+                        <xsl:value-of select="concat('        description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
                 </xsl:if>
 
                 <!-- Translate xs:* type into json schema type -->
                 <xsl:apply-templates select="specgen:Item[1]/specgen:Type">
-                        <xsl:with-param name="indent" select="'      '"/>
+                        <xsl:with-param name="indent" select="'        '"/>
                 </xsl:apply-templates>
 
                 <!-- Add the attributes -->
