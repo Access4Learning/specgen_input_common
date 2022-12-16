@@ -444,8 +444,16 @@
 		<xsl:text>        properties:&#x0a;</xsl:text>
 		<xsl:value-of select="concat('          ', @name, ':&#x0a;')"/>
 		<xsl:text>            type: object&#x0a;</xsl:text>
-		<xsl:value-of select="concat('            description: >-', '&#x0a;', '              Payload definition for ', @name, '&#x0a;')"/>
-		<xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', @name, '''&#x0a;')"/>
+                <xsl:value-of select="concat('            description: >-', '&#x0a;', '              Payload definition for ', @name, '&#x0a;')"/>
+                <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once -->
+                <xsl:choose>
+                  <xsl:when test="@name eq 'LearningResourcePackage'">
+		    <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', 'AbstractContentElement', '''&#x0a;')"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+		    <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', @name, '''&#x0a;')"/>
+                  </xsl:otherwise>
+                </xsl:choose>
 		<xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 
