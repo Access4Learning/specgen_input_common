@@ -454,7 +454,10 @@
 	<!-- ============================================================= -->
 	<!-- Template for producing info about Schema Def for List Objects -->
 	<!-- ============================================================= -->
-	<xsl:template match="specgen:DataObject" mode="collectionSchemaDef">
+        <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once: introduced xfn:refresolve -->
+        <!-- NN 20221219 force schema def to be PESC-conformant for lists, previous instance was Goessner-conformant -->
+        <xsl:template match="specgen:DataObject" mode="collectionSchemaDef">
+          <!-- old
 		<xsl:value-of select="concat('      updateSchema', @name, 's:&#x0a;')"/>
 		<xsl:text>        properties:&#x0a;</xsl:text>
 		<xsl:value-of select="concat('          ', @name, 's:&#x0a;')"/>
@@ -465,7 +468,6 @@
 		<xsl:value-of select="concat('              ', @name, ':&#x0a;')"/>
 		<xsl:text>                type: array&#x0a;</xsl:text>
 		<xsl:text>                items:&#x0a;</xsl:text>
-                <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once -->
 		<xsl:value-of select="concat('                  $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 		
@@ -479,9 +481,48 @@
 		<xsl:value-of select="concat('              ', @name, ':&#x0a;')"/>
 		<xsl:text>                type: array&#x0a;</xsl:text>
 		<xsl:text>                items:&#x0a;</xsl:text>
-                <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once -->
                 <xsl:value-of select="concat('                  $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
-		<xsl:text>&#x0a;</xsl:text>
+                <xsl:text>&#x0a;</xsl:text>
+            -->
+                <xsl:value-of select="concat('      updateSchema', @name, 's:&#x0a;')"/>
+                <xsl:text>        properties:&#x0a;</xsl:text>
+                <xsl:value-of select="concat('          ', @name, 's:&#x0a;')"/>
+                <xsl:text>            type: object&#x0a;</xsl:text>
+                <xsl:text>            description: >-&#x0a;</xsl:text>
+                <xsl:value-of select="concat('              A Collection of ', @name, ' objects&#x0a;')"/>
+                <xsl:text>            properties:&#x0a;</xsl:text>
+                <xsl:value-of select="concat('              ', @name, ':&#x0a;')"/>
+                <xsl:text>                type: object&#x0a;</xsl:text>
+                <xsl:value-of select="concat('                $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', @name, 'List', '''&#x0a;')"/>
+                <xsl:text>&#x0a;</xsl:text>
+                
+                <xsl:value-of select="concat('      createSchema', @name, 's:&#x0a;')"/>
+                <xsl:text>        properties:&#x0a;</xsl:text>
+                <xsl:value-of select="concat('          ', @name, 's:&#x0a;')"/>
+                <xsl:text>            type: object&#x0a;</xsl:text>
+                <xsl:text>            description: >-&#x0a;</xsl:text>
+                <xsl:value-of select="concat('              A Collection of ', @name, ' objects&#x0a;')"/>
+                <xsl:text>            properties:&#x0a;</xsl:text>
+                <xsl:value-of select="concat('              ', @name, ':&#x0a;')"/>
+                <xsl:text>                type: object&#x0a;</xsl:text>
+                <xsl:value-of select="concat('                $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', @name,  'List', '''&#x0a;')"/>
+                <xsl:text>&#x0a;</xsl:text>
+
+                <xsl:value-of select="concat('      updateSchema', @name, 'List:&#x0a;')"/>
+                <xsl:text>        type: array&#x0a;</xsl:text>
+                <xsl:text>        description: >-&#x0a;</xsl:text>
+                <xsl:value-of select="concat('              Payload definition for ', @name, ' list&#x0a;')"/>
+                <xsl:text>        items:&#x0a;</xsl:text>
+                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
+                <xsl:text>&#x0a;</xsl:text>
+
+                <xsl:value-of select="concat('      createSchema', @name, 'List:&#x0a;')"/>
+                <xsl:text>        type: array&#x0a;</xsl:text>
+                <xsl:text>        description: >-&#x0a;</xsl:text>
+                <xsl:value-of select="concat('              Payload definition for ', @name, ' list&#x0a;')"/>
+                <xsl:text>        items:&#x0a;</xsl:text>
+                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
+                <xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 
 	<!-- ============================= -->
