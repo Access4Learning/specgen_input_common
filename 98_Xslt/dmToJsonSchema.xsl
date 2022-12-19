@@ -568,7 +568,8 @@
 
 		<xsl:text>    type: object&#x0a;</xsl:text>
 		<xsl:if test="$mandatoryFields = 'required'">
-			<xsl:if test="specgen:Item[contains(specgen:Characteristics, 'M')]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[contains(specgen:Characteristics, 'M')]">
+                        <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
+			<xsl:if test="specgen:Item[position() gt 1][contains(specgen:Characteristics, 'M')]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[contains(specgen:Characteristics, 'M')][position() gt 1]">
 				<xsl:text>    required:&#x0a;</xsl:text>
                                 <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
 				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" mode="required">
