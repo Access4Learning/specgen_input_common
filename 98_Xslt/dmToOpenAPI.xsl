@@ -493,7 +493,7 @@
                 <xsl:text>            properties:&#x0a;</xsl:text>
                 <xsl:value-of select="concat('              ', @name, ':&#x0a;')"/>
                 <xsl:text>                type: array&#x0a;</xsl:text>
-                <xsl:text>                  items:&#x0a;</xsl:text>
+                <xsl:text>                items:&#x0a;</xsl:text>
                 <xsl:value-of select="concat('                    $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
                 
@@ -506,7 +506,7 @@
                 <xsl:text>            properties:&#x0a;</xsl:text>
                 <xsl:value-of select="concat('              ', @name, ':&#x0a;')"/>
                 <xsl:text>                type: array&#x0a;</xsl:text>
-                <xsl:text>                  items:&#x0a;</xsl:text>
+                <xsl:text>                items:&#x0a;</xsl:text>
                 <xsl:value-of select="concat('                    $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
