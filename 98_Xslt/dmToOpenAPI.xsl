@@ -438,7 +438,8 @@
 		<xsl:value-of select="concat('          ', @name, ':&#x0a;')"/>
 		<xsl:text>            type: object&#x0a;</xsl:text>
 		<xsl:value-of select="concat('            description: >-', '&#x0a;', '              Payload definition for ', @name, '&#x0a;')"/>
-		<xsl:value-of select="concat('            $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', @name, '''&#x0a;')"/>
+                <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once -->
+		<xsl:value-of select="concat('            $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 		<xsl:value-of select="concat('      createSchema', @name, ':&#x0a;')"/>
 		<xsl:text>        properties:&#x0a;</xsl:text>
@@ -446,14 +447,7 @@
 		<xsl:text>            type: object&#x0a;</xsl:text>
                 <xsl:value-of select="concat('            description: >-', '&#x0a;', '              Payload definition for ', @name, '&#x0a;')"/>
                 <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once -->
-                <xsl:choose>
-                  <xsl:when test="@name eq 'LearningResourcePackage'">
-		    <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', 'AbstractContentElement', '''&#x0a;')"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-		    <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', @name, '''&#x0a;')"/>
-                  </xsl:otherwise>
-                </xsl:choose>
+		<xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 
@@ -472,13 +466,7 @@
 		<xsl:text>                type: array&#x0a;</xsl:text>
 		<xsl:text>                items:&#x0a;</xsl:text>
                 <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once -->
-                  <xsl:when test="@name eq 'LearningResourcePackage'">
-		<xsl:value-of select="concat('                  $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', AbstractContentElement, '''&#x0a;')"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-		<xsl:value-of select="concat('                  $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', @name, '''&#x0a;')"/>
-                  </xsl:otherwise>
-                </xsl:choose>
+		<xsl:value-of select="concat('                  $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 		
 		<xsl:value-of select="concat('      createSchema', @name, 's:&#x0a;')"/>
@@ -492,14 +480,7 @@
 		<xsl:text>                type: array&#x0a;</xsl:text>
 		<xsl:text>                items:&#x0a;</xsl:text>
                 <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once -->
-                                <xsl:choose>
-                  <xsl:when test="@name eq 'LearningResourcePackage'">
-                    <xsl:value-of select="concat('                  $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', AbstractContentElement, '''&#x0a;')"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of select="concat('                  $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', @name, '''&#x0a;')"/>
-                  </xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="concat('                  $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 
@@ -1714,6 +1695,18 @@
 				<xsl:value-of select="$baseString"/>
 			</xsl:otherwise>
 		</xsl:choose>
-	</xsl:function>
+              </xsl:function>
+
+        <!-- NN 20221216 deal with recursively defined IdRef and RefId, which JSON Reference does not tolerate -->
+        <xsl:function name="xfn:refresolve" as="xs:string">
+          <xsl:param name="value"/>
+          <xsl:choose>
+            <xsl:when test="$value eq 'IdRef'">GUID</xsl:when>
+            <xsl:when test="$value eq 'RefId'">GUID</xsl:when>
+            <xsl:when test="$value eq 'LearningResourcePackage'">AbstractContentElement</xsl:when>
+            <xsl:otherwise><xsl:value-of select="$value"/></xsl:otherwise>
+          </xsl:choose>
+        </xsl:function>
+
 	
 </xsl:stylesheet>
