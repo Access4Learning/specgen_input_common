@@ -493,7 +493,7 @@
                 <xsl:text>            properties:&#x0a;</xsl:text>
                 <xsl:value-of select="concat('              ', @name, ':&#x0a;')"/>
                 <xsl:text>                type: object&#x0a;</xsl:text>
-                <xsl:value-of select="concat('                $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', 'updateSchema', @name, 'List', '''&#x0a;')"/>
+                <xsl:value-of select="concat('                $ref: ''#/components/schemas/SchemaDefinitions/', 'updateSchema', @name, 'List', '''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
                 
                 <xsl:value-of select="concat('      createSchema', @name, 's:&#x0a;')"/>
@@ -505,7 +505,7 @@
                 <xsl:text>            properties:&#x0a;</xsl:text>
                 <xsl:value-of select="concat('              ', @name, ':&#x0a;')"/>
                 <xsl:text>                type: object&#x0a;</xsl:text>
-                <xsl:value-of select="concat('                $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', 'createSchema', @name,  'List', '''&#x0a;')"/>
+                <xsl:value-of select="concat('                $ref: ''#/components/schemas/SchemaDefinitions/'', 'createSchema', @name,  'List', '''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
 
                 <xsl:value-of select="concat('      updateSchema', @name, 'List:&#x0a;')"/>

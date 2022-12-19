@@ -83,7 +83,7 @@
                 <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
 		<xsl:if test="$mandatoryFields = 'required'">
 			<xsl:variable name="req">
-				<xsl:apply-templates select="specgen:Item|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" mode="required">
+				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" mode="required">
 					<xsl:sort select="specgen:Element|specgen:Attribute"/>
 				</xsl:apply-templates>
 			</xsl:variable>
@@ -520,7 +520,7 @@
 			<xsl:if test="specgen:Item[contains(specgen:Characteristics, 'M')]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[contains(specgen:Characteristics, 'M')]">
 				<xsl:text>    - required:&#x0a;</xsl:text>
                                 <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
-				<xsl:apply-templates select="specgen:Item|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" mode="required">
+				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" mode="required">
 					<xsl:sort select="specgen:Element|specgen:Attribute"/>
 					<xsl:with-param name="indent" select="'      '"/>
 				</xsl:apply-templates>
@@ -571,7 +571,7 @@
 			<xsl:if test="specgen:Item[contains(specgen:Characteristics, 'M')]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[contains(specgen:Characteristics, 'M')]">
 				<xsl:text>    required:&#x0a;</xsl:text>
                                 <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
-				<xsl:apply-templates select="specgen:Item|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" mode="required">
+				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" mode="required">
 					<xsl:sort select="specgen:Element|specgen:Attribute"/>
 				</xsl:apply-templates>
 			</xsl:if>
