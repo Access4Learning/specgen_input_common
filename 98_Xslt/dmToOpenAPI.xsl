@@ -76,9 +76,13 @@
                                       'info:&#x0a;',
                                       '  version: v', $sifVersion, '&#x0a;',
                                       '  title: ', $q , $title, $q, '&#x0a;',
-									  '  description: ', $q, normalize-space(specgen:TitlePage/specgen:h1), $q, '&#x0a;',
+                                      '  description: ', $q, normalize-space(specgen:TitlePage/specgen:h1), $q, '&#x0a;',
+                                      '')"/>
+
+                <!-- NN 20221219: bogus elements 
 									  '  host: ', $q, 'apihost.example.com', $q, '&#x0a;',
-									  '  basePath: ', $q, 'v3', $q, '&#x0a;')"/>
+                                                                          '  basePath: ', $q, 'v3', $q, '&#x0a;')"/>
+                  -->
 			  
 		<!-- =================== -->
 		<!-- Adds Groups section -->
