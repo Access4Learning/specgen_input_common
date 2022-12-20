@@ -525,7 +525,7 @@
 				<xsl:variable name="typeName" select="xfn:getNoneEmptyValue(specgen:Item[2]/specgen:Type/@name,specgen:Item[2]/specgen:Union/specgen:Type[1]/@name)"/>
                         <xsl:variable name="ref">
                                 <xsl:apply-templates select="." mode="refresolve">
-                                  <xsl:with-param name="name" select="$type"/>
+                                  <xsl:with-param name="name" select="$typeName"/>
                                 </xsl:apply-templates>
                         </xsl:variable>
 				<xsl:value-of select="concat('          $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
