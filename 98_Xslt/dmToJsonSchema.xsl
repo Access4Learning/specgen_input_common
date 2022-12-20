@@ -1066,7 +1066,7 @@
 	</xsl:template>
 
         <!-- 20221220 deal with aliases, eliminating chains of JSON Reference -->
-        <xsl:template match="specgen:DataObjects|specgen:DataObject|specgen:CommonElement" mode="refresolve">
+        <xsl:template match="specgen:DataObject|specgen:CommonElement|specgen:Item|specgen:Type" mode="refresolve">
           <xsl:param name="name"/>
           <xsl:choose>
             <xsl:when test="$name eq 'IdRef'">GUID</xsl:when>
