@@ -465,7 +465,7 @@
 	</xsl:template>
 
 	<!-- Common type is a list (implicit or explicit), without choices -->
-	<xsl:template priority="2" match="specgen:CommonElement[count(specgen:Item) eq 2 and
+	<xsl:template priority="2" match="specgen:CommonElement[count(specgen:Item) gt 1 and
 	                                           (specgen:Item[1]/specgen:List or contains(specgen:Item[2]/specgen:Characteristics, 'R'))]">
 		<xsl:text>&#x0a;  # ///////////////////////////////// list ////////////////////////////&#x0a;</xsl:text>
 		<xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;')"/>
