@@ -55,7 +55,9 @@
 	</xsl:template>
 
 	<xsl:template match="specgen:DataObject" mode="reqRootObj">
-		<xsl:value-of select="concat('  - required: [ ', @name, ' ]&#x0a;')"/>
+          <xsl:value-of select="concat('  - required: [ ', @name, ' ]&#x0a;')"/>
+          <!-- NN 20221220: add collection objects -->
+		<xsl:value-of select="concat('  - required: [ ', @name, 's ]&#x0a;')"/>
 	</xsl:template>
 	
         <xsl:template match="specgen:DataObject" mode="rootObj">
