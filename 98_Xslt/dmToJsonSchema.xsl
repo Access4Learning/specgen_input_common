@@ -58,13 +58,23 @@
 		<xsl:value-of select="concat('  - required: [ ', @name, ' ]&#x0a;')"/>
 	</xsl:template>
 	
-	<xsl:template match="specgen:DataObject" mode="rootObj">
+        <xsl:template match="specgen:DataObject" mode="rootObj">
+                <xsl:variable name="ref">
+                  <xsl:apply-templates select="." mode="refresolve">
+                    <xsl:with-param name="name" select="@name"/>
+                  </xsl:apply-templates>
+                </xsl:variable>
 		<xsl:value-of select="concat('  ', @name, ':&#x0a;')"/>
-		<xsl:value-of select="concat('    $ref: ''#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
+		<xsl:value-of select="concat('    $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 
-	<xsl:template match="specgen:DataObject" mode="definitions">
+        <xsl:template match="specgen:DataObject" mode="definitions">
+                <xsl:variable name="ref">
+                  <xsl:apply-templates select="." mode="refresolve">
+                    <xsl:with-param name="name" select="@name"/>
+                  </xsl:apply-templates>
+                </xsl:variable>
 		<xsl:text>  # //////////////////////////////// data object /////////////////////////////&#x0a;</xsl:text>
 		<!-- First up the collection edition -->
 		<xsl:value-of select="concat('  ', @name, 'Collection:&#x0a;',
@@ -73,7 +83,7 @@
 									 '      ', @name , ':&#x0a;',
 									 '        type: array&#x0a;',
 									 '        items:&#x0a;',
-									 '          $ref: ''#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
+									 '          $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
 
 
 		<!-- Now do the actual dataObject definition --> 
@@ -99,13 +109,18 @@
 		<!-- DataObject maybe extension of a base type -->
 		<!--xsl:text>#DEBUG: DataObject maybe extension of a base type - check for specgen:Item[1]/specgen:Type[@complex]&#x0a;</xsl:text-->
 		<!--xsl:if test="specgen:Item[1]/specgen:Type[@complex]"-->
-		<xsl:if test="specgen:Item[1]/specgen:Type/@complex">
+              <xsl:if test="specgen:Item[1]/specgen:Type/@complex">
+                        <xsl:variable name="ref">
+                                <xsl:apply-templates select="." mode="refresolve">
+                                        <xsl:with-param name="name" select="xfn:chopType(specgen:Item[1]/specgen:Type/@name)"/>
+                                </xsl:apply-templates>
+                        </xsl:variable>
 			<!--xsl:text>#DEBUG: check: true&#x0a;</xsl:text-->
 			<xsl:value-of select="concat('    type: object&#x0a;',
 			                             '    description: &gt;-&#x0a;',
 			                             '      ', $desc, '&#x0a;',
 										 '#   allOfA:&#x0a;',
-										 '    $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;')"/>
+										 '    $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
 			<!--xsl:value-of select="concat('    type: object&#x0a;',
 										 '    allOfA:&#x0a;',
 										 '    - $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;',
@@ -162,18 +177,28 @@
 		</xsl:variable>
 		
 		<xsl:if test="string-length($desc) gt 0">
+                        <xsl:variable name="ref">
+                                <xsl:apply-templates select="." mode="refresolve">
+                                        <xsl:with-param name="name" select="xfn:chopType(specgen:Item[1]/specgen:Type/@name)"/>
+                                </xsl:apply-templates>
+                        </xsl:variable>
 			<xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
 										 '#     allOfB:&#x0a;',
 										 '      type: object&#x0a;',
 										 '      description: &gt;-&#x0a;',
 										 '        ', $desc, '&#x0a;',
-								         '      $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;')"/>
+								         '      $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
 		</xsl:if>
 		<xsl:if test="string-length($desc) eq 0">
+                        <xsl:variable name="ref">
+                                <xsl:apply-templates select="." mode="refresolve">
+                                        <xsl:with-param name="name" select="xfn:chopType(specgen:Item[1]/specgen:Type/@name)"/>
+                                </xsl:apply-templates>
+                        </xsl:variable>
 			<xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
 										 '#     allOfB:&#x0a;',
 										 '      type: object&#x0a;',
-								         '      $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;')"/>
+								         '      $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
 		</xsl:if>
 	</xsl:template>
 
@@ -203,10 +228,15 @@
 	                     specgen:Item[1]/specgen:Type/@complex eq 'extension' and
 						 count(specgen:Item[position() gt 1]) eq count(specgen:Item[specgen:Attribute]) ]" priority="2">
         <xsl:text>&#x0a;  # //////////////////////// attr extn /////////////////////////////////////&#x0a;</xsl:text>
+                        <xsl:variable name="ref">
+                                <xsl:apply-templates select="." mode="refresolve">
+                                        <xsl:with-param name="name" select="xfn:chopType(specgen:Item[1]/specgen:Type/@name)"/>
+                                </xsl:apply-templates>
+                        </xsl:variable>
 
         <xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
                                                                          '    allOf:&#x0a;',
-                                                                         '      - $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;',
+                                                                         '      - $ref: ''#/definitions/', $ref, '''&#x0a;',
                                                                          '      - type: object&#x0a;',
                                                                          '        properties:&#x0a;')"/>
 
@@ -493,7 +523,12 @@
 			<xsl:otherwise>
 				<!--  Some types are listed in a <Union> element. In this case we take the first one -->
 				<xsl:variable name="typeName" select="xfn:getNoneEmptyValue(specgen:Item[2]/specgen:Type/@name,specgen:Item[2]/specgen:Union/specgen:Type[1]/@name)"/>
-				<xsl:value-of select="concat('          $ref: ''#/definitions/', xfn:refresolve(xfn:chopType($typeName)), '''&#x0a;')"/>
+                        <xsl:variable name="ref">
+                                <xsl:apply-templates select="." mode="refresolve">
+                                  <xsl:with-param name="name" select="$type"/>
+                                </xsl:apply-templates>
+                        </xsl:variable>
+				<xsl:value-of select="concat('          $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
 <!--
 				<xsl:value-of select="concat('          $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[2]/specgen:Type/@name)), '''&#x0a;')"/>
 -->
@@ -514,7 +549,12 @@
 		</xsl:if>
 
 		<xsl:text>    allOf:&#x0a;</xsl:text>
-		<xsl:value-of select="concat('    - $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(@name)), '''&#x0a;')"/>
+                        <xsl:variable name="ref">
+                                <xsl:apply-templates select="." mode="refresolve">
+                                  <xsl:with-param name="name" select="xfn:chopType(@name)"/>
+                                </xsl:apply-templates>
+                        </xsl:variable>
+		<xsl:value-of select="concat('    - $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
 		<xsl:text>    - type: object&#x0a;</xsl:text>
 		<xsl:if test="$mandatoryFields = 'required'">
 			<xsl:if test="specgen:Item[contains(specgen:Characteristics, 'M')]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[contains(specgen:Characteristics, 'M')]">
@@ -835,7 +875,12 @@
 	<!-- Type is of named type -->
 	<xsl:template match="specgen:Type[not(@complex) and @name ne '' and not(starts-with(@name, 'xs:'))]">
 		<xsl:param name="indent"/>
-		<xsl:value-of select="concat($indent,'$ref: ''#/definitions/', xfn:refresolve(xfn:chopType(@name)), '''&#x0a;')"/>
+                        <xsl:variable name="ref">
+                                <xsl:apply-templates select="." mode="refresolve">
+                                  <xsl:with-param name="name" select="xfn:chopType(@name)"/>
+                                </xsl:apply-templates>
+                        </xsl:variable>
+		<xsl:value-of select="concat($indent,'$ref: ''#/definitions/', $ref, '''&#x0a;')"/>
 	</xsl:template>
 
 	<!-- Un-named type, so inline object -->
@@ -1019,6 +1064,17 @@
 		<xsl:apply-templates/>
 		<xsl:value-of select="concat('&lt;/', local-name(.), '&gt;')"/>
 	</xsl:template>
+
+        <!-- 20221220 deal with aliases, eliminating chains of JSON Reference -->
+        <xsl:template match="specgen:DataObjects|specgen:DataObject|specgen:CommonElement" mode="refresolve">
+          <xsl:param name="name"/>
+          <xsl:choose>
+            <xsl:when test="$name eq 'IdRef'">GUID</xsl:when>
+            <xsl:when test="$name eq 'RefId'">GUID</xsl:when>
+            <xsl:when test="$name eq 'LearningResourcePackage'">AbstractContentElement</xsl:when>
+            <xsl:otherwise><xsl:value-of select="$name"/></xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
 
 	<!-- Custom function to chop 'Type' off the end of XSD type names -->
 	<xsl:function name="xfn:chopType" as="xs:string">
