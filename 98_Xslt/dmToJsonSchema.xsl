@@ -331,11 +331,11 @@
                 </xsl:apply-templates>
         </xsl:template>
 
-        <!-- NN 20221216: Common type is an IdRef or MonetaryAmount value with attributes (no extension) -->
+        <!-- NN 20221216: Common type is an IdRef or MonetaryAmount or other type with attributes (no extension) -->
         <!-- TODO: needs to be generalised, to "this type is an alias" -->
         <xsl:template match="specgen:CommonElement[count(specgen:Item) gt 1 and
                              not(specgen:Item[1]/specgen:Type/@complex) and
-                                                 (specgen:Item[1]/specgen:Type/@name =  'IdRefType' or specgen:Item[1]/specgen:Type/@name =  'MonetaryAmountType') and
+                                                 (specgen:Item[1]/specgen:Type/@ref = 'CommonTypes') and
                                                  count(specgen:Item[position() gt 1]) eq count(specgen:Item[specgen:Attribute]) ]" priority="2">
                 <xsl:text>&#x0a;  # //////////////////////// IdRef with attrs /////////////////////////////////////&#x0a;</xsl:text>
                 <xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
@@ -1074,25 +1074,44 @@
           </xsl:variable>
           <xsl:variable name="ref">
             <!-- where is this type defined? -->
-            <xsl:value-of select="concat('//specgen:CommonElement[@name = ''', $name, '''')"/>
+            <xsl:value-of select="//specgen:CommonElement[@name = $name]"/>
           </xsl:variable>
-          <xsl:choose>
+          <xsl:variable name="recurse_name">
+            <!-- what is the next iteration of JSON Reference? -->
+            <xsl:value-of select="//specgen:CommonElement[@name = $name]/specgen:Item[1]/specgen:Type/@name"/>
+          </xsl:variable>
+         <xsl:variable name="is_alias">
+            <!-- detect whether the next iteration of JSON Reference is an alias -->
+				<xsl:apply-templates select="//specgen:CommonElement[@name = $name]" mode="alias_detect"/>
+          </xsl:variable>
+         <xsl:choose>
             <!-- type is not an alias: -->
+            <xsl:when test="count(specgen:Item) gt 1"><xsl:value-of select="$value"/></xsl:when>
             <xsl:when test="specgen:Item[1]/specgen:Type/@ref =  'CodeSets'"><xsl:value-of select="$value"/></xsl:when>
-            <xsl:when test="specgen:Type/@ref =  'CodeSets'"><xsl:value-of select="$value"/></xsl:when>
-            <xsl:when test="$ref/specgen:Item[1]/specgen:Type/@complex"><xsl:value-of select="$value"/></xsl:when>
-            <xsl:when test="count($ref/specgen:Item) gt 1"><xsl:value-of select="$value"/></xsl:when>
-            <xsl:when test="starts-with(specgen:Item[1]/specgen:Type/@name, 'xs:')"><xsl:value-of select="$value"/></xsl:when>
+            <xsl:when test="name() = 'Item' and specgen:Type/@ref =  'CodeSets'"><xsl:value-of select="$value"/></xsl:when>
+            <xsl:when test="name() = 'Type' and @ref =  'CodeSets'"><xsl:value-of select="$value"/></xsl:when>
+            <xsl:when test="$is_alias = 'false'"><xsl:value-of select="$value"/></xsl:when>
+            <xsl:when test="$recurse_name = ''"><xsl:value-of select="$value"/></xsl:when>
 
-
-            <!-- type is an alias -->
-            <xsl:when test="$value eq 'IdRef'">GUID</xsl:when>
-            <xsl:when test="$value eq 'RefId'">GUID</xsl:when>
-            <xsl:when test="$value eq 'LearningResourcePackage'">AbstractContentElement</xsl:when>
             <!-- recurse: follow JSON Reference chain -->
-            <xsl:otherwise><xsl:apply-templates select="$ref" mode="refresolve"/></xsl:otherwise>
+            <xsl:otherwise>
+				<xsl:apply-templates select="//specgen:CommonElement[@name = $name]" mode="refresolve">
+					<xsl:with-param name="name" select="$recurse_name"/>
+				</xsl:apply-templates>
+			</xsl:otherwise>
           </xsl:choose>
         </xsl:template>
+		
+		<xsl:template match="*" mode="alias_detect">
+          <xsl:choose>
+            <!-- type is not an alias: -->
+            <xsl:when test="specgen:Item[1]/specgen:Type/@complex">false</xsl:when>
+            <xsl:when test="specgen:Item[1]/specgen:Union">false</xsl:when>
+            <xsl:when test="count(specgen:Item) gt 1">false</xsl:when>
+            <xsl:when test="starts-with(specgen:Item[1]/specgen:Type/@name, 'xs:')">false</xsl:when>
+			<xsl:otherwise>true</xsl:otherwise>
+		  </xsl:choose>	
+		</xsl:template>
 
 	<!-- Custom function to chop 'Type' off the end of XSD type names -->
 	<xsl:function name="xfn:chopType" as="xs:string">
