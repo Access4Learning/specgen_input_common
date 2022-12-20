@@ -1074,7 +1074,7 @@
           </xsl:variable>
           <xsl:variable name="ref">
             <!-- where is this type defined? -->
-            <xsl:value-of select="concat('//*[@name = ''', $name, ''')"/>
+            <xsl:value-of select="concat('//specgen:CommonElement[@name = ''', $name, '''')"/>
           </xsl:variable>
           <xsl:choose>
             <!-- type is not an alias: -->
