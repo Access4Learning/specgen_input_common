@@ -304,7 +304,7 @@
         <!-- NN 20221216: Common type is a codeset value with attributes (no extension) -->
         <xsl:template match="specgen:CommonElement[count(specgen:Item) gt 1 and
                              not(specgen:Item[1]/specgen:Type/@complex) and
-                                                 (specgen:Item[1]/specgen:Type/@ref =  'CodeSets') and
+                                                 (specgen:Item[1]/specgen:Type/@ref =  'CodeSets' or specgen:Item[1]/specgen:Type/@ref =  'ExternalCodeSets') and
                                                  count(specgen:Item[position() gt 1]) eq count(specgen:Item[specgen:Attribute]) ]" priority="2">
                 <xsl:text>&#x0a;  # //////////////////////// codeset with attrs /////////////////////////////////////&#x0a;</xsl:text>
                 <xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
@@ -697,6 +697,26 @@
 														specgen:Type/@name, '&lt;a&gt;&#x0a;')"/>
 						</xsl:if>
 					</xsl:if>
+					<xsl:if test="specgen:Type/@ref eq 'ExternalCodeSets'">
+						<xsl:variable name="codeSetId">
+							<xsl:value-of select="xfn:chopType(substring-after(specgen:Type/@name, 'ExternalCodeSets'))"/>
+						</xsl:variable>
+						<xsl:variable name="codeSetGroupId">
+							<xsl:value-of select="substring-before(specgen:Type/@name, $codeSetId)"/>
+						</xsl:variable>
+						<xsl:value-of select="concat($indent, '      &lt;ul&gt;&#x0a;')"/>
+						<xsl:apply-templates select="//specgen:Appendix[ends-with(@name, 'External Code Sets')]/specgen:CodeSets//specgen:Grouping[@code = $codeSetGroupId]//specgen:CodeSet[replace(replace(specgen:ID, ' ',''), '-', '') = $codeSetId]/specgen:Values/specgen:Value[position() &lt;= $enumCount]" mode="descr">
+							<xsl:with-param name="indent" select="concat($indent, '      ')"/>
+						</xsl:apply-templates>
+						<xsl:value-of select="concat($indent, '      &lt;/ul&gt;&#x0a;')"/>
+						<xsl:if test="count(//specgen:Appendix[ends-with(@name, 'External Code Sets')]/specgen:CodeSets//specgen:Grouping[@code = $codeSetGroupId]//specgen:CodeSet[replace(replace(specgen:ID, ' ',''), '-', '') = $codeSetId]/specgen:Values/specgen:Value) &gt; $enumCount">
+							<xsl:value-of select="concat($indent, '        plus ', 
+														count(//specgen:Appendix[ends-with(@name, 'External Code Sets')]/specgen:CodeSets//specgen:Grouping[@code = $codeSetGroupId]//specgen:CodeSet[replace(replace(specgen:ID, ' ',''), '-', '') = $codeSetId]/specgen:Values/specgen:Value) - $enumCount, 
+														' more value(s) at &lt;a href=',$q,
+														$extDocURLBase, 'ExternalCodeSets.html#', specgen:Type/@name, $q, '&gt;',
+														specgen:Type/@name, '&lt;a&gt;&#x0a;')"/>
+						</xsl:if>
+					</xsl:if>
 				</xsl:if>
 			</xsl:when>
                         <xsl:otherwise>
@@ -706,6 +726,9 @@
 						  
                           <xsl:choose>
                             <xsl:when test="specgen:Type/@ref eq 'CodeSets'">
+                              <xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
+                            </xsl:when>
+                            <xsl:when test="specgen:Type/@ref eq 'ExternalCodeSets'">
                               <xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
                             </xsl:when>
                             <xsl:otherwise>
@@ -721,6 +744,7 @@
 					<xsl:apply-templates select="specgen:Description"/><xsl:text>&#x0a;</xsl:text>
 
 					<!-- If the Item is a codeset then include (at least some of) the values in the description -->
+					<!-- NN 20221220 declining to extend that to external code sets -->
 					<xsl:if test="specgen:Type/@ref eq 'CodeSets'">
 						<xsl:variable name="codeSetId">
 							<xsl:value-of select="xfn:chopType(substring-after(specgen:Type/@name, 'CodeSets'))"/>
@@ -911,6 +935,36 @@
 		</xsl:apply-templates>
 	</xsl:template>
 
+	<!-- NN 20221220 External Code sets are in separate HTML file -->
+	<xsl:template match="specgen:Appendix[@name = 'External Code Sets']//specgen:CodeSet">
+		<xsl:text>&#x0a;  # /////////////////////////////////////////////////////////////&#x0a;</xsl:text>
+		<xsl:variable name="codeSetId">
+			<xsl:value-of select="concat(ancestor::specgen:Grouping/@code, translate(specgen:ID, '- /()', ''))"/>
+		</xsl:variable>
+		<xsl:value-of select="concat('  ', $codeSetId, ':&#x0a;',
+			                         '    type: string&#x0a;',
+							         '    title: ', specgen:ID, '&#x0a;',
+			                         '    description: &gt;-&#x0a;      ')"/>
+		<xsl:apply-templates select="specgen:Intro"/><xsl:text>&#x0a;</xsl:text>
+		<xsl:text>      &lt;ul&gt;&#x0a;</xsl:text>
+		<xsl:apply-templates select="specgen:Values/specgen:Value[position() &lt;= $enumCount]" mode="descr">
+			<xsl:with-param name="indent" select="'    '"/>
+		</xsl:apply-templates>
+		<xsl:text>      &lt;/ul&gt;&#x0a;</xsl:text>
+		<xsl:if test="count(specgen:Values/specgen:Value) &gt; $enumCount">
+			<xsl:value-of select="concat('      plus ', 
+									  	count(specgen:Values/specgen:Value) - $enumCount, 
+										' more value(s) at &lt;a href=',$q,
+										$extDocURLBase, 'ExternalCodeSets.html#', $codeSetId, 'Type', $q, '&gt;',
+										$codeSetId, 'Type&lt;a&gt;&#x0a;')"/>
+		</xsl:if>
+		<xsl:apply-templates select="specgen:Values">
+			<xsl:with-param name="indent" select="'    '"/>
+		</xsl:apply-templates>
+	</xsl:template>
+
+
+
 	<!-- Instead of 'enum' we are using 'oneOf' with array of 'const' so we can put 
         title & description alongside the code value;  can't do that with 'enum' -->
 	<xsl:template match="specgen:Values">
@@ -1069,8 +1123,11 @@
             <!-- type is not an alias: -->
             <xsl:when test="count(specgen:Item) gt 1"><xsl:value-of select="$value"/></xsl:when>
             <xsl:when test="specgen:Item[1]/specgen:Type/@ref =  'CodeSets'"><xsl:value-of select="$value"/></xsl:when>
+            <xsl:when test="specgen:Item[1]/specgen:Type/@ref =  'ExternalCodeSets'"><xsl:value-of select="$value"/></xsl:when>
             <xsl:when test="name() = 'Item' and specgen:Type/@ref =  'CodeSets'"><xsl:value-of select="$value"/></xsl:when>
+            <xsl:when test="name() = 'Item' and specgen:Type/@ref =  'ExternalCodeSets'"><xsl:value-of select="$value"/></xsl:when>
             <xsl:when test="name() = 'Type' and @ref =  'CodeSets'"><xsl:value-of select="$value"/></xsl:when>
+            <xsl:when test="name() = 'Type' and @ref =  'ExternalCodeSets'"><xsl:value-of select="$value"/></xsl:when>
             <xsl:when test="$is_alias = 'false'"><xsl:value-of select="$value"/></xsl:when>
             <xsl:when test="$recurse_name = ''"><xsl:value-of select="$value"/></xsl:when>
 
@@ -1101,7 +1158,7 @@
           <xsl:choose>
            <xsl:when test="count(specgen:Item) gt 1">object</xsl:when>
            <xsl:when test="specgen:Item[1]/specgen:Type/@complex">object</xsl:when>
-           <xsl:when test="specgen:Item[1]/specgen:Union"><xsl:apply-templates select="specgen:Item[1]/specgen:Union/specgen:Type[1]/@name" mode="typeresolve"/></xsl:when>
+           <xsl:when test="specgen:Item[1]/specgen:Union"><xsl:apply-templates select="specgen:Item[1]/specgen:Union/specgen:Type[1]" mode="typeresolve"/></xsl:when>
 			<xsl:otherwise><xsl:apply-templates select="specgen:Item[1]/specgen:Type" mode="typeresolve"/></xsl:otherwise>
 		  </xsl:choose>	
 		</xsl:template>
@@ -1115,6 +1172,7 @@
         <xsl:choose>
             <!-- type is not an alias: -->
             <xsl:when test="@ref =  'CodeSets'">string</xsl:when>
+            <xsl:when test="@ref =  'ExternalCodeSets'">string</xsl:when>
             <xsl:when test="starts-with($name, 'xs:')"><xsl:value-of select="xfn:xs_to_type($name)"/></xsl:when>
             <!-- recurse: follow JSON Reference chain -->
             <xsl:otherwise>
@@ -1122,8 +1180,6 @@
 			</xsl:otherwise>
           </xsl:choose>
         </xsl:template>
-
-
 
 	<!-- Custom function to chop 'Type' off the end of XSD type names -->
 	<xsl:function name="xfn:chopType" as="xs:string">
