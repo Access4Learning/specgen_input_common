@@ -700,14 +700,19 @@
 				</xsl:if>
 			</xsl:when>
                         <xsl:otherwise>
-                                <!-- NN 20221216: ref=CommonTypes are type: object, but ref=CodeSets are type: string -->
+                          <!-- NN 20221220: resolve type recursively -->
                           <!--<xsl:value-of select="concat($indent, '  type: object&#x0a;')"/> -->
+
+						  
                           <xsl:choose>
                             <xsl:when test="specgen:Type/@ref eq 'CodeSets'">
                               <xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
                             </xsl:when>
                             <xsl:otherwise>
-                              <xsl:value-of select="concat($indent, '  type: object&#x0a;')"/>
+ 						    <xsl:variable name="ref">
+                                <xsl:apply-templates select="specgen:Type" mode="typeresolve"/>
+							</xsl:variable>
+                             <xsl:value-of select="concat($indent, '  type: ', $ref, '&#x0a;')"/>
                             </xsl:otherwise>
                             </xsl:choose>
 
@@ -833,41 +838,17 @@
 	<!-- Type is of known xs:type -->
 	<xsl:template match="specgen:Type[not(@complex) and starts-with(@name, 'xs:')]">
 		<xsl:param name="indent"/>
+		<xsl:variable name="type"><xsl:value-of select="xfn:xs_to_type(@name)"/></xsl:variable>
+		<xsl:value-of select="concat($indent, '  type: ', $type, '&#x0a;')"/>
 
 		<xsl:choose>
-			<xsl:when test="   @name eq 'xs:integer'
-							or @name eq 'xs:int'
-							or @name eq 'xs:unsignedInt'">
-				<xsl:value-of select="concat($indent, '  type: integer&#x0a;')"/>
-			</xsl:when>
-
-			<xsl:when test="@name eq 'xs:decimal'">
-				<xsl:value-of select="concat($indent, '  type: number&#x0a;')"/>
-			</xsl:when>
-
 			<xsl:when test="@name eq 'xs:date'">
-				<xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
 				<xsl:value-of select="concat($indent, '  format: date&#x0a;')"/>
 			</xsl:when>
-			
-			<xsl:when test="   @name eq 'xs:string'
-											or @name eq 'xs:normalizedString'
-                      or @name eq 'xs:token'
-					        		or @name eq 'NCName'">
-				<xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
-			</xsl:when>
-			
-			<xsl:when test="   @name eq 'xs:boolean'">
-				<xsl:value-of select="concat($indent, '  type: boolean&#x0a;')"/>
-			</xsl:when>
-			
 			<xsl:when test="@name eq 'xs:anyURI'">
-				<xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
 				<xsl:value-of select="concat($indent, '  format: uri&#x0a;')"/>
 			</xsl:when>
-
 			<xsl:when test="@name eq 'base64Binary'">
-				<xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
 				<xsl:value-of select="concat($indent, '  contentEncoding: base64&#x0a;')"/>				
 			</xsl:when>
 		</xsl:choose>
@@ -1102,6 +1083,7 @@
           </xsl:choose>
         </xsl:template>
 		
+        <!-- 20221220 deal with aliases, eliminating chains of JSON Reference -->
 		<xsl:template match="*" mode="alias_detect">
           <xsl:choose>
             <!-- type is not an alias: -->
@@ -1112,6 +1094,36 @@
 			<xsl:otherwise>true</xsl:otherwise>
 		  </xsl:choose>	
 		</xsl:template>
+		
+		<!-- 20221220 deal with aliases, eliminating chains of JSON Reference -->
+		<xsl:template match="specgen:CommonElement" mode="typeresolve">
+		 <!--OBJ <xsl:value-of select="@name"/> OBJ-->
+          <xsl:choose>
+           <xsl:when test="count(specgen:Item) gt 1">object</xsl:when>
+           <xsl:when test="specgen:Item[1]/specgen:Type/@complex">object</xsl:when>
+           <xsl:when test="specgen:Item[1]/specgen:Union"><xsl:apply-templates select="specgen:Item[1]/specgen:Union/specgen:Type[1]/@name" mode="typeresolve"/></xsl:when>
+			<xsl:otherwise><xsl:apply-templates select="specgen:Item[1]/specgen:Type" mode="typeresolve"/></xsl:otherwise>
+		  </xsl:choose>	
+		</xsl:template>
+
+
+
+        <!-- 20221220 deal with aliases, resolving type -->
+        <xsl:template match="specgen:Type" mode="typeresolve">
+		 <xsl:variable name="name"><xsl:value-of select="@name"/></xsl:variable>
+		 <!--TYPE <xsl:value-of select="@name"/> ENDTYPE-->
+        <xsl:choose>
+            <!-- type is not an alias: -->
+            <xsl:when test="@ref =  'CodeSets'">string</xsl:when>
+            <xsl:when test="starts-with($name, 'xs:')"><xsl:value-of select="xfn:xs_to_type($name)"/></xsl:when>
+            <!-- recurse: follow JSON Reference chain -->
+            <xsl:otherwise>
+				<xsl:apply-templates select="//specgen:CommonElement[@name = $name]" mode="typeresolve"/>
+			</xsl:otherwise>
+          </xsl:choose>
+        </xsl:template>
+
+
 
 	<!-- Custom function to chop 'Type' off the end of XSD type names -->
 	<xsl:function name="xfn:chopType" as="xs:string">
@@ -1142,6 +1154,32 @@
 	<xsl:function name="xfn:empty" as="xs:boolean">
 		<xsl:param name="value"/>
 		<xsl:sequence select="not($value != '')" />
+	</xsl:function>
+
+    <xsl:function name="xfn:xs_to_type" as="xs:string">
+	  <xsl:param name="name"/>
+	  		<xsl:choose>
+			<xsl:when test="   $name eq 'xs:integer'
+							or $name eq 'xs:int'
+							or $name eq 'xs:unsignedInt'">integer</xsl:when>
+
+			<xsl:when test="$name eq 'xs:decimal'">number</xsl:when>
+
+			<xsl:when test="$name eq 'xs:date' or $name eq 'xs:time' or $name eq 'xs:dateTime' or $name eq 'xs:gYear' or $name eq 'xs:duration'">string</xsl:when>
+			
+			<xsl:when test="   $name eq 'xs:string'
+											or $name eq 'xs:normalizedString'
+                      or $name eq 'xs:token'
+					        		or $name eq 'xs:NCName'">string</xsl:when>
+			
+			<xsl:when test="   $name eq 'xs:boolean'">boolean</xsl:when>
+			
+			<xsl:when test="$name eq 'xs:anyURI'">string</xsl:when>
+
+			<xsl:when test="$name eq 'xs:base64Binary'">string</xsl:when>
+			<xsl:otherwise><xsl:value-of select="concat($name, ' XXXXX UNRECOGNISED XML TYPE')"/></xsl:otherwise>
+		</xsl:choose>
+
 	</xsl:function>
 
 </xsl:stylesheet>
