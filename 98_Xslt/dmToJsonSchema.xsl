@@ -876,9 +876,10 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<!-- NN 20221221 We are skipping all SIF_RefObject attributes, they are subsumed automatically into preceding IdRef as new TypedIdRefType -->
+	<!-- NN 20221221 We are skipping all SIF_RefObject attributes, they are subsumed automatically into preceding IdRef as new TypedIdRefType.
+         But do not skip root attributes!	-->
 	<xsl:template match="specgen:DataObject/specgen:Item[specgen:Attribute = 'SIF_RefObject']" priority="2"/>
-	<xsl:template match="specgen:CommonElement[not(@name = 'TypedIdRefType')]/specgen:Item[specgen:Attribute = 'SIF_RefObject']"
+	<xsl:template match="specgen:CommonElement[not(@name = 'TypedIdRefType')]/specgen:Item[position() gt 2][specgen:Attribute = 'SIF_RefObject']"
 				  priority="2"/>
 	
 
