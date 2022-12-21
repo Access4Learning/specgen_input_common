@@ -337,8 +337,7 @@
                 </xsl:apply-templates>
         </xsl:template>
 
-        <!-- NN 20221216: Common type is an IdRef or MonetaryAmount or other type with attributes (no extension) -->
-        <!-- TODO: needs to be generalised, to "this type is an alias" -->
+        <!-- NN 20221216: Common type is an simple type like IdRef with attributes (no extension) -->
         <xsl:template match="specgen:CommonElement[count(specgen:Item) gt 1 and
                              not(specgen:Item[1]/specgen:Type/@complex) and
                                                  (specgen:Item[1]/specgen:Type/@ref = 'CommonTypes') and
@@ -694,7 +693,7 @@
 			<xsl:value-of select="concat('    - required: [ ''', specgen:Element, ''' ]&#x0a;')"/>
 		</xsl:for-each>
 	</xsl:template>
-
+	
 	<!-- Item is of a named Type -->
 	<xsl:template match="specgen:Item[specgen:Type/@ref]">
 		<xsl:param name="indent"/>
@@ -777,7 +776,15 @@
  						    <xsl:variable name="ref">
                                 <xsl:apply-templates select="specgen:Type" mode="typeresolve"/>
 							</xsl:variable>
-                             <xsl:value-of select="concat($indent, '  type: ', $ref, '&#x0a;')"/>
+							<!-- NN 20221221 if IdRef or RefId followed by SIF_RefObject, change type to TypedIdRef -->
+							<xsl:choose>
+								<xsl:when test="(specgen:Type/@name = 'RefIdType' or specgen:Type/@name = 'IdRefType') and following-sibling::specgen:Item[1]/specgen:Attribute = 'SIF_RefObject'">
+									<xsl:value-of select="concat($indent, '  type: object&#x0a;')"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="concat($indent, '  type: ', $ref, '&#x0a;')"/>
+								</xsl:otherwise>
+							 </xsl:choose>
                             </xsl:otherwise>
                             </xsl:choose>
 
@@ -815,9 +822,17 @@
 
                 <!-- Only apply for non-extensions... -->
                 <xsl:if test="not(specgen:Type/@complex eq 'extension')">
-					<xsl:apply-templates select="specgen:Type">
-						<xsl:with-param name="indent" select="concat($indent, '  ')"/>
-					</xsl:apply-templates>
+					<!-- NN 20221221 if IdRef or RefId followed by SIF_RefObject, change type to TypedIdRef -->
+					<xsl:choose>
+						<xsl:when test="(specgen:Type/@name = 'RefIdType' or specgen:Type/@name = 'IdRefType') and following-sibling::specgen:Item[1]/specgen:Attribute = 'SIF_RefObject'">
+							<xsl:value-of select="concat($indent,'  $ref: ''#/definitions/TypedIdRef''&#x0a;')"/>				
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:apply-templates select="specgen:Type">
+								<xsl:with-param name="indent" select="concat($indent, '  ')"/>
+							</xsl:apply-templates>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:if>
 				<!-- Can a named type also have Values -->
 				<xsl:apply-templates select="specgen:Values">
@@ -837,6 +852,12 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+
+	<!-- NN 20221221 We are skipping all SIF_RefObject attributes, they are subsumed automatically into preceding IdRef as new TypedIdRefType -->
+	<xsl:template match="specgen:DataObject/specgen:Item[specgen:Attribute = 'SIF_RefObject']" priority="2"/>
+	<xsl:template match="specgen:CommonElement[not(@name = 'TypedIdRefType')]/specgen:Item[specgen:Attribute = 'SIF_RefObject']"
+				  priority="2"/>
+	
 
 	<!-- Item is untyped, can have inline attributes and values -->
 	<xsl:template match="specgen:Item[not(specgen:Type)]">
