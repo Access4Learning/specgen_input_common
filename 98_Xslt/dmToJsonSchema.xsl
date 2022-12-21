@@ -284,9 +284,18 @@
 						 count(specgen:Item[position() gt 1]) eq count(specgen:Item[specgen:Attribute]) ]" priority="2">
 		<xsl:text>&#x0a;  # //////////////////////// xs:* with attrs /////////////////////////////////////&#x0a;</xsl:text>
 		<xsl:value-of select="concat('  ', xfn:chopType(@name), ':&#x0a;',
-									 '    type: object&#x0a;',
-									 '    properties:&#x0a;',
-									 '      value:&#x0a;')"/>
+									 '    type: object&#x0a;')"/>
+									 
+		<!-- NN 20221221 in such an element, all items are required -->
+		<xsl:if test="$mandatoryFields = 'required'">
+				<xsl:variable name="req">
+					<xsl:apply-templates select="specgen:Item[position() gt 1]" mode="required"/>
+				</xsl:variable>
+				<xsl:if test="string-length(normalize-space($req)) gt 0">
+					<xsl:value-of select="concat('    required:&#x0a;', $req)"/>
+				</xsl:if>
+		</xsl:if>		
+		<xsl:text>    properties:&#x0a;      value:&#x0a;</xsl:text>		
 
 		<!-- There might be a description -->
 		<xsl:variable name="desc">
@@ -520,7 +529,9 @@
                                   <xsl:with-param name="name" select="specgen:Item[2]/specgen:Type/@name"/>
                                 </xsl:apply-templates>
                         </xsl:variable>
+				<xsl:if test="not(starts-with($ref, 'xs:'))">
 				<xsl:value-of select="concat('          $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
+				</xsl:if>
 			</xsl:when>
 			<xsl:when test="specgen:Item[2]/specgen:Type/@name eq 'xs:string' 
 							or specgen:Item[2]/specgen:Type/@name eq 'xs:normalizedString'
