@@ -515,6 +515,12 @@
 			<!-- array of atomic type  -->
 			<xsl:when test="count(specgen:Item) gt 2"> <!-- NN 20221220: list of element + attribute, e.g. OtherCode -->
 				<xsl:text>          type: object&#x0a;</xsl:text>
+                        <xsl:variable name="ref">
+                                <xsl:apply-templates select="specgen:Item[2]" mode="refresolve">
+                                  <xsl:with-param name="name" select="specgen:Item[2]/specgen:Type/@name"/>
+                                </xsl:apply-templates>
+                        </xsl:variable>
+				<xsl:value-of select="concat('          $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
 			</xsl:when>
 			<xsl:when test="specgen:Item[2]/specgen:Type/@name eq 'xs:string' 
 							or specgen:Item[2]/specgen:Type/@name eq 'xs:normalizedString'
