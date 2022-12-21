@@ -103,7 +103,7 @@
 					<xsl:sort select="specgen:Element|specgen:Attribute"/>
 				</xsl:apply-templates>
 			</xsl:variable>
-			<xsl:if test="string-length($req) gt 0">
+			<xsl:if test="string-length(normalize-space($req)) gt 0">
 				<xsl:value-of select="concat('    required:&#x0a;', $req)"/>
 			</xsl:if>
 		</xsl:if>
@@ -492,8 +492,12 @@
 		<xsl:if test="$mandatoryFields = 'required'">
 			<xsl:if test="specgen:Item[contains(specgen:Characteristics, 'M')] and specgen:Item[position() = 2]/specgen:Characteristics = 'MR'">
 			<!--xsl:if test="specgen:Item[contains(specgen:Characteristics, 'M')]"-->
-				<xsl:text>    required:&#x0a;</xsl:text>
-				<xsl:apply-templates select="specgen:Item[position() gt 1]" mode="required"/>
+				<xsl:variable name="req">
+					<xsl:apply-templates select="specgen:Item[position() gt 1]" mode="required"/>
+				</xsl:variable>
+				<xsl:if test="string-length(normalize-space($req)) gt 0">
+					<xsl:value-of select="concat('    required:&#x0a;', $req)"/>
+				</xsl:if>
 			</xsl:if>
 		</xsl:if>				
 		<xsl:text>    properties:&#x0a;</xsl:text>
@@ -568,18 +572,23 @@
 		<xsl:text>    - type: object&#x0a;</xsl:text>
 		<xsl:if test="$mandatoryFields = 'required'">
 			<xsl:if test="specgen:Item[contains(specgen:Characteristics, 'M')]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[contains(specgen:Characteristics, 'M')]">
-				<xsl:text>    - required:&#x0a;</xsl:text>
-                                <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
-				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" mode="required">
+				<xsl:variable name="req">
+                 <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
+				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]"
+					mode="required">
 					<xsl:sort select="specgen:Element|specgen:Attribute"/>
 					<xsl:with-param name="indent" select="'      '"/>
 				</xsl:apply-templates>
+				</xsl:variable>
+				<xsl:if test="string-length(normalize-space($req)) gt 0">
+					<xsl:value-of select="concat('    - required:&#x0a;', $req)"/>
+				</xsl:if>
 			</xsl:if>
 		</xsl:if>
+			
 		<xsl:if test="count(specgen:Item|specgen:Choice) gt 0">
 			<xsl:text>    - properties:&#x0a;</xsl:text>
 		</xsl:if>
-	
 
 		<!-- Add extra properties, which may be wrapped up in a choice -->
 		<xsl:apply-templates select="specgen:Item[position() gt 1] | specgen:Choice">
@@ -620,12 +629,18 @@
 		<xsl:if test="$mandatoryFields = 'required'">
                         <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
 			<xsl:if test="specgen:Item[position() gt 1][contains(specgen:Characteristics, 'M')]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[contains(specgen:Characteristics, 'M')][position() gt 1]">
-				<xsl:text>    required:&#x0a;</xsl:text>
-                                <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
-				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" mode="required">
+				<xsl:variable name="req">
+                <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
+				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" 
+					mode="required">
 					<xsl:sort select="specgen:Element|specgen:Attribute"/>
 				</xsl:apply-templates>
+				</xsl:variable>
+				<xsl:if test="string-length(normalize-space($req)) gt 0">
+					<xsl:value-of select="concat('    required:&#x0a;', $req)"/>
+				</xsl:if>
 			</xsl:if>
+
 
 			<xsl:apply-templates select="specgen:Choice" mode="required"/>
 		</xsl:if>				
