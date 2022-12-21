@@ -79,7 +79,9 @@
                 </xsl:variable>
 		<xsl:text>  # //////////////////////////////// data object /////////////////////////////&#x0a;</xsl:text>
 		<!-- First up the collection edition -->
-		<xsl:value-of select="concat('  ', @name, 'Collection:&#x0a;',
+                  <!--<xsl:value-of select="concat('  ', @name, 'Collection:&#x0a;',-->
+          <!-- NN 20221221: consistent naming -->
+                  <xsl:value-of select="concat('  ', @name, 's:&#x0a;',
 									 '    type: object&#x0a;',
 									 '    properties:&#x0a;',
 									 '      ', @name , ':&#x0a;',
