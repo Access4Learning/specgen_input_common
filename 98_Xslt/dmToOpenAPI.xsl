@@ -502,7 +502,7 @@
                 <xsl:text>                items:&#x0a;</xsl:text>
                   <xsl:value-of select="concat('                    $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
                  -->
-                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  's''&#x0a;')"/>
+                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  'Collection''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
                 
                 <xsl:value-of select="concat('      createSchema', @name, 's:&#x0a;')"/>
@@ -519,7 +519,7 @@
                   <xsl:text>                items:&#x0a;</xsl:text>
                   <xsl:value-of select="concat('                    $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
                  -->
-                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  's''&#x0a;')"/>
+                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  'Collection''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 

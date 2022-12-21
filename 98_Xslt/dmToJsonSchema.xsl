@@ -68,6 +68,9 @@
                 </xsl:variable>
 		<xsl:value-of select="concat('  ', @name, ':&#x0a;')"/>
 		<xsl:value-of select="concat('    $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
+                <!-- NN 20221221: add collection objects -->
+		<xsl:value-of select="concat('  ', @name, 's:&#x0a;')"/>
+		<xsl:value-of select="concat('    $ref: ''#/definitions/', $ref, 'Collection''&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 
@@ -79,9 +82,7 @@
                 </xsl:variable>
 		<xsl:text>  # //////////////////////////////// data object /////////////////////////////&#x0a;</xsl:text>
 		<!-- First up the collection edition -->
-                  <!--<xsl:value-of select="concat('  ', @name, 'Collection:&#x0a;',-->
-          <!-- NN 20221221: consistent naming -->
-                  <xsl:value-of select="concat('  ', @name, 's:&#x0a;',
+                  <xsl:value-of select="concat('  ', @name, 'Collection:&#x0a;',
 									 '    type: object&#x0a;',
 									 '    properties:&#x0a;',
 									 '      ', @name , ':&#x0a;',
