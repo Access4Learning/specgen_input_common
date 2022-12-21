@@ -348,19 +348,25 @@
                                                                          '    properties:&#x0a;',
                                                                          '      value:&#x0a;')"/>
 
-                <!-- There might be a description -->
+				<!-- NN 20221221 if we are extending a string and not an object, we need to see its distinct type -->
+ 				<xsl:variable name="ref">
+                                <xsl:apply-templates select="specgen:Item[1]/specgen:Type" mode="typeresolve"/>
+				</xsl:variable>
+								<xsl:if test="$ref != 'object'">
+									<xsl:value-of select="concat('        type: ', $ref, '&#x0a;')"/>
+								</xsl:if>
+				
+                 <!-- There might be a description -->
                 <xsl:variable name="desc">
                         <xsl:apply-templates select="specgen:Item[1]/specgen:Description"/>
                 </xsl:variable>
                 <xsl:if test="string-length($desc) gt 0">
                         <xsl:value-of select="concat('        description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
                 </xsl:if>
-
                 <!-- Translate xs:* type into json schema type -->
                 <xsl:apply-templates select="specgen:Item[1]/specgen:Type">
                         <xsl:with-param name="indent" select="'        '"/>
                 </xsl:apply-templates>
-
                 <!-- Add the attributes -->
                 <xsl:apply-templates select="specgen:Item[position() gt 1]">
                         <xsl:with-param name="indent" select="'      '"/>
