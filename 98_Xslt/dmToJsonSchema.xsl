@@ -98,7 +98,8 @@
                 <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
 		<xsl:if test="$mandatoryFields = 'required'">
 			<xsl:variable name="req">
-				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]" mode="required">
+				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]"
+													mode="required">
 					<xsl:sort select="specgen:Element|specgen:Attribute"/>
 				</xsl:apply-templates>
 			</xsl:variable>
@@ -649,11 +650,29 @@
 
 	<!-- Item is required;  if Characteristcs == 'M' -->
 	<xsl:template match="specgen:Item" mode="required"/>
-	<xsl:template match="specgen:Item[contains(specgen:Characteristics, 'M')]" mode="required">
+	<!-- NN 20221221 restrict to elements and root attributes; hard code root attribues to sequence of up to 3 -->	
+	<xsl:template match="specgen:Item[contains(specgen:Characteristics, 'M')][specgen:Element]" mode="required">
 		<xsl:param name="indent"><xsl:value-of select="'    '"/></xsl:param>
 
-		<xsl:value-of select="concat($indent, '- ', $q, specgen:Element, specgen:Attribute, $q, '&#x0a;')"/>
+		<xsl:value-of select="concat($indent, '- ', $q, specgen:Element, $q, '&#x0a;')"/>
 	</xsl:template>
+	<xsl:template match="specgen:Item[2][contains(specgen:Characteristics, 'M')][specgen:Attribute]" mode="required">
+		<xsl:param name="indent"><xsl:value-of select="'    '"/></xsl:param>
+
+		<xsl:value-of select="concat($indent, '- ', $q, specgen:Attribute, $q, '&#x0a;')"/>
+	</xsl:template>
+	<xsl:template match="specgen:Item[3][contains(specgen:Characteristics, 'M')][specgen:Attribute][ancestor::*[1][specgen:Item[2]/specgen:Attribute]]" mode="required">
+		<xsl:param name="indent"><xsl:value-of select="'    '"/></xsl:param>
+
+		<xsl:value-of select="concat($indent, '- ', $q, specgen:Attribute, $q, '&#x0a;')"/>
+	</xsl:template>
+	<xsl:template match="specgen:Item[4][contains(specgen:Characteristics, 'M')][specgen:Attribute][ancestor::*[1][specgen:Item[2]/specgen:Attribute and specgen:Item[3]/specgen:Attribute]]" mode="required">
+		<xsl:param name="indent"><xsl:value-of select="'    '"/></xsl:param>
+
+		<xsl:value-of select="concat($indent, '- ', $q, specgen:Attribute, $q, '&#x0a;')"/>
+	</xsl:template>
+	
+	
 	<xsl:template match="specgen:Choice" mode="required">
 		<xsl:text>    oneOf:&#x0a;</xsl:text>
 		<xsl:for-each select="specgen:Item">
@@ -1245,5 +1264,5 @@
 		</xsl:choose>
 
 	</xsl:function>
-
+	
 </xsl:stylesheet>
