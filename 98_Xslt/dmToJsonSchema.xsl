@@ -89,7 +89,6 @@
             </xsl:apply-templates>
                                       </xsl:otherwise>
                                     </xsl:choose>
-                  </xsl:apply-templates>
                 </xsl:variable>
 		<xsl:text>  # //////////////////////////////// data object /////////////////////////////&#x0a;</xsl:text>
 		<!-- First up the collection edition -->
