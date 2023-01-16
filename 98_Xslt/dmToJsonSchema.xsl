@@ -75,9 +75,20 @@
 	</xsl:template>
 
         <xsl:template match="specgen:DataObject" mode="definitions">
-                <xsl:variable name="ref">
-                  <xsl:apply-templates select="." mode="refresolve">
-                    <xsl:with-param name="name" select="@name"/>
+          <xsl:variable name="ref">
+            <!-- 20230123 as below, DataObject may be extension of a base type -->
+              <xsl:choose>
+              <xsl:when test="specgen:Item[1]/specgen:Type/@complex">
+            <xsl:apply-templates select="." mode="refresolve">
+              <xsl:with-param name="name" select="specgen:Item[1]/specgen:Type/@name"/>
+            </xsl:apply-templates>
+                                      </xsl:when>
+                                      <xsl:otherwise>
+            <xsl:apply-templates select="." mode="refresolve">
+                                        <xsl:with-param name="name" select="@name"/>
+            </xsl:apply-templates>
+                                      </xsl:otherwise>
+                                    </xsl:choose>
                   </xsl:apply-templates>
                 </xsl:variable>
 		<xsl:text>  # //////////////////////////////// data object /////////////////////////////&#x0a;</xsl:text>

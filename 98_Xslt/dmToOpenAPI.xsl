@@ -459,6 +459,7 @@
 	<!-- Template for producing info about Schema Def for List Objects -->
 	<!-- ============================================================= -->
         <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once: introduced xfn:refresolve -->
+        <!-- NN 20230116 does not apply to object collection types, which are still distinct -->
         <!-- NN 20221219 force schema def to be PESC-conformant for lists, previous instance was Goessner-conformant -->
         <xsl:template match="specgen:DataObject" mode="collectionSchemaDef">
           <!-- old
@@ -502,7 +503,7 @@
                 <xsl:text>                items:&#x0a;</xsl:text>
                   <xsl:value-of select="concat('                    $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
                  -->
-                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  'Collection''&#x0a;')"/>
+                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', @name,  'Collection''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
                 
                 <xsl:value-of select="concat('      createSchema', @name, 's:&#x0a;')"/>
@@ -519,7 +520,7 @@
                   <xsl:text>                items:&#x0a;</xsl:text>
                   <xsl:value-of select="concat('                    $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
                  -->
-                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  'Collection''&#x0a;')"/>
+                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', @name,  'Collection''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 
