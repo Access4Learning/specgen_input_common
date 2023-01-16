@@ -549,7 +549,7 @@
                             <xsl:otherwise>
 				<xsl:value-of select="concat('          $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
                               </xsl:otherwise>
-                          <xsl:choose>
+                            </xsl:choose>
 				</xsl:if>
 			</xsl:when>
 			<xsl:when test="specgen:Item[2]/specgen:Type/@name eq 'xs:string' 
