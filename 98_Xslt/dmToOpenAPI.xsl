@@ -77,12 +77,23 @@
                                       '  version: v', $sifVersion, '&#x0a;',
                                       '  title: ', $q , $title, $q, '&#x0a;',
                                       '  description: ', $q, normalize-space(specgen:TitlePage/specgen:h1), $q, '&#x0a;',
-                                      '')"/>
+                                      'servers:&#x0a;',
+                                      '  - url: ''https://{tenant}/{root}''&#x0a;',
+                                      '    variables:&#x0a;',
+                                      '      tenant:&#x0a;',
+                                      '        default: api.example.com&#x0a;',
+                                      '        description: Your server host&#x0a;',
+                                      '      root:&#x0a;',
+                                      '        default: sif&#x0a;',
+                                      '        description: optional root directory for SIF API&#x0a;',
+                  '')"/>
+
 
                 <!-- NN 20221219: bogus elements 
 									  '  host: ', $q, 'apihost.example.com', $q, '&#x0a;',
                                                                           '  basePath: ', $q, 'v3', $q, '&#x0a;')"/>
                   -->
+                                                                          <!-- NN 20230116: add servers  -->
 			  
 		<!-- =================== -->
 		<!-- Adds Groups section -->
