@@ -10,14 +10,6 @@
 	<!-- Take a SIF_DataModel.input.xml file and produce a matching OpenAPI v3.0.0 spec -->
 	<xsl:output method="text" omit-xml-declaration="yes" indent="no"/>
 
-	<xsl:param name="sifVersion"/>
-	<xsl:param name="sifLocale"/>
-	<xsl:param name="sifObjectList" select="''"/> <!-- Default to empty list -->
-	<xsl:param name="sifObjectGroupList" select="''"/> <!-- Default to empty list -->
-	<xsl:param name="includeAllHeaders" select="'false'" as="xs:string"/> <!-- If false we only show minimum number of headers -->
-	<xsl:param name="includeAdminDirectives" select="'false'" as="xs:string"/> <!-- If true admin directives endpoints will be included. -->
-	<xsl:param name="omitVersionInExamplesFileName" select="'false'" as="xs:string"/> <!-- If true admin directives endpoints will be included. -->
-
     <!-- Get the Data Model URL from the Title Page -->
 	<xsl:variable name="extDocUrlRoot">
 		<xsl:value-of select="specgen:SIFSpecification/specgen:TitlePage/specgen:dl/specgen:dd[1]/specgen:a[@href]"/>
@@ -59,7 +51,14 @@
 		<xsl:if test="not($produceAllHeaders)">
 			<xsl:value-of select="'commonDefs-main-headers.yaml'"/>
 		</xsl:if>
-	</xsl:variable>
+              </xsl:variable>
+
+              <xsl:variable name="openapi_version">
+                <xsl:choose>
+                  <xsl:when test="$openAPI30"><xsl:value-of select="_OpenAPI3.0_"/></xsl:when>
+                  <xsl:otherwise><xsl:value-of select="_OpenAPI3.1_"/></xsl:otherwisewhen>
+                </xsl:choose>
+              </xsl:variable>
 	
 	<xsl:template match="/specgen:SIFSpecification">
 		<xsl:text># // Open API file for:&#x0a;</xsl:text>
@@ -457,7 +456,7 @@
 		<xsl:text>            type: object&#x0a;</xsl:text>
 		<xsl:value-of select="concat('            description: >-', '&#x0a;', '              Payload definition for ', @name, '&#x0a;')"/>
                 <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once -->
-		<xsl:value-of select="concat('            $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
+		<xsl:value-of select="concat('            $ref: ''jsonSchema', $openapi_version, 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 		<xsl:value-of select="concat('      createSchema', @name, ':&#x0a;')"/>
 		<xsl:text>        properties:&#x0a;</xsl:text>
@@ -465,7 +464,7 @@
 		<xsl:text>            type: object&#x0a;</xsl:text>
                 <xsl:value-of select="concat('            description: >-', '&#x0a;', '              Payload definition for ', @name, '&#x0a;')"/>
                 <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once -->
-		<xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
+		<xsl:value-of select="concat('            $ref: ''jsonSchema', $openapi_version, 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 
@@ -517,7 +516,7 @@
                 <xsl:text>                items:&#x0a;</xsl:text>
                   <xsl:value-of select="concat('                    $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
                  -->
-                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', @name,  'Collection''&#x0a;')"/>
+                <xsl:value-of select="concat('            $ref: ''jsonSchema', $openapi_version, 'Update_', $sifLocale, '.yaml#/definitions/', @name,  'Collection''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
                 
                 <xsl:value-of select="concat('      createSchema', @name, 's:&#x0a;')"/>
@@ -534,7 +533,7 @@
                   <xsl:text>                items:&#x0a;</xsl:text>
                   <xsl:value-of select="concat('                    $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
                  -->
-                <xsl:value-of select="concat('            $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', @name,  'Collection''&#x0a;')"/>
+                <xsl:value-of select="concat('            $ref: ''jsonSchema', $openapi_version, 'Create_', $sifLocale, '.yaml#/definitions/', @name,  'Collection''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 

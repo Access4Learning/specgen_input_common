@@ -20,7 +20,7 @@
 	
         <!-- Include all the vendor extensions ?? -->
         <!-- Whether we are compliant with OpenAPI 3.0 JSON Schema (true), or full JSON Schema, i.e. OpenAPI 3.1 (false). -->
-	<xsl:param name="strictJSON">true</xsl:param>
+	<xsl:param name="openAPI30">true</xsl:param>
 
 	<!-- Where is the SIF HTML documentation available for links -->
         <xsl:variable name="extDocURLBase">

@@ -11,7 +11,7 @@
 	<!-- Take a SIF_DataModel.input.xml file and produce a matching Json Schema -->
 	<xsl:output method="text" omit-xml-declaration="yes" indent="no"/>
 	
-        <!-- variable $strictJSON: Whether we are compliant with OpenAPI 3.0 JSON Schema (true), or full JSON Schema, i.e. OpenAPI 3.1 (false). -->
+        <!-- variable $openAPI30: Whether we are compliant with OpenAPI 3.0 JSON Schema (true), or full JSON Schema, i.e. OpenAPI 3.1 (false). -->
 
 
 	<!-- Shorthand to get a quote character into the output -->
@@ -1086,7 +1086,7 @@
 
 		<!-- JSON Schema for OpenAPI doesn't (currently) support 'const' as synonym for singleton 'enum' array -->
 		<xsl:choose>
-			<xsl:when test="$strictJSON eq 'true'">
+			<xsl:when test="$openAPI30 eq 'true'">
 				<xsl:value-of select="concat($indent, '- enum: [ ', $q, specgen:Code, $q, ' ]&#x0a;')"/>
 			</xsl:when>
 			<xsl:otherwise>
