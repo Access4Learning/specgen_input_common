@@ -544,7 +544,7 @@
                           <xsl:choose>
 			<!-- NN 20230116 if IdRef or RefId followed by SIF_RefObject, change type to TypedIdRef -->
                             <xsl:when test="(specgen:Item[2]/specgen:Type/@name eq 'RefIdType' or specgen:Item[2]/specgen:Type/@name eq 'IdRefType') and specgen:Item[3]/specgen:Attribute eq 'SIF_RefObject'">
-				<xsl:value-of select="          $ref: ''#/definitions/TypedIdRef''&#x0a;"/>
+                              <xsl:text>          $ref: '#/definitions/TypedIdRef'&#x0a;</xsl:text>
                             </xsl:when>
                             <xsl:otherwise>
 				<xsl:value-of select="concat('          $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
