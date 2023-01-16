@@ -531,7 +531,8 @@
 
 		<!-- What kind of thing is each list member? -->
 		<xsl:choose>
-			<!-- array of atomic type  -->
+                  <!-- array of atomic type  -->
+
 			<xsl:when test="count(specgen:Item) gt 2"> <!-- NN 20221220: list of element + attribute, e.g. OtherCode -->
 				<xsl:text>          type: object&#x0a;</xsl:text>
                         <xsl:variable name="ref">
@@ -539,8 +540,16 @@
                                   <xsl:with-param name="name" select="specgen:Item[2]/specgen:Type/@name"/>
                                 </xsl:apply-templates>
                         </xsl:variable>
-				<xsl:if test="not(starts-with($ref, 'xs:'))">
+                        <xsl:if test="not(starts-with($ref, 'xs:'))">
+                          <xsl:choose>
+			<!-- NN 20230116 if IdRef or RefId followed by SIF_RefObject, change type to TypedIdRef -->
+                            <xsl:when test="(specgen:Item[2]/specgen:Type/@name = 'RefIdType' or specgen:Item[2]/specgen:Type/@name = 'IdRefType') and specgen:Item[3]/specgen:Attribute = 'SIF_RefObject'">
+				<xsl:value-of select="concat('          $ref: ''#/definitions/TypedIdRef''&#x0a;')"/>
+                            </xsl:when>
+                            <xsl:otherwise>
 				<xsl:value-of select="concat('          $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
+                              </xsl:otherwise>
+                          <xsl:choose>
 				</xsl:if>
 			</xsl:when>
 			<xsl:when test="specgen:Item[2]/specgen:Type/@name eq 'xs:string' 
