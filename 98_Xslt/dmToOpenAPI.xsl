@@ -62,8 +62,8 @@
 	
               <xsl:variable name="openapi_version">
                 <xsl:choose>
-                  <xsl:when test="$openAPI30"><xsl:value-of select="3.0.3"/></xsl:when>
-                  <xsl:otherwise><xsl:value-of select="3.1.0"/></xsl:otherwise>
+                  <xsl:when test="$openAPI30"><xsl:value-of select='"3.0.3"'/></xsl:when>
+                  <xsl:otherwise><xsl:value-of select='"3.1.0"'/></xsl:otherwise>
                 </xsl:choose>
               </xsl:variable>
 	
