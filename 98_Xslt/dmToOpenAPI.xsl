@@ -55,14 +55,14 @@
 
               <xsl:variable name="openapi_version_lbl">
                 <xsl:choose>
-                  <xsl:when test="$openAPI30"><xsl:value-of select="_OpenAPI3.0_"/></xsl:when>
+                  <xsl:when test="$openAPI30 = 'true'"><xsl:value-of select="_OpenAPI3.0_"/></xsl:when>
                   <xsl:otherwise><xsl:value-of select="_OpenAPI3.1_"/></xsl:otherwise>
                 </xsl:choose>
               </xsl:variable>
 	
               <xsl:variable name="openapi_version">
                 <xsl:choose>
-                  <xsl:when test="$openAPI30"><xsl:value-of select='"3.0.3"'/></xsl:when>
+                  <xsl:when test="$openAPI30 = 'true'"><xsl:value-of select='"3.0.3"'/></xsl:when>
                   <xsl:otherwise><xsl:value-of select='"3.1.0"'/></xsl:otherwise>
                 </xsl:choose>
               </xsl:variable>
@@ -380,26 +380,26 @@
 		<xsl:if test="$isQBE = 'true'">
 			<xsl:value-of select="concat('              qbe', 'PESC:', '&#x0a;')"/>
                         <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiExamples/pesc', '''&#x0a;')"/>
-                      <xsl:if test="not($openAPI30)">
+                      <xsl:if test="not($openAPI30 = 'true')">
 			<xsl:value-of select="concat('              qbe', 'Goessner:', '&#x0a;')"/>
                         <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiExamples/goessner', '''&#x0a;')"/>
                       </xsl:if>
 		</xsl:if>		
 		<xsl:value-of select="concat('              ', $schemaID, 'PESC:', '&#x0a;')"/>
 		<xsl:value-of select="concat('                $ref: ''', $exampleFileName, '#/objectExamples/', $objectName, '/pesc''&#x0a;')"/>
-                      <xsl:if test="not($openAPI30)">
+                      <xsl:if test="not($openAPI30 = 'true')">
 		<xsl:value-of select="concat('              ', $schemaID, 'Goessner:', '&#x0a;')"/>
                 <xsl:value-of select="concat('                $ref: ''', $exampleFileName, '#/objectExamples/', $objectName, '/goessner''&#x0a;')"/>
               </xsl:if>
 	  	<xsl:if test="$addBatchDeleletRequest = 'true'">
 			<xsl:value-of select="concat('              ', 'deletePESC:', '&#x0a;')"/>
 			<xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiExamples/pesc', '''&#x0a;')"/>
-                      <xsl:if test="not($openAPI30)">
+                      <xsl:if test="not($openAPI30 = 'true')">
 			<xsl:value-of select="concat('              ', 'deleteGoessner:', '&#x0a;')"/>
                         <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiExamples/goessner', '''&#x0a;')"/>
                       </xsl:if>
 		</xsl:if>
-                      <xsl:if test="not($openAPI30)">
+                      <xsl:if test="not($openAPI30 = 'true')">
 		<xsl:text>          application/xml:&#x0a;</xsl:text>
 		<xsl:text>            schema:&#x0a;</xsl:text>
 		<xsl:if test="$isQBE = 'true'">
