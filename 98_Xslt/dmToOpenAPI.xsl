@@ -44,13 +44,25 @@
 		</xsl:if>
 	</xsl:variable>
 	
-	<xsl:variable name="commonDefsFileName">
+        <xsl:variable name="commonDefsFileName">
+          <xsl:choose>
+            <xsl:when test="$openAPI30 = 'true'">
+		<xsl:if test="$produceAllHeaders">
+			<xsl:value-of select="'commonDefs-OpenAPI3.0-all-headers.yaml'"/>
+		</xsl:if>
+		<xsl:if test="not($produceAllHeaders)">
+			<xsl:value-of select="'commonDefs-OpenAPI3.0-main-headers.yaml'"/>
+                      </xsl:if>
+            </xsl:when>
+              <xsl:otherwise>
 		<xsl:if test="$produceAllHeaders">
 			<xsl:value-of select="'commonDefs-all-headers.yaml'"/>
 		</xsl:if>
 		<xsl:if test="not($produceAllHeaders)">
 			<xsl:value-of select="'commonDefs-main-headers.yaml'"/>
-		</xsl:if>
+                      </xsl:if>
+                    </xsl:otherwise>
+                  </xsl:choose>
               </xsl:variable>
 
               <xsl:variable name="openapi_version_lbl">

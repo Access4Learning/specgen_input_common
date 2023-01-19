@@ -13,10 +13,7 @@ components:
               type: object
               properties:
                 adminDirectives:
-                  type: object
-                  description: >-
-                    List of admin directives.
-                  $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/adminDirectiveCollection'
+                  $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/adminDirectiveCollection'
             examples: 
               pesc: 
                 summary: PESC notation
@@ -40,60 +37,6 @@ components:
                           - methodParameter:
                               paramName: RequireIsolation
                               paramValue: 'TRUE'
-              goessner: 
-                summary: Goessner notation
-                value: 
-                  adminDirectives:
-                    - adminDirective:
-                        "@id": a8c3c3e3-4b35-9d75-101d-00aa001a1652
-                        timestamp: '2021-06-18T01:04:42.283Z'
-                        timeout: P2D
-                        serviceName: StudentPersonals
-                        method: Refresh
-                        methodParameters:
-                          - methodParameter:
-                              paramName: RefId
-                              paramValue: b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                              comparisonType: EQUAL
-                          - methodParameter:
-                              paramName: 'DOB:Year'
-                              paramValue: '2010'
-                              comparisonType: GREATER
-                          - methodParameter:
-                              paramName: RequireIsolation
-                              paramValue: 'TRUE'
-          application/xml:
-            schema:
-              type: object
-              properties:
-                error:
-                  type: object
-                  description: >-
-                    List of admin directives.
-                  $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/adminDirectiveCollection'
-            example: >-
-              <adminDirective id="a8c3c3e3-4b35-9d75-101d-00aa001a1652">
-                <timestamp>2021-06-18T01:04:42.283Z</timestamp>
-                <timeout>P2D</timeout> 
-                <serviceName>StudentPersonals</serviceName>
-                <method>Refresh</method>
-                <methodParameters>
-                  <methodParameter>
-                    <paramName>RefId</paramName>
-                    <paramValue>5b72f2d4-7a83-4297-a71f-8b5fb26cbf14</paramValue>
-                    <comparisonType>EQUAL</comparisonType>
-                  </methodParameter>
-                  <methodParameter>
-                    <paramName>DOB:Year</paramName>
-                    <paramValue>2010</paramValue>
-                    <comparisonType>GREATER</comparisonType>
-                  </methodParameter>
-                  <methodParameter>
-                    <paramName>RequireIsolation</paramName>
-                    <paramValue>TRUE</paramValue>
-                  </methodParameter>
-                </methodParameters>
-              </adminDirective>
         headers:
           'changesSinceMarker':
             $ref: '#/components/schemas/httpHeaders/response/changesSinceMarkerGet'
@@ -116,26 +59,17 @@ components:
       updateMultiSchema:
         properties:
           updateResponse:
-            type: object
-            description: >-
-              Update Response if request HTTP Header methodOverride=UPDATE  
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/updateResponseCollection'
+            $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/updateResponseCollection'
     
       deleteMultiSchema:
         properties:
           deleteResponse:
-            type: object
-            description: >-
-              Delete Response if request HTTP Header methodOverride=DELETE  
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteResponseCollection'
+            $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/deleteResponseCollection'
     
       createMultiSchema:
         properties:
           createResponse:
-            type: object
-            description: >-
-              Create Response
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/createResponseCollection'
+            $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/createResponseCollection'
     
       updateMultiExamples:
         pesc: 
@@ -157,41 +91,6 @@ components:
                 - update:
                     id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
                     statusCode: '200'
-        goessner: 
-          summary: Goessner - Batch Update Response
-          value: 
-            updateResponse:
-              updates:
-                - update:
-                    "@id": df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    "@statusCode": '200'
-                - update:
-                    "@id": 41953aaa-2811-11e6-b67b-9e71128cae77
-                    "@statusCode": '404'
-                    error:
-                      "@id": 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                      code: '404'
-                      scope: Provider
-                      message: Data for the given ID does not exist.
-                - update:
-                    "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    "@statusCode": '200'
-        xml: 
-          summary: XML - Batch Update Response
-          value: >-
-            <updateResponse>
-              <updates>
-                <update id="df789e1c-dfe7-4c18-8ef0-d907b81ea61e" statusCode="200"/>
-                <update id="41953aaa-2811-11e6-b67b-9e71128cae77" statusCode="404">
-                  <error id="6f789e1c-dfe7-4c18-8ef0-d907b81ea61e">
-                    <code>404</code>
-                    <scope>Provider</scope>
-                    <message>Data for the given ID does not exist.</message>
-                  </error>
-                </update>
-                <update id="ff789e1c-dfe7-4c18-8ef0-d907b81ea61e" statusCode="200"/>
-              </updates>
-            </updateResponse>
     
       deleteMultiExamples:
         pesc: 
@@ -212,40 +111,6 @@ components:
               - delete:
                   id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
                   statusCode: '204'
-        goessner: 
-          summary: Goessner - Batch Delete Response
-          value: 
-            deletes:
-              - delete:
-                  "@id": df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  "@statusCode": '204'
-              - delete:
-                  "@id": 41953aaa-2811-11e6-b67b-9e71128cae77
-                  "@statusCode": '404'
-                  error:
-                    "@id": 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    code: '404'
-                    scope: Provider
-                    message: Data for the given ID does not exist.
-              - delete:
-                  "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  "@statusCode": '204'
-        xml:  
-          summary: XML - Batch Delete Response
-          value: >-
-            <deleteResponse>
-              <deletes>
-                <delete id="df789e1c-dfe7-4c18-8ef0-d907b81ea61e" statusCode="204"/>
-                <delete id="41953aaa-2811-11e6-b67b-9e71128cae77" statusCode="404">
-                  <error id="6f789e1c-dfe7-4c18-8ef0-d907b81ea61e">
-                    <code>404</code>
-                    <scope>Provider</scope>
-                    <message>Data for the given ID does not exist.</message>
-                  </error>
-                </delete>
-                <delete id="ff789e1c-dfe7-4c18-8ef0-d907b81ea61e" statusCode="204"/>
-              </deletes>
-            </deleteResponse>
     
       createMultiExamples:
         pesc: 
@@ -269,43 +134,6 @@ components:
                     id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
                     advisoryId: '2'
                     statusCode: '201'
-        goessner: 
-          summary: Goessner - Batch Create Response
-          value: 
-            createResponse:
-              creates:
-                - create:
-                    "@id": df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    "@advisoryId": '3'
-                    "@statusCode": '201'
-                - create:
-                    "@advisoryId": '1'
-                    "@statusCode": '400'
-                    error:
-                      "@id": 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                      code: '400'
-                      scope: Provider
-                      message: Mandatory data is missing.
-                - create:
-                    "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    "@advisoryId": '2'
-                    "@statusCode": '201'
-        xml: 
-          summary: XML - Batch Create Response
-          value: >-
-            <createResponse>
-              <creates>
-                <create id="df789e1c-dfe7-4c18-8ef0-d907b81ea61e" advisoryId="3" statusCode="201"/>
-                <create advisoryId="1" statusCode="400">
-                  <error id="6f789e1c-dfe7-4c18-8ef0-d907b81ea61e">
-                    <code>400</code>
-                    <scope>Provider</scope>
-                    <message>Mandatory data is missing.</message>
-                  </error>
-                </create>
-                <create id="ff789e1c-dfe7-4c18-8ef0-d907b81ea61e"  advisoryId="2" statusCode="201"/>
-              </creates>
-            </createResponse>
     
       #//
       #// Batch PUT Response 
@@ -317,30 +145,12 @@ components:
             schema:
               oneOf:
                 - $ref: '#/components/schemas/multipleResponses/updateMultiSchema'
-                  title: updateResponse
                 - $ref: '#/components/schemas/multipleResponses/deleteMultiSchema'
-                  title: deleteResponse
             examples:
               pescUpdate:   
                 $ref: '#/components/schemas/multipleResponses/updateMultiExamples/pesc'
-              goessnerUpdate:   
-                $ref: '#/components/schemas/multipleResponses/updateMultiExamples/goessner'
               pescDelete:   
                 $ref: '#/components/schemas/multipleResponses/deleteMultiExamples/pesc'
-              goessnerDelete:   
-                $ref: '#/components/schemas/multipleResponses/deleteMultiExamples/goessner'
-          application/xml:
-            schema:
-              oneOf:
-                - $ref: '#/components/schemas/multipleResponses/updateMultiSchema'
-                  title: updateResponse
-                - $ref: '#/components/schemas/multipleResponses/deleteMultiSchema'
-                  title: deleteResponse
-            examples:
-              xmlUpdate:   
-                $ref: '#/components/schemas/multipleResponses/updateMultiExamples/xml'
-              xmlDelete:   
-                $ref: '#/components/schemas/multipleResponses/deleteMultiExamples/xml'
     
         headers:
           'content-type':
@@ -364,14 +174,6 @@ components:
             examples:
               pescCreate:   
                 $ref: '#/components/schemas/multipleResponses/createMultiExamples/pesc'
-              goessnerCreate:   
-                $ref: '#/components/schemas/multipleResponses/createMultiExamples/goessner'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/multipleResponses/createMultiSchema'
-            examples:
-              xmlCreate:   
-                $ref: '#/components/schemas/multipleResponses/createMultiExamples/xml'
         headers:
           'content-type':
             $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -389,10 +191,7 @@ components:
       deleteMultiSchema:
         properties:
           deleteRequest:
-            type: object
-            description: >-
-              Delete Request if request HTTP Header methodOverride=DELETE  
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteRequestCollection'
+            $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/deleteRequestCollection'
     
       deleteMultiExamples:
         pesc: 
@@ -406,27 +205,6 @@ components:
                     id: 41953aaa-2811-11e6-b67b-9e71128cae77
                 - delete:
                     id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-        goessner: 
-          summary: Goessner - Batch Delete Request
-          value: 
-            deleteRequest:
-              deletes:
-                - delete:
-                    "@id": df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                - delete:
-                    "@id": 41953aaa-2811-11e6-b67b-9e71128cae77
-                - delete:
-                    "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-        xml:  
-          summary: XML - Batch Delete Request
-          value: >-
-            <deleteRequest>
-              <deletes>
-                <delete id="df789e1c-dfe7-4c18-8ef0-d907b81ea61e"/>
-                <delete id="41953aaa-2811-11e6-b67b-9e71128cae77"/>
-                <delete id="ff789e1c-dfe7-4c18-8ef0-d907b81ea61e"/>
-              </deletes>
-            </deleteRequest>
     
     # ///////////////////////
     # // Error Definitions //
@@ -441,10 +219,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -455,31 +230,6 @@ components:
                       scope: Provider
                       message: Bad Request
                       description: Version problems or error specific to a particular object type, such as the omission of a mandatory element or an unsupported query or an unsupported order clause.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '400'
-                      scope: Provider
-                      message: Bad Request
-                      description: Version problems or error specific to a particular object type, such as the omission of a mandatory element or an unsupported query or an unsupported order clause.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>400</code>
-                  <scope>Provider</scope>
-                  <message>Bad Request</message>
-                  <description>Version problems or error specific to a particular object type, such as the omission of a mandatory element or an unsupported query or an unsupported order clause.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -497,10 +247,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -511,31 +258,6 @@ components:
                       scope: Provider
                       message: Authorisation failed.
                       description: Invalid or missing 'Authorization' HTTP Header.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '401'
-                      scope: Provider
-                      message: Authorisation failed.
-                      description: Invalid or missing 'Authorization' HTTP Header.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>401</code>
-                  <scope>Provider</scope>
-                  <message>Authorisation failed.</message>
-                  <description>Invalid or missing 'Authorization' HTTP Header.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -553,10 +275,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -567,31 +286,6 @@ components:
                       scope: Provider
                       message: Forbidden
                       description: This operation is not enabled for your adapter.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '403'
-                      scope: Provider
-                      message: Forbidden
-                      description: This operation is not enabled for your adapter.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>403</code>
-                  <scope>Provider</scope>
-                  <message>Forbidden</message>
-                  <description>This operation is not enabled for your adapter.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -609,10 +303,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -623,31 +314,6 @@ components:
                       scope: Provider
                       message: Not Found
                       description: Object ID does not correspond to an existing object. This can occur for Query as well as Update or Delete operations. No Service Provider has been found to match the parameters (Zone, Context, Service name) in the Request.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '404'
-                      scope: Provider
-                      message: Not Found
-                      description: Object ID does not correspond to an existing object. This can occur for Query as well as Update or Delete operations. No Service Provider has been found to match the parameters (Zone, Context, Service name) in the Request.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>404</code>
-                  <scope>Provider</scope>
-                  <message>Not Found</message>
-                  <description>Object ID does not correspond to an existing object. This can occur for Query as well as Update or Delete operations. No Service Provider has been found to match the parameters (Zone, Context, Service name) in the Request.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -665,10 +331,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -679,31 +342,6 @@ components:
                       scope: Provider
                       message: Method not Allowed
                       description: Paged Query Request issued to Object URL rather than Object List URL.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '405'
-                      scope: Provider
-                      message: Method not Allowed
-                      description: Paged Query Request issued to Object URL rather than Object List URL.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>405</code>
-                  <scope>Provider</scope>
-                  <message>Method not Allowed</message>
-                  <description>Paged Query Request issued to Object URL rather than Object List URL.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -721,10 +359,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -735,31 +370,6 @@ components:
                       scope: Provider
                       message: State Conflict
                       description: An attempt has been made to create an existing object.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '409'
-                      scope: Provider
-                      message: State Conflict
-                      description: An attempt has been made to create an existing object.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>409</code>
-                  <scope>Provider</scope>
-                  <message>State Conflict</message>
-                  <description>An attempt has been made to create an existing object.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -777,10 +387,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -791,31 +398,6 @@ components:
                       scope: Provider
                       message: Gone
                       description: Used for query functionality where the Changes Since opaque marker or Paged navigationId provided by the consumer is no longer valid.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '410'
-                      scope: Provider
-                      message: Gone
-                      description: Used for query functionality where the Changes Since opaque marker or Paged navigationId provided by the consumer is no longer valid.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>410</code>
-                  <scope>Provider</scope>
-                  <message>Gone</message>
-                  <description>Used for query functionality where the Changes Since opaque marker or Paged navigationId provided by the consumer is no longer valid.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -833,10 +415,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -847,31 +426,6 @@ components:
                       scope: Provider
                       message: Precondition Failed
                       description: An attempt has been made to modify an object when the Requester was not basing the modification on the latest version.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '412'
-                      scope: Provider
-                      message: Precondition Failed
-                      description: An attempt has been made to modify an object when the Requester was not basing the modification on the latest version.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>412</code>
-                  <scope>Provider</scope>
-                  <message>Precondition Failed</message>
-                  <description>An attempt has been made to modify an object when the Requester was not basing the modification on the latest version.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -889,10 +443,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -903,31 +454,6 @@ components:
                       scope: Provider
                       message: Response too large
                       description: A non-paged Query returning all objects was too large for the Service Provider (or Broker) to include in a single Response.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '413'
-                      scope: Provider
-                      message: Response too large
-                      description: A non-paged Query returning all objects was too large for the Service Provider (or Broker) to include in a single Response.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>413</code>
-                  <scope>Provider</scope>
-                  <message>Response too large</message>
-                  <description>A non-paged Query returning all objects was too large for the Service Provider (or Broker) to include in a single Response.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -945,10 +471,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -959,31 +482,6 @@ components:
                       scope: Provider
                       message: Unsupported Media Type
                       description: The request entity has a media type which the server or resource does not support. For example, the client requestd application/json but the server only supports application/xml.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '415'
-                      scope: Provider
-                      message: Unsupported Media Type
-                      description: The request entity has a media type which the server or resource does not support. For example, the client requestd application/json but the server only supports application/xml.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>415</code>
-                  <scope>Provider</scope>
-                  <message>Unsupported Media Type</message>
-                  <description>The request entity has a media type which the server or resource does not support. For example, the client requestd application/json but the server only supports application/xml.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -1001,10 +499,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -1015,31 +510,6 @@ components:
                       scope: Provider
                       message: Internal Service Error
                       description: An unexpected error occurred in servicing the Request.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '500'
-                      scope: Provider
-                      message: Internal Service Error
-                      description: An unexpected error occurred in servicing the Request.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>500</code>
-                  <scope>Provider</scope>
-                  <message>Internal Service Error</message>
-                  <description>An unexpected error occurred in servicing the Request.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -1057,10 +527,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -1071,31 +538,6 @@ components:
                       scope: Provider
                       message: Not Implemented
                       description: The server either does not recognize the request method, or it lacks the ability to fulfil the request. Usually this implies future availability (e.g., a new feature of a web-service API).
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '501'
-                      scope: Provider
-                      message: Not Implemented
-                      description: The server either does not recognize the request method, or it lacks the ability to fulfil the request. Usually this implies future availability (e.g., a new feature of a web-service API).
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>501</code>
-                  <scope>Provider</scope>
-                  <message>Not Implemented</message>
-                  <description>The server either does not recognize the request method, or it lacks the ability to fulfil the request. Usually this implies future availability (e.g., a new feature of a web-service API).</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
@@ -1113,10 +555,7 @@ components:
                 type: object
                 properties:
                   error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
+                    $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/error'
               examples: 
                 pesc: 
                   summary: PESC notation
@@ -1127,31 +566,6 @@ components:
                       scope: Provider
                       message: Service Unavailable
                       description: Returned only for Consumer Requests requiring an immediate Response. This error indicates that the expected Service processing time for the Request is great enough that the Consumer must reissue it as a Request requiring a delayed Response.
-                goessner: 
-                  summary: Goessner notation
-                  value: 
-                    error: 
-                      "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '503'
-                      scope: Provider
-                      message: Service Unavailable
-                      description: Returned only for Consumer Requests requiring an immediate Response. This error indicates that the expected Service processing time for the Request is great enough that the Consumer must reissue it as a Request requiring a delayed Response.
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    description: >-
-                      Error Message
-                    $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/error'
-              example: >-
-                <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-                  <code>503</code>
-                  <scope>Provider</scope>
-                  <message>Service Unavailable</message>
-                  <description>Returned only for Consumer Requests requiring an immediate Response. This error indicates that the expected Service processing time for the Request is great enough that the Consumer must reissue it as a Request requiring a delayed Response.</description>
-                </error>
           headers:
             'content-type':
               $ref: '#/components/schemas/httpHeaders/response/content-type'
