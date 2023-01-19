@@ -13,7 +13,7 @@ components:
               type: object
               properties:
                 adminDirectives:
-                   : 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/adminDirectiveCollection'
+                   $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/adminDirectiveCollection'
             examples: 
               pesc: 
                 summary: PESC notation
