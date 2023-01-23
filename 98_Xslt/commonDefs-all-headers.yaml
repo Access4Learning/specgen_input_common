@@ -29,17 +29,15 @@ components:
                         serviceName: StudentPersonals
                         method: Refresh
                         methodParameters:
-                          - methodParameter:
-                              paramName: RefId
-                              paramValue: b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                              comparisonType: EQUAL
-                          - methodParameter:
-                              paramName: 'DOB:Year'
-                              paramValue: '2010'
-                              comparisonType: GREATER
-                          - methodParameter:
-                              paramName: RequireIsolation
-                              paramValue: 'TRUE'
+                          methodParameter:
+                          - paramName: RefId
+                            paramValue: b72f2d4-7a83-4297-a71f-8b5fb26cbf14
+                            comparisonType: EQUAL
+                          - paramName: 'DOB:Year'
+                            paramValue: '2010'
+                            comparisonType: GREATER
+                          - paramName: RequireIsolation
+                            paramValue: 'TRUE'
               goessner: 
                 summary: Goessner notation
                 value: 
@@ -175,19 +173,17 @@ components:
           value: 
             updateResponse:
               updates:
-                - update:
-                    id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    statusCode: '200'
-                - update:
-                    id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                update:
+                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  statusCode: '200'
+                - id: 41953aaa-2811-11e6-b67b-9e71128cae77
                     statusCode: '404'
                     error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                       code: '404'
                       scope: Provider
                       message: Data for the given ID does not exist.
-                - update:
-                    id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                -   id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
                     statusCode: '200'
         goessner: 
           summary: Goessner - Batch Update Response
@@ -230,20 +226,18 @@ components:
           summary: PESC - Batch Delete Response
           value: 
             deletes:
-              - delete:
-                  id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+              delete:
+              - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
                   statusCode: '204'
-              - delete:
-                  id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                  statusCode: '404'
-                  error:
+              - id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                statusCode: '404'
+                error:
                     id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                     code: '404'
                     scope: Provider
                     message: Data for the given ID does not exist.
-              - delete:
-                  id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  statusCode: '204'
+              - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                statusCode: '204'
         goessner: 
           summary: Goessner - Batch Delete Response
           value: 
@@ -285,22 +279,20 @@ components:
           value: 
             createResponse:
               creates:
-                - create:
-                    id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    advisoryId: '3'
-                    statusCode: '201'
-                - create:
-                    advisoryId: '1'
-                    statusCode: '400'
-                    error:
+                create:
+                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  advisoryId: '3'
+                  statusCode: '201'
+                - advisoryId: '1'
+                  statusCode: '400'
+                  error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                       code: '400'
                       scope: Provider
                       message: Mandatory data is missing.
-                - create:
-                    id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    advisoryId: '2'
-                    statusCode: '201'
+                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  advisoryId: '2'
+                  statusCode: '201'
         goessner: 
           summary: Goessner - Batch Create Response
           value: 
@@ -470,12 +462,10 @@ components:
           value:
             deleteRequest:
               deletes:
-                - delete:
-                    id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                - delete:
-                    id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                - delete:
-                    id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                delete:
+                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                - id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
         goessner: 
           summary: Goessner - Batch Delete Request
           value: 
