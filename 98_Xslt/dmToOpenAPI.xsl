@@ -370,11 +370,16 @@
 		
 		<xsl:if test="$isQBE = 'true'">
 			<xsl:text>              oneOf:&#x0a;</xsl:text>
-			<xsl:value-of select="concat('                - $ref: ''#/components/schemas/schemaDefinitions/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
-			<xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
+                        <xsl:value-of select="concat('                - $ref: ''#/components/schemas/schemaDefinitions/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
+                        <!-- NN 20230123 no attributes next to JSON References -->
+                        <xsl:if test="not($openAPI30 = 'true')">
+                          <xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
+                        </xsl:if>
 			<!--xsl:value-of select="concat('                - $ref: ''commonDefs.yaml#/components/schemas/multipleResponses/createMultiSchema', '''&#x0a;')"/-->
 			<xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiSchema', '''&#x0a;')"/>
-			<xsl:value-of select="concat('                  title: createRequest', '&#x0a;')"/>
+                        <xsl:if test="not($openAPI30 = 'true')">
+                          <xsl:value-of select="concat('                  title: createRequest', '&#x0a;')"/>
+                        </xsl:if>
 		</xsl:if>
 		<xsl:if test="not($isQBE = 'true')">
 		  <xsl:if test="not($addBatchDeleletRequest = 'true')">
@@ -383,9 +388,13 @@
 		  <xsl:if test="$addBatchDeleletRequest = 'true'">
 			<xsl:text>              oneOf:&#x0a;</xsl:text>
 			<xsl:value-of select="concat('                - $ref: ''#/components/schemas/schemaDefinitions/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
+                        <xsl:if test="not($openAPI30 = 'true')">
 			<xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
+                        </xsl:if>
 			<xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiSchema', '''&#x0a;')"/>
+                        <xsl:if test="not($openAPI30 = 'true')">
 			<xsl:value-of select="concat('                  title: deleteRequest', '&#x0a;')"/>
+                        </xsl:if>
 		  </xsl:if>
 		</xsl:if>
 		<xsl:text>            examples:&#x0a;</xsl:text>
@@ -417,9 +426,13 @@
 		<xsl:if test="$isQBE = 'true'">
 			<xsl:text>              oneOf:&#x0a;</xsl:text>
 			<xsl:value-of select="concat('                - $ref: ''#/components/schemas/schemaDefinitions/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
+                      <xsl:if test="not($openAPI30 = 'true')">
 			<xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
+                      </xsl:if>
 			<xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiSchema', '''&#x0a;')"/>
+                      <xsl:if test="not($openAPI30 = 'true')">
 			<xsl:value-of select="concat('                  title: createRequest', '&#x0a;')"/>
+                      </xsl:if>
 		</xsl:if>
 		<xsl:if test="not($isQBE = 'true')">
 		  <xsl:if test="not($addBatchDeleletRequest = 'true')">
@@ -428,9 +441,13 @@
 		  <xsl:if test="$addBatchDeleletRequest = 'true'">
 			<xsl:text>              oneOf:&#x0a;</xsl:text>
 			<xsl:value-of select="concat('                - $ref: ''#/components/schemas/schemaDefinitions/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
+                      <xsl:if test="not($openAPI30 = 'true')">
 			<xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
+                      </xsl:if>
 			<xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiSchema', '''&#x0a;')"/>
+                      <xsl:if test="not($openAPI30 = 'true')">
 			<xsl:value-of select="concat('                  title: deleteRequest', '&#x0a;')"/>
+                      </xsl:if>
 		  </xsl:if>
                 </xsl:if>
 		<xsl:text>            examples:&#x0a;</xsl:text>
