@@ -175,17 +175,17 @@ components:
             updateResponse:
               updates:
                 update:
-                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  statusCode: '200'
-                - id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                  - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                    statusCode: '200'
+                  - id: 41953aaa-2811-11e6-b67b-9e71128cae77
                     statusCode: '404'
                     error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                       code: '404'
                       scope: Provider
                       message: Data for the given ID does not exist.
-                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  statusCode: '200'
+                  - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                    statusCode: '200'
         goessner: 
           summary: Goessner - Batch Update Response
           value: 
@@ -472,11 +472,11 @@ components:
           value: 
             deleteRequest:
               deletes:
-                - delete:
+              - delete:
                     "@id": df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                - delete:
+              - delete:
                     "@id": 41953aaa-2811-11e6-b67b-9e71128cae77
-                - delete:
+              - delete:
                     "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
         xml:  
           summary: XML - Batch Delete Request
