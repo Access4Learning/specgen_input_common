@@ -221,24 +221,23 @@ components:
                 <update id="ff789e1c-dfe7-4c18-8ef0-d907b81ea61e" statusCode="200"/>
               </updates>
             </updateResponse>
-    
       deleteMultiExamples:
         pesc: 
           summary: PESC - Batch Delete Response
           value: 
             deletes:
               delete:
-              - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
                   statusCode: '204'
-              - id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                statusCode: '404'
-                error:
+                - id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                  statusCode: '404'
+                  error:
                     id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                     code: '404'
                     scope: Provider
                     message: Data for the given ID does not exist.
-              - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                statusCode: '204'
+                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  statusCode: '204'
         goessner: 
           summary: Goessner - Batch Delete Response
           value: 
