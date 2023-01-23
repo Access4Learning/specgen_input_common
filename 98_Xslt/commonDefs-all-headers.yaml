@@ -178,16 +178,16 @@ components:
               updates:
                 update:
                   - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    statusCode: 200
+                    statusCode: '200'
                   - id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                    statusCode: 404
+                    statusCode: '404'
                     error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                       code: 404
                       scope: Provider
                       message: Data for the given ID does not exist.
                   - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    statusCode: 200
+                    statusCode: '200'
         goessner: 
           summary: Goessner - Batch Update Response
           value: 
@@ -227,37 +227,39 @@ components:
         pesc: 
           summary: PESC - Batch Delete Response
           value: 
-            deletes:
-              delete:
-                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  statusCode: 204
-                - id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                  statusCode: 404
-                  error:
-                    id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    code: 404
-                    scope: Provider
-                    message: Data for the given ID does not exist.
-                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  statusCode: 204
+            deleteResponse:
+              deletes:
+                delete:
+                  - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                    statusCode: '204'
+                  - id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                    statusCode: '404'
+                    error:
+                      id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                      code: 404
+                      scope: Provider
+                      message: Data for the given ID does not exist.
+                  - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                    statusCode: '204'
         goessner: 
           summary: Goessner - Batch Delete Response
           value: 
-            deletes:
-              - delete:
-                  "@id": df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  "@statusCode": '204'
-              - delete:
-                  "@id": 41953aaa-2811-11e6-b67b-9e71128cae77
-                  "@statusCode": '404'
-                  error:
-                    "@id": 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    code: '404'
-                    scope: Provider
-                    message: Data for the given ID does not exist.
-              - delete:
-                  "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  "@statusCode": '204'
+            deleteResponse:
+              deletes:
+                - delete:
+                    "@id": df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                    "@statusCode": '204'
+                - delete:
+                    "@id": 41953aaa-2811-11e6-b67b-9e71128cae77
+                    "@statusCode": '404'
+                    error:
+                      "@id": 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                      code: '404'
+                      scope: Provider
+                      message: Data for the given ID does not exist.
+                - delete:
+                    "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                    "@statusCode": '204'
         xml:  
           summary: XML - Batch Delete Response
           value: >-
@@ -284,9 +286,9 @@ components:
                 create:
                 - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
                   advisoryId: '3'
-                  statusCode: 201
+                  statusCode: '201'
                 - advisoryId: '1'
-                  statusCode: 400
+                  statusCode: '400'
                   error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                       code: 400
@@ -294,7 +296,7 @@ components:
                       message: Mandatory data is missing.
                 - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
                   advisoryId: '2'
-                  statusCode: 201
+                  statusCode: '201'
         goessner: 
           summary: Goessner - Batch Create Response
           value: 
