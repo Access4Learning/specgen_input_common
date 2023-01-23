@@ -19,24 +19,22 @@ components:
                 summary: PESC notation
                 value: 
                   adminDirectives:
-                    - adminDirective:
-                        id: a8c3c3e3-4b35-9d75-101d-00aa001a1652
-                        timestamp: '2021-06-18T01:04:42.283Z'
-                        timeout: P2D
-                        serviceName: StudentPersonals
-                        method: Refresh
-                        methodParameters:
-                          - methodParameter:
-                              paramName: RefId
-                              paramValue: b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                              comparisonType: EQUAL
-                          - methodParameter:
-                              paramName: 'DOB:Year'
-                              paramValue: '2010'
-                              comparisonType: GREATER
-                          - methodParameter:
-                              paramName: RequireIsolation
-                              paramValue: 'TRUE'
+                    adminDirective:
+                    - id: a8c3c3e3-4b35-9d75-101d-00aa001a1652
+                      timestamp: '2021-06-18T01:04:42.283Z'
+                      timeout: P2D
+                      serviceName: StudentPersonals
+                      method: Refresh
+                      methodParameters:
+                          methodParameter:
+                          - paramName: RefId
+                            paramValue: b72f2d4-7a83-4297-a71f-8b5fb26cbf14
+                            comparisonType: EQUAL
+                          - paramName: 'DOB:Year'
+                            paramValue: '2010'
+                            comparisonType: GREATER
+                          - paramName: RequireIsolation
+                            paramValue: 'TRUE'
         headers:
           'accept':
             $ref: '#/components/schemas/httpHeaders/response/accept'
@@ -96,7 +94,8 @@ components:
       deleteMultiSchema:
         properties:
           deleteResponse:
-            $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/deleteResponseCollection'
+            $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/deleteResponse'
+              # $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/deleteResponseCollection'
     
       createMultiSchema:
         properties:
@@ -109,39 +108,35 @@ components:
           value: 
             updateResponse:
               updates:
-                - update:
-                    id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    statusCode: '200'
-                - update:
-                    id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                    statusCode: '404'
-                    error:
+                update:
+                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  statusCode: '200'
+                - id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                  statusCode: '404'
+                  error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                       code: '404'
                       scope: Provider
                       message: Data for the given ID does not exist.
-                - update:
-                    id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    statusCode: '200'
+                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  statusCode: '200'
     
       deleteMultiExamples:
         pesc: 
           summary: PESC - Batch Delete Response
           value: 
             deletes:
-              - delete:
-                  id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+              delete:
+                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
                   statusCode: '204'
-              - delete:
-                  id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                - id: 41953aaa-2811-11e6-b67b-9e71128cae77
                   statusCode: '404'
                   error:
                     id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                     code: '404'
                     scope: Provider
                     message: Data for the given ID does not exist.
-              - delete:
-                  id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
                   statusCode: '204'
     
       createMultiExamples:
@@ -150,22 +145,20 @@ components:
           value: 
             createResponse:
               creates:
-                - create:
-                    id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    advisoryId: '3'
-                    statusCode: '201'
-                - create:
-                    advisoryId: '1'
-                    statusCode: '400'
-                    error:
+                create:
+                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  advisoryId: '3'
+                  statusCode: '201'
+                - advisoryId: '1'
+                  statusCode: '400'
+                  error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                       code: '400'
                       scope: Provider
                       message: Mandatory data is missing.
-                - create:
-                    id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    advisoryId: '2'
-                    statusCode: '201'
+                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  advisoryId: '2'
+                  statusCode: '201'
     
       #//
       #// Batch PUT Response 
@@ -261,7 +254,8 @@ components:
       deleteMultiSchema:
         properties:
           deleteRequest:
-            $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/deleteRequestCollection'
+            $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/deleteRequest'
+              #$ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/deleteRequestCollection'
     
       deleteMultiExamples:
         pesc: 
@@ -269,12 +263,10 @@ components:
           value:
             deleteRequest:
               deletes:
-                - delete:
-                    id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                - delete:
-                    id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                - delete:
-                    id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                delete:
+                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                - id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
     
     # ///////////////////////
     # // Error Definitions //

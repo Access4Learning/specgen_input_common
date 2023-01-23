@@ -22,14 +22,14 @@ components:
                 summary: PESC notation
                 value: 
                   adminDirectives:
-                    - adminDirective:
-                        id: a8c3c3e3-4b35-9d75-101d-00aa001a1652
-                        timestamp: '2021-06-18T01:04:42.283Z'
-                        timeout: P2D
-                        serviceName: StudentPersonals
-                        method: Refresh
-                        methodParameters:
-                          methodParameter:
+                    adminDirective:
+                    - id: a8c3c3e3-4b35-9d75-101d-00aa001a1652
+                      timestamp: '2021-06-18T01:04:42.283Z'
+                      timeout: P2D
+                      serviceName: StudentPersonals
+                      method: Refresh
+                      methodParameters:
+                        methodParameter:
                           - paramName: RefId
                             paramValue: b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                             comparisonType: EQUAL
@@ -184,8 +184,8 @@ components:
                       code: '404'
                       scope: Provider
                       message: Data for the given ID does not exist.
-                -   id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    statusCode: '200'
+                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  statusCode: '200'
         goessner: 
           summary: Goessner - Batch Update Response
           value: 
