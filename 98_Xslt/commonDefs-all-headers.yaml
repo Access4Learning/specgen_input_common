@@ -149,7 +149,8 @@ components:
             type: object
             description: >-
               Update Response if request HTTP Header methodOverride=UPDATE  
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/updateResponseCollection'
+            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/updateResponse'
+              #$ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/updateResponseCollection'
     
       deleteMultiSchema:
         properties:
@@ -166,7 +167,8 @@ components:
             type: object
             description: >-
               Create Response
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/createResponseCollection'
+            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/createResponse'
+              #$ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/createResponseCollection'
     
       updateMultiExamples:
         pesc: 
@@ -176,16 +178,16 @@ components:
               updates:
                 update:
                   - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    statusCode: '200'
+                    statusCode: 200
                   - id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                    statusCode: '404'
+                    statusCode: 404
                     error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                      code: '404'
+                      code: 404
                       scope: Provider
                       message: Data for the given ID does not exist.
                   - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    statusCode: '200'
+                    statusCode: 200
         goessner: 
           summary: Goessner - Batch Update Response
           value: 
@@ -228,16 +230,16 @@ components:
             deletes:
               delete:
                 - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  statusCode: '204'
+                  statusCode: 204
                 - id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                  statusCode: '404'
+                  statusCode: 404
                   error:
                     id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    code: '404'
+                    code: 404
                     scope: Provider
                     message: Data for the given ID does not exist.
                 - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  statusCode: '204'
+                  statusCode: 204
         goessner: 
           summary: Goessner - Batch Delete Response
           value: 
@@ -282,17 +284,17 @@ components:
                 create:
                 - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
                   advisoryId: '3'
-                  statusCode: '201'
+                  statusCode: 201
                 - advisoryId: '1'
-                  statusCode: '400'
+                  statusCode: 400
                   error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                      code: '400'
+                      code: 400
                       scope: Provider
                       message: Mandatory data is missing.
                 - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
                   advisoryId: '2'
-                  statusCode: '201'
+                  statusCode: 201
         goessner: 
           summary: Goessner - Batch Create Response
           value: 
@@ -512,7 +514,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '400'
+                      code: 400
                       scope: Provider
                       message: Bad Request
                       description: Version problems or error specific to a particular object type, such as the omission of a mandatory element or an unsupported query or an unsupported order clause.
@@ -588,7 +590,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '401'
+                      code: 401
                       scope: Provider
                       message: Authorisation failed.
                       description: Invalid or missing 'Authorization' HTTP Header.
@@ -664,7 +666,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '403'
+                      code: 403
                       scope: Provider
                       message: Forbidden
                       description: This operation is not enabled for your adapter.
@@ -740,7 +742,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '404'
+                      code: 404
                       scope: Provider
                       message: Not Found
                       description: Object ID does not correspond to an existing object. This can occur for Query as well as Update or Delete operations. No Service Provider has been found to match the parameters (Zone, Context, Service name) in the Request.
@@ -816,7 +818,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '405'
+                      code: 405
                       scope: Provider
                       message: Method not Allowed
                       description: Paged Query Request issued to Object URL rather than Object List URL.
@@ -892,7 +894,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '409'
+                      code: 409
                       scope: Provider
                       message: State Conflict
                       description: An attempt has been made to create an existing object.
@@ -968,7 +970,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '410'
+                      code: 410
                       scope: Provider
                       message: Gone
                       description: Used for query functionality where the Changes Since opaque marker or Paged navigationId provided by the consumer is no longer valid.
@@ -1044,7 +1046,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '412'
+                      code: 412
                       scope: Provider
                       message: Precondition Failed
                       description: An attempt has been made to modify an object when the Requester was not basing the modification on the latest version.
@@ -1120,7 +1122,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '413'
+                      code: 413
                       scope: Provider
                       message: Response too large
                       description: A non-paged Query returning all objects was too large for the Service Provider (or Broker) to include in a single Response.
@@ -1196,7 +1198,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '415'
+                      code: 415
                       scope: Provider
                       message: Unsupported Media Type
                       description: The request entity has a media type which the server or resource does not support. For example, the client requestd application/json but the server only supports application/xml.
@@ -1272,7 +1274,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '500'
+                      code: 500
                       scope: Provider
                       message: Internal Service Error
                       description: An unexpected error occurred in servicing the Request.
@@ -1348,7 +1350,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '501'
+                      code: 501
                       scope: Provider
                       message: Not Implemented
                       description: The server either does not recognize the request method, or it lacks the ability to fulfil the request. Usually this implies future availability (e.g., a new feature of a web-service API).
@@ -1424,7 +1426,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '503'
+                      code: 503
                       scope: Provider
                       message: Service Unavailable
                       description: Returned only for Consumer Requests requiring an immediate Response. This error indicates that the expected Service processing time for the Request is great enough that the Consumer must reissue it as a Request requiring a delayed Response.
