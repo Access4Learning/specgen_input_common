@@ -157,7 +157,8 @@ components:
             type: object
             description: >-
               Delete Response if request HTTP Header methodOverride=DELETE  
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteResponseCollection'
+              #$ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteResponseCollection'
+            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteResponse'
     
       createMultiSchema:
         properties:
@@ -454,7 +455,8 @@ components:
             type: object
             description: >-
               Delete Request if request HTTP Header methodOverride=DELETE  
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteRequestCollection'
+              #$ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteRequestCollection'
+            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteRequest'
     
       deleteMultiExamples:
         pesc: 
