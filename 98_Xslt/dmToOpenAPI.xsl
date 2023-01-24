@@ -1268,7 +1268,7 @@
 		<xsl:param name="schemaId"/>
 		<xsl:value-of select="concat('      operationId: ', $operationId, '&#x0a;')"/>
 		<xsl:text>      requestBody:&#x0a;</xsl:text>
-                <xsl:value-of select="concat('        $ref: ''#/components/schemas/requestBodies/', $schemaId, @name, '''&#x0a;')"/>
+                <xsl:value-of select="concat('        $ref: ''#/components/requestBodies/', $schemaId, @name, '''&#x0a;')"/>
 	</xsl:template>
 
     <xsl:template match="specgen:DataObject" mode="requestBodyList">
@@ -1276,7 +1276,7 @@
 		<xsl:param name="schemaId"/>
 		<xsl:value-of select="concat('      operationId: ', $operationId, '&#x0a;')"/>
 		<xsl:text>      requestBody:&#x0a;</xsl:text>
-                <xsl:value-of select="concat('        $ref: ''#/components/schemas/requestBodies/', $schemaId, @name, 's''&#x0a;')"/>
+                <xsl:value-of select="concat('        $ref: ''#/components/requestBodies/', $schemaId, @name, 's''&#x0a;')"/>
 	</xsl:template>
 
     <xsl:template match="specgen:DataObject" mode="responsesSingle">
