@@ -222,24 +222,28 @@
 				<xsl:value-of select="concat('      #// ', @name, '&#x0a;')"/>
 				<xsl:text>      #//&#x0a;</xsl:text>
 				<xsl:apply-templates select="." mode="payloadDefinition">
-					<xsl:with-param name="schemaID">requestPayloads-create</xsl:with-param>
+					<xsl:with-param name="schemaID">create</xsl:with-param>
+					<xsl:with-param name="schemaPrefix">requestPayloads-</xsl:with-param>
                                         <!-- NN 20230124 remove nesting of children of components/schemas -->
                                         <!--<xsl:with-param name="schemaID">create</xsl:with-param>-->
 					<xsl:with-param name="objectName"><xsl:value-of select="@name"/></xsl:with-param>
 				</xsl:apply-templates>
 				<xsl:text>&#x0a;</xsl:text>
 				<xsl:apply-templates select="." mode="payloadDefinition">
-					<xsl:with-param name="schemaID">requestPayloads-update</xsl:with-param>
+					<xsl:with-param name="schemaID">update</xsl:with-param>
+					<xsl:with-param name="schemaPrefix">requestPayloads-</xsl:with-param>
 					<xsl:with-param name="objectName"><xsl:value-of select="@name"/></xsl:with-param>
 				</xsl:apply-templates>
 				<xsl:text>&#x0a;</xsl:text>
 				<xsl:apply-templates select="." mode="payloadDefinition">
-					<xsl:with-param name="schemaID">requestPayloads-create</xsl:with-param>
+					<xsl:with-param name="schemaID">create</xsl:with-param>
+					<xsl:with-param name="schemaPrefix">requestPayloads-</xsl:with-param>
 					<xsl:with-param name="objectName"><xsl:value-of select="concat(@name, 's')"/></xsl:with-param>
 				</xsl:apply-templates>
 				<xsl:text>&#x0a;</xsl:text>
 				<xsl:apply-templates select="." mode="payloadDefinition">
-					<xsl:with-param name="schemaID">requestPayloads-update</xsl:with-param>
+					<xsl:with-param name="schemaID">update</xsl:with-param>
+					<xsl:with-param name="schemaPrefix">requestPayloads-</xsl:with-param>
 					<xsl:with-param name="objectName"><xsl:value-of select="concat(@name, 's')"/></xsl:with-param>
 					<xsl:with-param name="addBatchDeleletRequest">true</xsl:with-param>
 				</xsl:apply-templates>
@@ -276,7 +280,8 @@
 				<xsl:apply-templates select="." mode="payloadDefinition">
                                         <!-- NN 20230124 remove nesting of children of components/schemas -->
                                         <!--<xsl:with-param name="schemaID">create</xsl:with-param> -->
-					<xsl:with-param name="schemaID">responsePayloads-create</xsl:with-param>
+					<xsl:with-param name="schemaID">create</xsl:with-param>
+					<xsl:with-param name="schemaPrefix">responsePayloads-</xsl:with-param>
 					<xsl:with-param name="objectName"><xsl:value-of select="@name"/></xsl:with-param>
 				</xsl:apply-templates>
 	
@@ -295,7 +300,8 @@
 					Single Object Update Info
 				 -->
 				<xsl:apply-templates select="." mode="payloadDefinition">
-					<xsl:with-param name="schemaID">responsePayloads-update</xsl:with-param>
+					<xsl:with-param name="schemaID">update</xsl:with-param>
+					<xsl:with-param name="schemaPrefix">responsePayloads-</xsl:with-param>
 					<xsl:with-param name="objectName"><xsl:value-of select="@name"/></xsl:with-param>
 				</xsl:apply-templates>
 	
@@ -314,7 +320,8 @@
 					Collection Object: Response for standard GET
 				 -->
 				<xsl:apply-templates select="." mode="payloadDefinition">
-					<xsl:with-param name="schemaID">responsePayloads-create</xsl:with-param>
+					<xsl:with-param name="schemaID">create</xsl:with-param>
+					<xsl:with-param name="schemaPrefix">responsePayloads-</xsl:with-param>
 					<xsl:with-param name="objectName"><xsl:value-of select="concat(@name, 's')"/></xsl:with-param>
 				</xsl:apply-templates>
 				
@@ -331,7 +338,8 @@
 					Collection Object: Response for POST when methodoveride="GET" => QBE!
 				-->
 				<xsl:apply-templates select="." mode="payloadDefinition">
-					<xsl:with-param name="schemaID">responsePayloads-create</xsl:with-param>
+					<xsl:with-param name="schemaID">create</xsl:with-param>
+					<xsl:with-param name="schemaPrefix">responsePayloads-</xsl:with-param>
 					<xsl:with-param name="objectName"><xsl:value-of select="concat(@name, 's')"/></xsl:with-param>
 					<xsl:with-param name="isQBE">true</xsl:with-param>
 				</xsl:apply-templates>
@@ -358,16 +366,17 @@
 	<!-- ===================================================== -->
 	<xsl:template match="specgen:DataObject" mode="payloadDefinition">
 		<xsl:param name="schemaID"/>
+		<xsl:param name="schemaPrefix"/>
 		<xsl:param name="objectName"/>
 		<xsl:param name="isQBE"/>
 		<xsl:param name="addBatchDeleletRequest"/>
 
 		<xsl:if test="$isQBE = 'true'">
-			<xsl:value-of select="concat('      ', $schemaID, $objectName, 'QBE:&#x0a;')"/>
+			<xsl:value-of select="concat('      ', $schemaPrefix,$schemaID, $objectName, 'QBE:&#x0a;')"/>
 			<xsl:value-of select="concat('        description: Payload for Multiple POST request for ', $objectName, '&#x0a;')"/>
 		</xsl:if>
 		<xsl:if test="not($isQBE = 'true')">
-			<xsl:value-of select="concat('      ', $schemaID, $objectName, ':&#x0a;')"/>
+			<xsl:value-of select="concat('      ', $schemaPrefix,$schemaID, $objectName, ':&#x0a;')"/>
 			<xsl:value-of select="concat('        description: Payload for ', $objectName, '&#x0a;')"/>
 		</xsl:if>
 		<xsl:text>        content:&#x0a;</xsl:text>
@@ -412,10 +421,10 @@
                         <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiExamples/goessner', '''&#x0a;')"/>
                       </xsl:if>
 		</xsl:if>		
-		<xsl:value-of select="concat('              ', $schemaID, 'PESC:', '&#x0a;')"/>
+		<xsl:value-of select="concat('              ', $schemaPrefix,$schemaID, 'PESC:', '&#x0a;')"/>
 		<xsl:value-of select="concat('                $ref: ''', $exampleFileName, '#/objectExamples/', $objectName, '/pesc''&#x0a;')"/>
                       <xsl:if test="not($openAPI30 = 'true')">
-		<xsl:value-of select="concat('              ', $schemaID, 'Goessner:', '&#x0a;')"/>
+		<xsl:value-of select="concat('              ', $schemaPrefix,$schemaID, 'Goessner:', '&#x0a;')"/>
                 <xsl:value-of select="concat('                $ref: ''', $exampleFileName, '#/objectExamples/', $objectName, '/goessner''&#x0a;')"/>
               </xsl:if>
 	  	<xsl:if test="$addBatchDeleletRequest = 'true'">
@@ -461,7 +470,7 @@
 			<xsl:value-of select="concat('              qbe', 'XML:', '&#x0a;')"/>
 			<xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiExamples/xml', '''&#x0a;')"/>
 		</xsl:if>		
-		<xsl:value-of select="concat('              ', $schemaID, 'XML:', '&#x0a;')"/>
+		<xsl:value-of select="concat('              ', $schemaPrefix,$schemaID, 'XML:', '&#x0a;')"/>
 		<xsl:value-of select="concat('                $ref: ''', $exampleFileName, '#/objectExamples/', $objectName, '/xml''&#x0a;')"/>
 	  	<xsl:if test="$addBatchDeleletRequest = 'true'">
 			<xsl:value-of select="concat('              ', 'deleteXML:', '&#x0a;')"/>
