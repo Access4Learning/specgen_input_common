@@ -108,8 +108,8 @@
                                       '        default: sif&#x0a;',
                                       '        description: optional root directory for SIF API&#x0a;',
                                       'security:&#x0a;',
-                                      '  - basicAuth: []:&#x0a;',
-                                      '## note: SIF supports a range of authentication schemes beyond basic authentication, this is a placeholder',
+                                      '  - basicAuth: []&#x0a;',
+                                      '## note: SIF supports a range of authentication schemes beyond basic authentication, this is a placeholder&#x0a;',
                 '')"/>
                 <!-- NN 20230124: basicAuth is a dummy placeholder -->
 
