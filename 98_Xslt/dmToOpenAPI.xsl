@@ -275,7 +275,7 @@
 				 -->
 				<xsl:apply-templates select="." mode="payloadDefinition">
                                         <!-- NN 20230124 remove nesting of children of components/schemas -->
-                                        <!-<xsl:with-param name="schemaID">create</xsl:with-param> -->
+                                        <!--<xsl:with-param name="schemaID">create</xsl:with-param> -->
 					<xsl:with-param name="schemaID">responsePayloads-create</xsl:with-param>
 					<xsl:with-param name="objectName"><xsl:value-of select="@name"/></xsl:with-param>
 				</xsl:apply-templates>
