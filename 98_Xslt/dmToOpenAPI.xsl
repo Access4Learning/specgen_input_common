@@ -107,7 +107,11 @@
                                       '      root:&#x0a;',
                                       '        default: sif&#x0a;',
                                       '        description: optional root directory for SIF API&#x0a;',
-                  '')"/>
+                                      'security:&#x0a;',
+                                      '  - basicAuth: []:&#x0a;',
+                                      '## note: SIF supports a range of authentication schemes beyond basic authentication, this is a placeholder',
+                '')"/>
+                <!-- NN 20230124: basicAuth is a dummy placeholder -->
 
 
                 <!-- NN 20221219: bogus elements 
@@ -139,11 +143,20 @@
 		<!-- Add schema defs, example defs, request defs and response defs for each object -->
 		<!-- ============================================================================= -->
 		<xsl:text>components:&#x0a;</xsl:text>
+		<xsl:apply-templates select="." mode="securitySchemes"/>
                 <!--<xsl:text>  schemas:&#x0a;</xsl:text>-->
 		<xsl:apply-templates select=".//specgen:DataObjects" mode="requestPayloadDefinitions"/>
 		<xsl:apply-templates select=".//specgen:DataObjects" mode="responsePayloadDefinitions"/>
 		<xsl:apply-templates select=".//specgen:DataObjects" mode="schemaDefinitions"/>
-	</xsl:template>
+              </xsl:template>
+
+              <!-- NN 20230124 placeholder security scheme -->     
+              <xsl:template match="*" mode="securitySchemes">
+		<xsl:text>  securitySchemes:&#x0a;</xsl:text>
+		<xsl:text>    basicAuth:&#x0a;</xsl:text>
+		<xsl:text>      type: http&#x0a;</xsl:text>
+		<xsl:text>      scheme: basic&#x0a;</xsl:text>
+              </xsl:template>
 	
 	<!-- ========================================================= -->
 	<!-- Tag Groups Section -->
