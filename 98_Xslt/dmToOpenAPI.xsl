@@ -208,7 +208,7 @@
 		<xsl:text>    # // Request Payload Definitions //&#x0a;</xsl:text>
                 <xsl:text>    # /////////////////////////////////&#x0a;</xsl:text>
                 <!-- NN 20230124 remove nesting of children of components/schemas -->
-                <!-- <xsl:text>    requestPayloads:&#x0a;</xsl:text> --> -->
+                <!-- <xsl:text>    requestPayloads:&#x0a;</xsl:text> -->
 		<xsl:apply-templates select=".//specgen:DataObject" mode="requestPayloadDefinitions"/>
 	</xsl:template>
 
