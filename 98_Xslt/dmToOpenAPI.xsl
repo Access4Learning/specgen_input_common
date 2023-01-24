@@ -338,7 +338,7 @@
 				
 				<!-- Response Headers -->
 				<xsl:apply-templates select="." mode="addResponseHeaders">
-					<xsl:with-param name="pfx"><xsl:text>     </xsl:text></xsl:with-param>
+					<xsl:with-param name="pfx"><xsl:text>      </xsl:text></xsl:with-param>
 					<xsl:with-param name="excludeHeaders">
 						<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerHead,changesSinceMarkerGet,dataPrivacyMarkerBatchPutResponse,serviceSubType')"/>
 					</xsl:with-param>
