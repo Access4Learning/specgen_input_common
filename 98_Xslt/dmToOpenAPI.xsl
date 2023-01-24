@@ -1268,7 +1268,7 @@
 		<xsl:param name="schemaId"/>
 		<xsl:value-of select="concat('      operationId: ', $operationId, '&#x0a;')"/>
 		<xsl:text>      requestBody:&#x0a;</xsl:text>
-		<xsl:value-of select="concat('        $ref: ''#/components/schemas/requestPayloads-', $schemaId, @name, '''&#x0a;')"/>
+                <xsl:value-of select="concat('        $ref: ''#/components/schemas/requestBodies/', $schemaId, @name, '''&#x0a;')"/>
 	</xsl:template>
 
     <xsl:template match="specgen:DataObject" mode="requestBodyList">
@@ -1276,7 +1276,7 @@
 		<xsl:param name="schemaId"/>
 		<xsl:value-of select="concat('      operationId: ', $operationId, '&#x0a;')"/>
 		<xsl:text>      requestBody:&#x0a;</xsl:text>
-		<xsl:value-of select="concat('        $ref: ''#/components/schemas/requestPayloads-', $schemaId, @name, 's''&#x0a;')"/>
+                <xsl:value-of select="concat('        $ref: ''#/components/schemas/requestBodies/', $schemaId, @name, 's''&#x0a;')"/>
 	</xsl:template>
 
     <xsl:template match="specgen:DataObject" mode="responsesSingle">
@@ -1285,7 +1285,7 @@
 		
 		<xsl:text>      responses:&#x0a;</xsl:text>
 		<xsl:value-of select="concat('        ''', $returnCode , ''':&#x0a;')"/>
-		<xsl:value-of select="concat('          $ref: ''#/components/schemas/responsePayloads-', $schemaId, @name, '''&#x0a;')"/>
+                <xsl:value-of select="concat('          $ref: ''#/components/responses/', $schemaId, @name, '''&#x0a;')"/>
 	</xsl:template>
 
     <xsl:template match="specgen:DataObject" mode="responsesList">
@@ -1296,7 +1296,7 @@
         <xsl:text>        '200':&#x0a;</xsl:text>
         
         <xsl:if test="not($isAdminDirective)">
-			<xsl:value-of select="concat('          $ref: ''#/components/schemas/responsePayloads-create', @name, 's''&#x0a;')"/>
+          <xsl:value-of select="concat('          $ref: ''#/components/schemas/responses/create', @name, 's''&#x0a;')"/>
 		</xsl:if>
         <xsl:if test="$isAdminDirective">
 			<xsl:value-of select="concat('          $ref: ''',$commonDefsFileName,'#/components/schemas/adminDirectiveResponse/adminDirectives', '''&#x0a;')"/>
@@ -1331,7 +1331,7 @@
 		<xsl:text>      responses:&#x0a;</xsl:text>
 		<xsl:value-of select="concat('        ''', '200', '''', ':&#x0a;')"/>
 		<xsl:if test="$qbeSupported">
-			<xsl:value-of select="concat('          $ref: ', '''', '#/components/schemas/responsePayloads-create', @name, 'sQBE', '''&#x0a;')"/>
+			<xsl:value-of select="concat('          $ref: ', '''', '#/components/schemas/responses/create', @name, 'sQBE', '''&#x0a;')"/>
 		</xsl:if>
 		<xsl:if test="not($qbeSupported)">
 			<xsl:value-of select="concat('          $ref: ', '''', $commonDefsFileName,'#/components/schemas/multipleResponses/batchPostResponse''', '&#x0a;')"/>
