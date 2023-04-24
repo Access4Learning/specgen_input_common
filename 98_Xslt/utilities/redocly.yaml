@@ -1,0 +1,24 @@
+#
+# Details about content, usage and structure of this file can be found at these locations: 
+# https://redocly.com/docs/cli/commands/lint/#custom-configuration-file
+# https://redocly.com/docs/cli/configuration/
+#
+
+#apis:
+#  infra@v3.5:
+#    root: ./OpenAPI_IN.yaml
+#    rules:
+#       no-unused-components: error
+#  au@v3.4.9:
+#    root: ./OpenAPI_AU.yaml
+#    rules:
+#       no-unused-components: error
+
+# The line below indicates that this file extends redocly's standard (recommended) built-in setup.
+extends:
+  - recommended
+  
+# The list below overwrites the default behaviour of some redocly validation rules.   
+rules:
+  no-unused-components: off
+#  no-invalid-media-type-examples: off
