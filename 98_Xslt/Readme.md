@@ -1,5 +1,5 @@
 # License
-> Copyright © Access 4 Learning ^TM^ Community.  All Rights Reserved
+> Copyright ï¿½ Access 4 Learning ^TM^ Community.  All Rights Reserved
 > 
 > Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 > 
@@ -26,7 +26,7 @@ This repository has the following files each of which will be detailed in sectio
 - commonDefs-OpenAPI3.0-main-headers.yaml
 - commonDefs-OpenAPI3.1-all-headers.yaml
 - commonDefs-OpenAPI3.1-main-headers.yaml
-- infraPath.temaplate.yaml (requires pre-processing)
+- infraPaths.temaplate.yaml (requires pre-processing)
 - jsonSchema\_OpenAPI3.0\_Create_IN.yaml
 - jsonSchema\_OpenAPI3.0\_Update_IN.yaml
 - jsonSchema\_OpenAPI3.1\_Create_IN.yaml
@@ -138,20 +138,20 @@ Must be provided if the top-level Open API yaml is produced with the following v
 - openAPI30=false
 
 
-### infraPath.temaplate.yaml
+### infraPaths.temaplate.yaml
 
 This yaml file is a template and is only required for the SIF Infrastructure Open API specification. However, before it is provided as part of the complete Infrastructure Open API it need to be pre-processed (hence the template nature of this yaml file). The pre-processing is required to make this yaml file valid for either Open API 3.0 or Open API 3.1. 
-There are two tags in this template that need to be replaced during the pre-processing step. The resulting file must be named `infraPath.yaml` to ensure that the references in the top-level Open API yaml file resolve properly.
+There are two tags in this template that need to be replaced during the pre-processing step. The resulting file must be named `infraPaths.yaml` to ensure that the references in the top-level Open API yaml file resolve properly.
 
 #### Open API 3.0
 
-To make the `infraPath.yaml` valid for Open API 3.0 the tags in the `infraPath.temaplate.yaml` need to be replaced with the following values:
+To make the `infraPaths.yaml` valid for Open API 3.0 the tags in the `infraPaths.temaplate.yaml` need to be replaced with the following values:
 - Replace the `${OpenAPIVersion}` tag with `3.0`.
 - Replace the `${CommenOut}` tag with `#` or remove that line altogether.
 
 #### Open API 3.1
 
-To make the `infraPath.yaml` valid for Open API 3.1 the tags in the `infraPath.temaplate.yaml` need to be replaced with the following values:
+To make the `infraPaths.yaml` valid for Open API 3.1 the tags in the `infraPaths.temaplate.yaml` need to be replaced with the following values:
 - Replace the `${OpenAPIVersion}` tag with `3.1`.
 - Replace the `${CommenOut}` tag with an empty string.
 
@@ -170,6 +170,6 @@ The steps below are required to produce a complete set of yaml files for the Ope
 4) Produce the Example yaml file with the `dmToExamples.xsl`. This creates the `examples.yaml` file.
 5) Add the correct `commonDefs-OpenAPIxx-yyy-headers.yaml`.
 6) One of the sub-steps is required depending whether the infrastructure or a locale data model Open API is produced: 
-   - If the Open API yaml files for the Infrastructure are produced, pre-process the `infraPath.temaplate.yaml` and add the resulting `infraPath.yaml` file.
+   - If the Open API yaml files for the Infrastructure are produced, pre-process the `infraPaths.temaplate.yaml` and add the resulting `infraPaths.yaml` file.
    - If the Open API yaml files are produced for a locale (e.g. AU, NA) then step 2 and step 3 should be repeated with the infrastructure input XML file. This is required because the `commonDefs-OpenAPIxx-yyy-headers.yaml` holds references to infrastructure data models such as the error message structure. The resulting `jsonSchema_OpenAPIxx_Create_IN.yaml` and `jsonSchema_OpenAPIxx_Update_IN.yaml` must be added to complete the Open API specification of a locale data model. To simplify this process these files are part of this repository but will be updated from time to time as the infrastructure specification evolves.
 
