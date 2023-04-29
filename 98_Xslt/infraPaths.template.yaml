@@ -839,7 +839,7 @@ ${CommenOut}              $ref: '#/components/infraExamples/stateCreateResponse/
           type: object
           description: >-
             Payload definition for job phase state
-          $ref: 'jsonSchema_OpenAPI3.0_Create_IN.yaml#/definitions/stateCommon'
+          $ref: 'jsonSchema_OpenAPI${OpenAPIVersion}_Create_IN.yaml#/definitions/stateCommon'
 
   # ------------------------------------------
   # -- Examples specific to paths in this file          
