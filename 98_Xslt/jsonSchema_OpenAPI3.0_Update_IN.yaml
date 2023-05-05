@@ -1,9 +1,9 @@
 # 
-## Json Schema derived from SIF IN v3.5
+## Json Schema derived from SIF IN v3.6
 # 
 $schema: 'http://json-schema.org/draft-07/schema#'
-title: SIF IN v3.5
-description: JSON Schema derived from SIF IN v3.5
+title: SIF IN v3.6
+description: JSON Schema derived from SIF IN v3.6
 type: array
 items:
   oneOf:
@@ -955,7 +955,7 @@ definitions:
       familyName:
         type: string
         description: >-
-          <p>Family name. That part of the person's name which is used to describe family, clan, tribal group, or marital association. Note that this element is required when known. However, it may not be possible to know the family name in which case you should add the available information to the FullName element. </p>
+          <p>Family name. That part of the person`s name which is used to describe family, clan, tribal group, or marital association. Note that this element is required when known. However, it may not be possible to know the family name in which case you should add the available information to the FullName element. </p>
       givenName:
         type: string
         description: >-
@@ -1000,7 +1000,7 @@ definitions:
       positionTitle:
         type: string
         description: >-
-          <p>The contact person's position title.</p>
+          <p>The contact person`s position title.</p>
       role:
         type: string
         description: >-
@@ -1039,12 +1039,12 @@ definitions:
         type: string
         format: date
         description: >-
-          <p>Date the address became active.</p>
+          <p>Date the address became valid.</p>
       effectiveToDate:
         type: string
         format: date
         description: >-
-          <p>Date the address ceases to be active.</p>
+          <p>Date the address ceases to be valid.</p>
       line1:
         type: string
         description: >-
@@ -1220,12 +1220,12 @@ definitions:
       dataController:
         type: object
         description: >-
-          <p>The data controller, "means the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data", see GDPR.</p>
+          <p>The data controller, means the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data, see GDPR.</p>
         $ref: '#/definitions/dataController'
       dataProcessor:
         type: object
         description: >-
-          <p>The data processor, "means a natural or legal person, public authority, agency or other body which processes personal data on behalf of the controller", see GDPR.</p>
+          <p>The data processor, means a natural or legal person, public authority, agency or other body which processes personal data on behalf of the controller, see GDPR.</p>
         $ref: '#/definitions/dataProcessor'
       dataSubProcessorList:
         type: object
@@ -1243,7 +1243,7 @@ definitions:
         type: string
         format: uri
         description: >-
-          <p>URI Associated with contract</p>
+          <p>URI associated with contract. This may be a resolvable URL or just a unique identifier.</p>
       contractName:
         type: string
         description: >-
@@ -1252,16 +1252,16 @@ definitions:
         type: string
         format: date
         description: >-
-          <p>Date the contract is valid from.</p>
+          <p>The initial date that the contract is enforceable.</p>
       dateValidTo:
         type: string
         format: date
         description: >-
-          <p>Date the contract is valid to.</p>
+          <p>The date the contract expires and is no longer enforcable.</p>
       contractVersion:
         type: string
         description: >-
-          <p>Version of contract that this POD applies to.</p>
+          <p>The version of the contract being represented by the associated elements.</p>
       lawList:
         type: object
         description: >-
@@ -1270,7 +1270,7 @@ definitions:
       studentDataIPRights:
         type: string
         description: >-
-          <p>Who owns the IP rights of this contract?</p>
+          <p>Who owns the intellectual property for any student under this contract.</p>
 
   # ///////////////////////////////// list ////////////////////////////
   lawList:
@@ -1292,11 +1292,11 @@ definitions:
       lawName:
         type: string
         description: >-
-          <p>Common name for this law.</p>
+          <p>The name of the law support is being included for.</p>
       lawDescription:
         type: string
         description: >-
-          <p>Details of the law.</p>
+          <p>A simplified representation of a law, designed to communicate its intent to any member of the public.</p>
 
   # ////////////////////////////// default sequence ///////////////////////////////
   legalRequirements:
@@ -1330,11 +1330,11 @@ definitions:
       clauseLabel:
         type: string
         description: >-
-          <p>The label which should include a brief description.</p>
+          <p>A human friendly handle for refering to the associated clause.</p>
       clauseReference:
         type: string
         description: >-
-          <p>The formal clause reference.</p>
+          <p>An exact reference within the contract to a specific clause.</p>
       clauseContent:
         type: string
         description: >-
@@ -1365,21 +1365,21 @@ definitions:
       benchmarkName:
         type: string
         description: >-
-          <p>The name of the Benchmark</p>
+          <p>A name given to the evidence against which privacy obligations or requirements may be assessed or measured.</p>
       benchmarkId:
         type: string
         description: >-
-          <p>The local id of the benchmark.</p>
+          <p>A unique identifier assigned to an instance of the evidence against which privacy obligations or requirements may be assessed or measured.</p>
         $ref: '#/definitions/gCoreLocalId'
       benchmarkDescription:
         type: string
         description: >-
-          <p>A description of what the benchmark is and how it should be applied.</p>
+          <p>A description of the evidence against which privacy obligations or requirements may be assessed or measured.</p>
       benchmarkURL:
         type: string
         format: uri
         description: >-
-          <p>A link to any authoritative source of the benchmark.</p>
+          <p>A URL pointing to the evidence against which privacy obligations or requirements may be assessed or measured.</p>
 
   # ///////////////////////////////// list ////////////////////////////
   obligationList:
@@ -1401,12 +1401,12 @@ definitions:
       obligationDescription:
         type: string
         description: >-
-          <p>A description of the requirment imposed by the contract.</p>
+          <p>The narrative of an individual requirement imposed by the contract.</p>
       obligationURL:
         type: string
         format: uri
         description: >-
-          <p>A link to any authoritative source of the obligation.</p>
+          <p>The URL pointing to the official definition of a requirment imposed by the contract.</p>
       benchmarkList:
         type: object
         description: >-
@@ -1455,7 +1455,7 @@ definitions:
       fieldList:
         type: object
         description: >-
-          <p>A list of fields that can be accessed under this POD. Equivalent to a "green list".</p>
+          <p>A list of fields that can be accessed under this POD. Equivalent to a green list.</p>
         $ref: '#/definitions/fieldList'
 
   # ////////////////////////////// default sequence ///////////////////////////////
@@ -1473,15 +1473,15 @@ definitions:
       fieldList:
         type: object
         description: >-
-          <p>A list of fields that can be accessed under this POD. Equivalent to a "green list".</p>
+          <p>A list of fields that can be accessed under this POD. Equivalent to a green list.</p>
         $ref: '#/definitions/fieldList'
       respondInDays:
         type: integer
         description: >-
-          <p>n how many days should any request for information around this data subject be responded to?</p>
+          <p>Maximum response time, number of days, for information regarding this data.</p>
       requirePortability:
         description: >-
-          <p>Do all the rules surrounding this data need to be ported with any data that is transmeitted?</p>
+          <p>Flag indicating that the rules surrounding this data must be ported with applicable data that is transmitted.</p>
         oneOf:
         - enum: [ "Y" ]
           title: Y
@@ -1496,7 +1496,7 @@ definitions:
     properties:
       deleteData:
         description: >-
-          <p>Must data be deleted when no longer required to the primary purpose?</p>
+          <p>Flag indicating that the data must be deleted when no longer requred for the primary purpose.</p>
         oneOf:
         - enum: [ "Y" ]
           title: Y
@@ -1505,12 +1505,12 @@ definitions:
       dataRetention:
         type: integer
         description: >-
-          <p>If allowed, how long can the data be retained for when no longer required for the primary purpose?</p>
+          <p>If allowed, the length of time the data be retained when no longer required for the primary purpose.</p>
       deleteBy:
         type: string
         format: date
         description: >-
-          <p>By which specific date should this data be removed from systems?</p>
+          <p>The specific date should this data be removed from the systems.</p>
       partyToDeleteData:
         type: object
         description: >-
@@ -1519,10 +1519,10 @@ definitions:
       respondInDays:
         type: integer
         description: >-
-          <p>In how many days should any request for information around this data and it's deletion be responded to?</p>
+          <p>Maximum response time, number of days, for information regarding this data.</p>
       requirePortability:
         description: >-
-          <p>Do all the rules surrounding this data need to be ported with any data that is transmeitted?</p>
+          <p>Flag indicating that the rules surrounding this data must be ported with applicable data that is transmitted.</p>
         oneOf:
         - enum: [ "Y" ]
           title: Y
@@ -1537,6 +1537,8 @@ definitions:
     properties:
       organisation:
         type: string
+        description: >-
+          <p>The group responsible for ensuring the data is removed when required.</p>
         $ref: '#/definitions/gCoreLocalId'
       deletecontactInfo:
         type: object
@@ -1564,18 +1566,24 @@ definitions:
         $ref: '#/definitions/clauseList'
       technologyName:
         type: string
+        description: >-
+          <p>The name of the technology being utilized.</p>
       technologyDescription:
         type: string
+        description: >-
+          <p>The narrative as to what the technology`s role is in providing security.</p>
       referenceURL:
         type: string
         format: uri
       versionMin:
         type: string
+        description: >-
+          <p>The version at which the technology is considered sufficient to supply security for its applicable area.</p>
 
   # ///////////////////////////////// list ////////////////////////////
   fieldList:
     description: >-
-      <p>A list of fields that can be accessed under this POD. Equivalent to a "green list".</p>
+      <p>A list of fields that can be accessed under this POD. Equivalent to a green list.</p>
     type: object
     properties:
       field:
@@ -1586,16 +1594,16 @@ definitions:
   # ////////////////////////////// default sequence ///////////////////////////////
   field:
     description: >-
-      <p>Details of a field that can be accessed under this POD, equivalent to an element in a "green list".</p>
+      <p>Details of a field that can be accessed under this POD, equivalent to an element in a green list.</p>
     type: object
     properties:
       fieldName:
         type: string
         description: >-
-          <p>Name of the "green listed field"</p>
+          <p>The full unique path for the data field being granted access to.</p>
       controlrights:
         description: >-
-          <p>What are the control rights around this "green listed field"?</p>
+          <p>The level of access being granted to the data.</p>
         oneOf:
         - enum: [ "R" ]
           title: R
@@ -1605,13 +1613,13 @@ definitions:
   # ////////////////////////////// default sequence ///////////////////////////////
   dataController:
     description: >-
-      <p>The data controller, "means the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data", see GDPR.</p>
+      <p>The data controller, means the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data, see GDPR.</p>
     type: object
     properties:
       dataControllerName:
         type: string
         description: >-
-          <p>Name of the data controller.</p>
+          <p>The name of the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data.</p>
       privacyPolicyURL:
         type: string
         format: uri
@@ -1642,13 +1650,13 @@ definitions:
   # ////////////////////////////// default sequence ///////////////////////////////
   dataProcessor:
     description: >-
-      <p>The data processor, "means a natural or legal person, public authority, agency or other body which processes personal data on behalf of the controller", see GDPR.</p>
+      <p>The data processor, means a natural or legal person, public authority, agency or other body which processes personal data on behalf of the controller, see GDPR.</p>
     type: object
     properties:
       dataProcessorName:
         type: string
         description: >-
-          <p>Name of the Data Processor.</p>
+          <p>The label for the vendor who will be accessing, consuming and/or providing information back to the controller.</p>
       privacyPolicyURL:
         type: string
         format: uri
@@ -1661,7 +1669,7 @@ definitions:
         $ref: '#/definitions/gCoreContactList'
       notifyDataControllerOnAccessRequests:
         description: >-
-          <p>Do we need to advise the data controller of access requests?</p>
+          <p>Indicates if the processor needs to advise the controller of access requests.</p>
         oneOf:
         - enum: [ "Y" ]
           title: Y
@@ -1680,7 +1688,7 @@ definitions:
       alternatePurposeList:
         type: object
         description: >-
-          <p>Alternate purposes for which the data may be used.</p>
+          <p>A purpose for which the data may be shared beyond its orginal uses.</p>
         $ref: '#/definitions/alternatePurposeList'
       deidentifiedPurposeList:
         type: object
@@ -1689,7 +1697,7 @@ definitions:
         $ref: '#/definitions/deidentifiedPurposeList'
       dataUsageMarketingAllowed:
         description: >-
-          <p>Can the data be used for marketing purposes?</p>
+          <p>Determines whether the data may be used for marketing purposes.</p>
         oneOf:
         - enum: [ "Y" ]
           title: Y
@@ -1698,10 +1706,10 @@ definitions:
       personalInformationUpdatedFromSource:
         type: integer
         description: >-
-          <p>The frequency at which personal information is to be updated from source systems.</p>
+          <p>The frequency at which personal information is to be updated from source systems, including deletions.</p>
       dataBreachNotification:
         description: >-
-          <p>In the event there is a breach event is notification of the breach contact required?</p>
+          <p>Determines if notification of those in the breach contact list is required.</p>
         oneOf:
         - enum: [ "Y" ]
           title: Y
@@ -1714,7 +1722,7 @@ definitions:
         $ref: '#/definitions/gCoreContactList'
       employeesMustComplyWithAgreement:
         description: >-
-          <p>Must employees of the data controller comply the with agreement?</p>
+          <p>Determines whether the data controller and their staff must also comply with the privacy agreement.</p>
         oneOf:
         - enum: [ "Y" ]
           title: Y
@@ -1722,7 +1730,7 @@ definitions:
           title: N
       employeeConfidentialityAgreement:
         description: >-
-          <p> Are employees of the data controller required to comply with a confidentiality agreement?</p>
+          <p>Determines whether the data controller and their staff must also comply with the confidentiality agreement.</p>
         oneOf:
         - enum: [ "Y" ]
           title: Y
@@ -1758,7 +1766,7 @@ definitions:
       subProcessorName:
         type: string
         description: >-
-          <p>Name of the sub processor.</p>
+          <p>The name of the natural or legal person, public authority, agency or other body which processes personal data on behalf of the controller.</p>
       privacyPolicyURL:
         type: string
         format: uri
@@ -1767,7 +1775,7 @@ definitions:
       privacyContactList:
         type: object
         description: >-
-          <p>Details of the data sub processor's privacy contact.</p>
+          <p>Details of the data sub processor`s privacy contact.</p>
         $ref: '#/definitions/gCoreContactList'
       purposeList:
         type: object
@@ -1800,7 +1808,7 @@ definitions:
   # ///////////////////////////////// list ////////////////////////////
   deidentifiedPurposeList:
     description: >-
-      <p>The purposes for which deidentified data is able to be used (if any).</p>
+      <p>A purposes for which deidentified data may be used.</p>
     type: object
     properties:
       deidentifiedPurpose:
@@ -1822,7 +1830,7 @@ definitions:
   # ///////////////////////////////// list ////////////////////////////
   alternatePurposeList:
     description: >-
-      <p>Alternate purposes for which the data may be used.</p>
+      <p>Purposes for which the data may be shared beyond its orginal uses.</p>
     type: object
     properties:
       alternatePurpose:
@@ -1849,10 +1857,16 @@ definitions:
     properties:
       typeOfCondition:
         type: string
+        description: >-
+          <p>The name of the parameter used fo enforce the privacy condition.</p>
       conditionName:
         type: string
+        description: >-
+          <p>The name of the parameter used to enforce the privacy condition.</p>
       conditionDescription:
         type: string
+        description: >-
+          <p>The explanation of what the related privacy conditions combine to do in plain terms.</p>
       propertyList:
         type: object
         $ref: '#/definitions/propertyNVList'
@@ -1876,9 +1890,13 @@ definitions:
     properties:
       zoneId:
         type: string
+        description: >-
+          <p>Identifies the collection of appropriate data providers.</p>
         $ref: '#/definitions/gCoreLocalId'
       contextId:
         type: string
+        description: >-
+          <p>Identifies the data scope within the zone.</p>
         $ref: '#/definitions/gCoreLocalId'
 
   # ///////////////////////////////// list ////////////////////////////
@@ -1927,9 +1945,13 @@ definitions:
     properties:
       trainingName:
         type: string
+        description: >-
+          <p>The label of the training being given to employees to teach privacy requirements and practices.</p>
       trainingURL:
         type: string
         format: uri
+        description: >-
+          <p>The URL of the training being given to employees to teach privacy requirements and practices.</p>
 
   # ////////////////////////////// default sequence ///////////////////////////////
   passwordEmployeeAccessStandard:
@@ -1940,7 +1962,7 @@ definitions:
       standardName:
         type: string
         description: >-
-          <p>Name of the standard used for access.</p>
+          <p>The label of rule set for the proceessor used to define valid passwords.</p>
       standardURL:
         type: string
         format: uri
@@ -1972,7 +1994,7 @@ definitions:
       usage:
         type: string
         description: >-
-          <p>Details of the usage within the country, how the data is handled e.g. stored permanently, operational store, back-up, archived, etc.</p>
+          <p>Country specific details about how the processor handles the data.</p>
 
   # ///////////////////////////////// list ////////////////////////////
   securityTestRequiredList:
@@ -2002,10 +2024,10 @@ definitions:
       remediationRequiredIn:
         type: string
         description: >-
-          <p>RNumber of days remediation for any inadequacies has to be completed with in.</p>
+          <p>Number of days allowed to remediate any inadequacies discovered during testing.</p>
       shareResults:
         description: >-
-          <p>Are the results of this security test allowed to be shared?</p>
+          <p>Determines whether the results of a security test may be made publicly known.</p>
         oneOf:
         - enum: [ "Y" ]
           title: Y
@@ -2031,8 +2053,12 @@ definitions:
     properties:
       propertyName:
         type: string
+        description: >-
+          <p>A short label meant to convey quick meaning of the machine readable expression.</p>
       propertyValue:
         type: string
+        description: >-
+          <p>A machine readable expression designed to specify one aspect of the condition for machine enforcement.</p>
 
   # ///////////////////////////// single Item with Values ////////////////////////////////
   DefinedProtocols:
@@ -2126,6 +2152,15 @@ definitions:
         type: string
         description: >-
           <p>Attempted operation. Ex: "Modify Student"</p>
+      type:
+        type: string
+        description: >-
+          <p>Indicator if the error relates to infrastructure or data.</p>
+        $ref: '#/definitions/errorType'
+      subCode:
+        type: string
+        description: >-
+          <p>Machine readable second code used to eliminate ambiguity.</p>
       message:
         type: string
         description: >-
@@ -2134,6 +2169,53 @@ definitions:
         type: string
         description: >-
           <p>An optional error description that is more complete and technical in nature. It is to be used as a diagnostic message in trouble-shooting procedures. Example: "The 'Students' table is opened in exclusive mode by user 'ADM1' (dbm.cpp, line 300)."</p>
+      errorDetails:
+        type: object
+        $ref: '#/definitions/errorDetails'
+
+  # ////////////////////////////// default sequence ///////////////////////////////
+  errorDetail:
+    type: object
+    properties:
+      id:
+        type: string
+        xml:
+          attribute: true
+      type:
+        type: string
+        description: >-
+          <p>Indicator if the error relates to infrastructure or data.</p>
+        $ref: '#/definitions/errorType'
+      subCode:
+        type: string
+        description: >-
+          <p>Machine readable second code used to eliminate ambiguity.</p>
+      message:
+        type: string
+        description: >-
+          <p>A simple, easy to understand, compact description of the error. The primary consumer of this message is the application user. Example: "Unable to open database."</p>
+      description:
+        type: string
+        description: >-
+          <p>An optional error description that is more complete and technical in nature. It is to be used as a diagnostic message in trouble-shooting procedures. Example: "The 'Students' table is opened in exclusive mode by user 'ADM1' (dbm.cpp, line 300)."</p>
+
+  # ///////////////////////////// single Item with Values ////////////////////////////////
+  errorType:
+    type: string
+    oneOf:
+    - enum: [ "INFRASTRUCTURE" ]
+      title: INFRASTRUCTURE
+    - enum: [ "DATA" ]
+      title: DATA
+
+  # ///////////////////////////////// list ////////////////////////////
+  errorDetails:
+    type: object
+    properties:
+      errorDetail:
+        type: array
+        items:
+          $ref: '#/definitions/errorDetail'
 
   # ///////////////////////////////// list ////////////////////////////
   stateList:
