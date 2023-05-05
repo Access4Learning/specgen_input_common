@@ -22,24 +22,22 @@ components:
                 summary: PESC notation
                 value: 
                   adminDirectives:
-                    - adminDirective:
-                        id: a8c3c3e3-4b35-9d75-101d-00aa001a1652
-                        timestamp: '2021-06-18T01:04:42.283Z'
-                        timeout: P2D
-                        serviceName: StudentPersonals
-                        method: Refresh
-                        methodParameters:
-                          - methodParameter:
-                              paramName: RefId
-                              paramValue: b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                              comparisonType: EQUAL
-                          - methodParameter:
-                              paramName: 'DOB:Year'
-                              paramValue: '2010'
-                              comparisonType: GREATER
-                          - methodParameter:
-                              paramName: RequireIsolation
-                              paramValue: 'TRUE'
+                    adminDirective:
+                    - id: a8c3c3e3-4b35-9d75-101d-00aa001a1652
+                      timestamp: '2021-06-18T01:04:42.283Z'
+                      timeout: P2D
+                      serviceName: StudentPersonals
+                      method: Refresh
+                      methodParameters:
+                        methodParameter:
+                          - paramName: RefId
+                            paramValue: b72f2d4-7a83-4297-a71f-8b5fb26cbf14
+                            comparisonType: EQUAL
+                          - paramName: 'DOB:Year'
+                            paramValue: '2010'
+                            comparisonType: GREATER
+                          - paramName: RequireIsolation
+                            paramValue: 'TRUE'
               goessner: 
                 summary: Goessner notation
                 value: 
@@ -119,7 +117,8 @@ components:
             type: object
             description: >-
               Update Response if request HTTP Header methodOverride=UPDATE  
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/updateResponseCollection'
+            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/updateResponse'
+              #$ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/updateResponseCollection'
     
       deleteMultiSchema:
         properties:
@@ -127,7 +126,8 @@ components:
             type: object
             description: >-
               Delete Response if request HTTP Header methodOverride=DELETE  
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteResponseCollection'
+              #$ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteResponseCollection'
+            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteResponse'
     
       createMultiSchema:
         properties:
@@ -135,7 +135,8 @@ components:
             type: object
             description: >-
               Create Response
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/createResponseCollection'
+            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/createResponse'
+              #$ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/createResponseCollection'
     
       updateMultiExamples:
         pesc: 
@@ -143,19 +144,17 @@ components:
           value: 
             updateResponse:
               updates:
-                - update:
-                    id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                update:
+                  - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
                     statusCode: '200'
-                - update:
-                    id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                  - id: 41953aaa-2811-11e6-b67b-9e71128cae77
                     statusCode: '404'
                     error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                      code: '404'
+                      code: 404
                       scope: Provider
                       message: Data for the given ID does not exist.
-                - update:
-                    id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
                     statusCode: '200'
         goessner: 
           summary: Goessner - Batch Update Response
@@ -192,44 +191,43 @@ components:
                 <update id="ff789e1c-dfe7-4c18-8ef0-d907b81ea61e" statusCode="200"/>
               </updates>
             </updateResponse>
-    
       deleteMultiExamples:
         pesc: 
           summary: PESC - Batch Delete Response
           value: 
-            deletes:
-              - delete:
-                  id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  statusCode: '204'
-              - delete:
-                  id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                  statusCode: '404'
-                  error:
-                    id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    code: '404'
-                    scope: Provider
-                    message: Data for the given ID does not exist.
-              - delete:
-                  id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  statusCode: '204'
+            deleteResponse:
+              deletes:
+                delete:
+                  - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                    statusCode: '204'
+                  - id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                    statusCode: '404'
+                    error:
+                      id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                      code: 404
+                      scope: Provider
+                      message: Data for the given ID does not exist.
+                  - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                    statusCode: '204'
         goessner: 
           summary: Goessner - Batch Delete Response
           value: 
-            deletes:
-              - delete:
-                  "@id": df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  "@statusCode": '204'
-              - delete:
-                  "@id": 41953aaa-2811-11e6-b67b-9e71128cae77
-                  "@statusCode": '404'
-                  error:
-                    "@id": 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    code: '404'
-                    scope: Provider
-                    message: Data for the given ID does not exist.
-              - delete:
-                  "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                  "@statusCode": '204'
+            deleteResponse:
+              deletes:
+                - delete:
+                    "@id": df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                    "@statusCode": '204'
+                - delete:
+                    "@id": 41953aaa-2811-11e6-b67b-9e71128cae77
+                    "@statusCode": '404'
+                    error:
+                      "@id": 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                      code: '404'
+                      scope: Provider
+                      message: Data for the given ID does not exist.
+                - delete:
+                    "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                    "@statusCode": '204'
         xml:  
           summary: XML - Batch Delete Response
           value: >-
@@ -253,22 +251,34 @@ components:
           value: 
             createResponse:
               creates:
-                - create:
-                    id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    advisoryId: '3'
-                    statusCode: '201'
-                - create:
-                    advisoryId: '1'
-                    statusCode: '400'
-                    error:
+                create:
+                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  advisoryId: '3'
+                  statusCode: '201'
+                - advisoryId: '1'
+                  statusCode: '400'
+                  error:
                       id: 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                      code: '400'
+                      code: 400
+                      type: DATA
                       scope: Provider
                       message: Mandatory data is missing.
-                - create:
-                    id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                    advisoryId: '2'
-                    statusCode: '201'
+                      description: Version problems or error specific to a particular object type, such as the omission of a mandatory element or an unsupported query or an unsupported order clause.
+                      errorDetails:
+                        errorDetail:
+                          - id: 2372e458-7d1a-190e-ede4-8b5fb26ce35a
+                            type: DATA
+                            subCode: 400-01
+                            message: Missing date of birth.
+                            description: The date of birth is required for the student.
+                          - id: ad349e34-43af-083e-aae3-82ef5a34b450
+                            type: DATA
+                            subCode: 400-17
+                            message: Student already enroled.
+                            description: Student is already enrolled in another school.
+                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                  advisoryId: '2'
+                  statusCode: '201'
         goessner: 
           summary: Goessner - Batch Create Response
           value: 
@@ -284,8 +294,23 @@ components:
                     error:
                       "@id": 6f789e1c-dfe7-4c18-8ef0-d907b81ea61e
                       code: '400'
+                      type: DATA
                       scope: Provider
                       message: Mandatory data is missing.
+                      description: Version problems or error specific to a particular object type, such as the omission of a mandatory element or an unsupported query or an unsupported order clause.
+                      errorDetails:
+                        - errorDetail:
+                            "@id": 2372e458-7d1a-190e-ede4-8b5fb26ce35a
+                            type: DATA
+                            subCode: 400-01
+                            message: Missing date of birth.
+                            description: The date of birth is required for the student.
+                        - errorDetail:
+                            "@id": ad349e34-43af-083e-aae3-82ef5a34b450
+                            type: DATA
+                            subCode: 400-17
+                            message: Student already enroled.
+                            description: Student is already enrolled in another school.
                 - create:
                     "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
                     "@advisoryId": '2'
@@ -299,8 +324,24 @@ components:
                 <create advisoryId="1" statusCode="400">
                   <error id="6f789e1c-dfe7-4c18-8ef0-d907b81ea61e">
                     <code>400</code>
+                    <type>DATA</type>
                     <scope>Provider</scope>
                     <message>Mandatory data is missing.</message>
+                    <description>Version problems or error specific to a particular object type, such as the omission of a mandatory element or an unsupported query or an unsupported order clause.</description>
+                    <errorDetails>
+                      <errorDetail id="2372e458-7d1a-190e-ede4-8b5fb26ce35a">
+                        <type>DATA</type>
+                        <subCode>400-01</subCode>
+                        <message>Missing date of birth.</message>
+                        <description>The date of birth is required for the student.</description>
+                      </errorDetail>
+                      <errorDetail id="ad349e34-43af-083e-aae3-82ef5a34b450">
+                        <type>DATA</type>
+                        <subCode>400-17</subCode>
+                        <message>Student already enroled.</message>
+                        <description>Student is already enrolled in another school.</description>
+                      </errorDetail>
+                    </errorDetails>
                   </error>
                 </create>
                 <create id="ff789e1c-dfe7-4c18-8ef0-d907b81ea61e"  advisoryId="2" statusCode="201"/>
@@ -392,7 +433,8 @@ components:
             type: object
             description: >-
               Delete Request if request HTTP Header methodOverride=DELETE  
-            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteRequestCollection'
+              #$ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteRequestCollection'
+            $ref: 'jsonSchema_OpenAPI3.1_Create_IN.yaml#/definitions/deleteRequest'
     
       deleteMultiExamples:
         pesc: 
@@ -400,22 +442,20 @@ components:
           value:
             deleteRequest:
               deletes:
-                - delete:
-                    id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                - delete:
-                    id: 41953aaa-2811-11e6-b67b-9e71128cae77
-                - delete:
-                    id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                delete:
+                - id: df789e1c-dfe7-4c18-8ef0-d907b81ea61e
+                - id: 41953aaa-2811-11e6-b67b-9e71128cae77
+                - id: ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
         goessner: 
           summary: Goessner - Batch Delete Request
           value: 
             deleteRequest:
               deletes:
-                - delete:
+              - delete:
                     "@id": df789e1c-dfe7-4c18-8ef0-d907b81ea61e
-                - delete:
+              - delete:
                     "@id": 41953aaa-2811-11e6-b67b-9e71128cae77
-                - delete:
+              - delete:
                     "@id": ff789e1c-dfe7-4c18-8ef0-d907b81ea61e
         xml:  
           summary: XML - Batch Delete Request
@@ -451,19 +491,46 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '400'
+                      code: 400
+                      type: DATA
                       scope: Provider
                       message: Bad Request
                       description: Version problems or error specific to a particular object type, such as the omission of a mandatory element or an unsupported query or an unsupported order clause.
+                      errorDetails:
+                        errorDetail:
+                          - id: 2372e458-7d1a-190e-ede4-8b5fb26ce35a
+                            type: DATA
+                            subCode: 400-01
+                            message: Missing date of birth.
+                            description: The date of birth is required for the student.
+                          - id: ad349e34-43af-083e-aae3-82ef5a34b450
+                            type: DATA
+                            subCode: 400-17
+                            message: Student already enroled.
+                            description: Student is already enrolled in another school.
                 goessner: 
                   summary: Goessner notation
                   value: 
                     error: 
                       "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                       code: '400'
+                      type: DATA
                       scope: Provider
                       message: Bad Request
                       description: Version problems or error specific to a particular object type, such as the omission of a mandatory element or an unsupported query or an unsupported order clause.
+                      errorDetails:
+                        - errorDetail:
+                            "@id": 2372e458-7d1a-190e-ede4-8b5fb26ce35a
+                            type: DATA
+                            subCode: 400-01
+                            message: Missing date of birth.
+                            description: The date of birth is required for the student.
+                        - errorDetail:
+                            "@id": ad349e34-43af-083e-aae3-82ef5a34b450
+                            type: DATA
+                            subCode: 400-17
+                            message: Student already enroled.
+                            description: Student is already enrolled in another school.
             application/xml:
               schema:
                 type: object
@@ -476,9 +543,24 @@ components:
               example: >-
                 <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
                   <code>400</code>
+                  <type>DATA</type>
                   <scope>Provider</scope>
                   <message>Bad Request</message>
                   <description>Version problems or error specific to a particular object type, such as the omission of a mandatory element or an unsupported query or an unsupported order clause.</description>
+                  <errorDetails>
+                    <errorDetail id="2372e458-7d1a-190e-ede4-8b5fb26ce35a">
+                        <type>DATA</type>
+                        <subCode>400-01</subCode>
+                        <message>Missing date of birth.</message>
+                        <description>The date of birth is required for the student.</description>
+                    </errorDetail>
+                      <errorDetail id="ad349e34-43af-083e-aae3-82ef5a34b450">
+                        <type>DATA</type>
+                        <subCode>400-17</subCode>
+                        <message>Student already enroled.</message>
+                        <description>Student is already enrolled in another school.</description>
+                    </errorDetail>
+                  </errorDetails>
                 </error>
           headers:
             'content-type':
@@ -507,7 +589,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '401'
+                      code: 401
                       scope: Provider
                       message: Authorisation failed.
                       description: Invalid or missing 'Authorization' HTTP Header.
@@ -563,19 +645,46 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '403'
+                      code: 403
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Forbidden
-                      description: This operation is not enabled for your adapter.
+                      description: Not allowed to perform this operation.
+                      errorDetails:
+                        errorDetail:
+                          - id: 2372e458-7d1a-190e-ede4-8b5fb26ce35a
+                            type: INFRASTRUCTURE
+                            subCode: 403-01
+                            message: Missing data privacy marker.
+                            description: The HTTP header called 'dataPrivacyMarker' is missing.
+                          - id: ad349e34-43af-083e-aae3-82ef5a34b450
+                            type: INFRASTRUCTURE
+                            subCode: 403-05
+                            message: Operation not allowed.
+                            description: Not allows to call a HTTP POST for this data set.
                 goessner: 
                   summary: Goessner notation
                   value: 
                     error: 
                       "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                       code: '403'
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Forbidden
                       description: This operation is not enabled for your adapter.
+                      errorDetails:
+                        - errorDetail:
+                            "@id": 2372e458-7d1a-190e-ede4-8b5fb26ce35a
+                            type: INFRASTRUCTURE
+                            subCode: 403-01
+                            message: Missing data privacy marker.
+                            description: The HTTP header called 'dataPrivacyMarker' is missing.
+                        - errorDetail:
+                            "@id": ad349e34-43af-083e-aae3-82ef5a34b450
+                            type: INFRASTRUCTURE
+                            subCode: 403-05
+                            message: Operation not allowed.
+                            description: Not allows to call a HTTP POST for this data set.
             application/xml:
               schema:
                 type: object
@@ -588,9 +697,24 @@ components:
               example: >-
                 <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
                   <code>403</code>
+                  <type>INFRASTRUCTURE</type>
                   <scope>Provider</scope>
                   <message>Forbidden</message>
                   <description>This operation is not enabled for your adapter.</description>
+                  <errorDetails>
+                    <errorDetail id="2372e458-7d1a-190e-ede4-8b5fb26ce35a">
+                        <type>INFRASTRUCTURE</type>
+                        <subCode>403-01</subCode>
+                        <message>Missing data privacy marker.</message>
+                        <description>The HTTP header called 'dataPrivacyMarker' is missing.</description>
+                    </errorDetail>
+                    <errorDetail id="ad349e34-43af-083e-aae3-82ef5a34b450">
+                        <type>INFRASTRUCTURE</type>
+                        <subCode>403-05</subCode>
+                        <message>Operation not allowed.</message>
+                        <description>Not allows to call a HTTP POST for this data set.</description>
+                    </errorDetail>
+                  </errorDetails>
                 </error>
           headers:
             'content-type':
@@ -619,7 +743,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '404'
+                      code: 404
                       scope: Provider
                       message: Not Found
                       description: Object ID does not correspond to an existing object. This can occur for Query as well as Update or Delete operations. No Service Provider has been found to match the parameters (Zone, Context, Service name) in the Request.
@@ -675,7 +799,7 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '405'
+                      code: 405
                       scope: Provider
                       message: Method not Allowed
                       description: Paged Query Request issued to Object URL rather than Object List URL.
@@ -731,7 +855,9 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '409'
+                      code: 409
+                      type: DATA
+                      subCode: 409-01
                       scope: Provider
                       message: State Conflict
                       description: An attempt has been made to create an existing object.
@@ -741,6 +867,8 @@ components:
                     error: 
                       "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                       code: '409'
+                      type: DATA
+                      subCode: 409-01
                       scope: Provider
                       message: State Conflict
                       description: An attempt has been made to create an existing object.
@@ -756,6 +884,8 @@ components:
               example: >-
                 <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
                   <code>409</code>
+                  <type>DATA</type>
+                  <subCode>409-01</subCode>
                   <scope>Provider</scope>
                   <message>State Conflict</message>
                   <description>An attempt has been made to create an existing object.</description>
@@ -787,19 +917,46 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '410'
+                      code: 410
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Gone
-                      description: Used for query functionality where the Changes Since opaque marker or Paged navigationId provided by the consumer is no longer valid.
+                      description: Some HTTP headers provided are no longer valid. See error details for more information
+                      errorDetails:
+                        errorDetail:
+                          - id: 2372e458-7d1a-190e-ede4-8b5fb26ce35a
+                            type: INFRASTRUCTURE
+                            subCode: 410-20
+                            message: Invalid data privacy marker.
+                            description: The HTTP header called 'dataPrivacyMarker' is no longer valid.
+                          - id: ad349e34-43af-083e-aae3-82ef5a34b450
+                            type: INFRASTRUCTURE
+                            subCode: 410-21
+                            message: Invalid changes since marker.
+                            description: The HTTP header called 'changesSinceMarker' is no longer valid.
                 goessner: 
                   summary: Goessner notation
                   value: 
                     error: 
                       "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                       code: '410'
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Gone
-                      description: Used for query functionality where the Changes Since opaque marker or Paged navigationId provided by the consumer is no longer valid.
+                      description: Some HTTP headers provided are no longer valid. See error details for more information
+                      errorDetails:
+                        - errorDetail:
+                            "@id": 2372e458-7d1a-190e-ede4-8b5fb26ce35a
+                            type: INFRASTRUCTURE
+                            subCode: 410-20
+                            message: Invalid data privacy marker.
+                            description: The HTTP header called 'dataPrivacyMarker' is no longer valid.
+                        - errorDetail:
+                            "@id": ad349e34-43af-083e-aae3-82ef5a34b450
+                            type: INFRASTRUCTURE
+                            subCode: 410-21
+                            message: Invalid changes since marker.
+                            description: The HTTP header called 'changesSinceMarker' is no longer valid.
             application/xml:
               schema:
                 type: object
@@ -812,9 +969,24 @@ components:
               example: >-
                 <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
                   <code>410</code>
+                  <type>INFRASTRUCTURE</type>
                   <scope>Provider</scope>
                   <message>Gone</message>
-                  <description>Used for query functionality where the Changes Since opaque marker or Paged navigationId provided by the consumer is no longer valid.</description>
+                  <description>Some HTTP headers provided are no longer valid. See error details for more information</description>
+                  <errorDetails>
+                    <errorDetail id="2372e458-7d1a-190e-ede4-8b5fb26ce35a">
+                        <type>INFRASTRUCTURE</type>
+                        <subCode>410-20</subCode>
+                        <message>Invalid data privacy marker.</message>
+                        <description>The HTTP header called 'dataPrivacyMarker' is no longer valid.</description>
+                    </errorDetail>
+                    <errorDetail id="ad349e34-43af-083e-aae3-82ef5a34b450">
+                        <type>INFRASTRUCTURE</type>
+                        <subCode>410-21</subCode>
+                        <message>Invalid changes since marker.</message>
+                        <description>he HTTP header called 'changesSinceMarker' is no longer valid.</description>
+                    </errorDetail>
+                  </errorDetails>
                 </error>
           headers:
             'content-type':
@@ -843,7 +1015,8 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '412'
+                      code: 412
+                      type: DATA
                       scope: Provider
                       message: Precondition Failed
                       description: An attempt has been made to modify an object when the Requester was not basing the modification on the latest version.
@@ -853,6 +1026,7 @@ components:
                     error: 
                       "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                       code: '412'
+                      type: DATA
                       scope: Provider
                       message: Precondition Failed
                       description: An attempt has been made to modify an object when the Requester was not basing the modification on the latest version.
@@ -868,6 +1042,7 @@ components:
               example: >-
                 <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
                   <code>412</code>
+                  <type>DATA</type>
                   <scope>Provider</scope>
                   <message>Precondition Failed</message>
                   <description>An attempt has been made to modify an object when the Requester was not basing the modification on the latest version.</description>
@@ -899,19 +1074,35 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '413'
+                      code: 413
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Response too large
                       description: A non-paged Query returning all objects was too large for the Service Provider (or Broker) to include in a single Response.
+                      errorDetails:
+                        errorDetail:
+                          - id: 2372e458-7d1a-190e-ede4-8b5fb26ce35a
+                            type: INFRASTRUCTURE
+                            subCode: 413-HINT
+                            message: "10"
+                            description: See 'message' for max number of objects that can be requested.
                 goessner: 
                   summary: Goessner notation
                   value: 
                     error: 
                       "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                       code: '413'
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Response too large
                       description: A non-paged Query returning all objects was too large for the Service Provider (or Broker) to include in a single Response.
+                      errorDetails:
+                        - errorDetail:
+                            "@id": 2372e458-7d1a-190e-ede4-8b5fb26ce35a
+                            type: INFRASTRUCTURE
+                            subCode: 413-HINT
+                            message: "10"
+                            description: See 'message' for max number of objects that can be requested.
             application/xml:
               schema:
                 type: object
@@ -924,9 +1115,18 @@ components:
               example: >-
                 <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
                   <code>413</code>
+                  <type>INFRASTRUCTURE</type>
                   <scope>Provider</scope>
                   <message>Response too large</message>
                   <description>A non-paged Query returning all objects was too large for the Service Provider (or Broker) to include in a single Response.</description>
+                  <errorDetails>
+                    <errorDetail id="2372e458-7d1a-190e-ede4-8b5fb26ce35a">
+                        <type>INFRASTRUCTURE</type>
+                        <subCode>413-HINT</subCode>
+                        <message>10</message>
+                        <description>See 'message' for max number of objects that can be requested.</description>
+                    </errorDetail>
+                  </errorDetails>
                 </error>
           headers:
             'content-type':
@@ -955,7 +1155,8 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '415'
+                      code: 415
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Unsupported Media Type
                       description: The request entity has a media type which the server or resource does not support. For example, the client requestd application/json but the server only supports application/xml.
@@ -965,6 +1166,7 @@ components:
                     error: 
                       "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                       code: '415'
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Unsupported Media Type
                       description: The request entity has a media type which the server or resource does not support. For example, the client requestd application/json but the server only supports application/xml.
@@ -980,6 +1182,7 @@ components:
               example: >-
                 <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
                   <code>415</code>
+                  <type>INFRASTRUCTURE</type>
                   <scope>Provider</scope>
                   <message>Unsupported Media Type</message>
                   <description>The request entity has a media type which the server or resource does not support. For example, the client requestd application/json but the server only supports application/xml.</description>
@@ -1011,7 +1214,8 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '500'
+                      code: 500
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Internal Service Error
                       description: An unexpected error occurred in servicing the Request.
@@ -1021,6 +1225,7 @@ components:
                     error: 
                       "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                       code: '500'
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Internal Service Error
                       description: An unexpected error occurred in servicing the Request.
@@ -1036,6 +1241,7 @@ components:
               example: >-
                 <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
                   <code>500</code>
+                  <type>INFRASTRUCTURE</type>
                   <scope>Provider</scope>
                   <message>Internal Service Error</message>
                   <description>An unexpected error occurred in servicing the Request.</description>
@@ -1067,7 +1273,8 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '501'
+                      code: 501
+                      type: DATA
                       scope: Provider
                       message: Not Implemented
                       description: The server either does not recognize the request method, or it lacks the ability to fulfil the request. Usually this implies future availability (e.g., a new feature of a web-service API).
@@ -1077,6 +1284,7 @@ components:
                     error: 
                       "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                       code: '501'
+                      type: DATA
                       scope: Provider
                       message: Not Implemented
                       description: The server either does not recognize the request method, or it lacks the ability to fulfil the request. Usually this implies future availability (e.g., a new feature of a web-service API).
@@ -1092,6 +1300,7 @@ components:
               example: >-
                 <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
                   <code>501</code>
+                  <type>DATA</type>
                   <scope>Provider</scope>
                   <message>Not Implemented</message>
                   <description>The server either does not recognize the request method, or it lacks the ability to fulfil the request. Usually this implies future availability (e.g., a new feature of a web-service API).</description>
@@ -1123,7 +1332,8 @@ components:
                   value: 
                     error: 
                       id: 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
-                      code: '503'
+                      code: 503
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Service Unavailable
                       description: Returned only for Consumer Requests requiring an immediate Response. This error indicates that the expected Service processing time for the Request is great enough that the Consumer must reissue it as a Request requiring a delayed Response.
@@ -1133,6 +1343,7 @@ components:
                     error: 
                       "@id": 5b72f2d4-7a83-4297-a71f-8b5fb26cbf14
                       code: '503'
+                      type: INFRASTRUCTURE
                       scope: Provider
                       message: Service Unavailable
                       description: Returned only for Consumer Requests requiring an immediate Response. This error indicates that the expected Service processing time for the Request is great enough that the Consumer must reissue it as a Request requiring a delayed Response.
@@ -1148,6 +1359,7 @@ components:
               example: >-
                 <error id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
                   <code>503</code>
+                  <type>INFRASTRUCTURE</type>
                   <scope>Provider</scope>
                   <message>Service Unavailable</message>
                   <description>Returned only for Consumer Requests requiring an immediate Response. This error indicates that the expected Service processing time for the Request is great enough that the Consumer must reissue it as a Request requiring a delayed Response.</description>
@@ -1288,14 +1500,30 @@ components:
           required: false
           schema:
             type: string
-        ETag:
-          name: ETag
+        dataPrivacyMarkerStd:
+          name: dataPrivacyMarker
           in: header
           description: >-
-            If it is returned in a Response, the Consumer may include it the next time it issues any Query to that Service Provider, so that the Service Provider can determine whether it needs to respond to the query by means of query the data store of it cached values can be used.
+            Conditional: If privacy services are in place and enforced then the respective adapter must include this HTTP header in each request or event.
           required: false
           schema:
             type: string
+        dataPrivacyMarkerBatchPutRequest:
+          name: dataPrivacyMarker
+          in: header
+          description: >-
+            Conditional: If privacy services are in place and enforced then the respective adapter must include this HTTP header in each request for an UPDATE or event. For a DELETE it is not required however.
+          required: false
+          schema:
+            type: string
+#        ETag:
+#          name: ETag
+#          in: header
+#          description: >-
+#            If it is returned in a Response, the Consumer may include it the next time it issues any Query to that Service Provider, so that the Service Provider can determine whether it needs to respond to the query by means of query the data store of it cached values can be used.
+#          required: false
+#          schema:
+#            type: string
         fingerprint:
           name: fingerprint
           in: header
@@ -1454,141 +1682,128 @@ components:
       # ////////////////////////////////
       response:
         accept:
-          name: accept
           schema:
             type: string
           description: >-
             Optional: Indicates to the caller what the provider accepts. Typical values are application/xml or application/json. Often provided when a HTTP code 415 is returned.
         content-type:
-          name: content-type
           schema:
             type: string
           description: >-
             Mime type of response body. Example: application/json, application/xml
         content-profile:
-          name: content-profile
           schema:
             type: string
           description: >-
             Optional: Used to indicate the data model schema used in the payload. Example: urn:sif:data/au/3.4.4. Indicates SIF AU v3.4.4 is used.
         changesSinceMarkerGet:
-          name: changesSinceMarker
           schema:
             type: string
           description: >-
             If the changesSinceMarker request was performed. The first response page will contain the new changesSinceMarker value.
         changesSinceMarkerHead:
-          name: changesSinceMarker
           schema:
             type: string
           description: >-
             If a changesSinceMarker is returned then it indicates that this functionality is supported by this endpoint.
         content-encoding:
-          name: content-encoding
           schema:
             type: string
           description: >-
             MIndicate the payload encoding. Valid values are: identity (not compressed) or gzip (compressed).
+        dataPrivacyMarkerStd:
+          schema:
+            type: string
+          description: >-
+            Conditional: If privacy services are in place and enforced then the respective adapter must include this HTTP header in each response or event.
+        dataPrivacyMarkerBatchPutResponse:
+          description: >-
+            Conditional: If privacy services are in place and enforced then the respective adapter must include this HTTP header in each response for an UPDATE or event. For a DELETE it is not required however.
+          required: false
+          schema:
+            type: string
         environmentURI:
-          name: environmentURI
           schema:
             type: string
           description: >-
             May be returned by the provider where the environment is pre-provisioned.
-        ETag:
-          name: ETag
-          schema:
-            type: string
-          description: >-
-            If it is returned in a Response, the Consumer may include it the next time it issues any Query to that Service Provider, so that the Service Provider can determine whether it needs to respond to the query by means of query the data store of it cached values can be used.
+#        ETag:
+#          schema:
+#            type: string
+#          description: >-
+#            If it is returned in a Response, the Consumer may include it the next time it issues any Query to that Service Provider, so that the Service Provider can determine whether it needs to respond to the query by means of query the data store of it cached values can be used.
         fingerprint:
-          name: fingerprint
           schema:
             type: string
           description: >-
             A unique environment identifier that can be safely shared with others. In order not to compromise security it MUST NOT match the environment’s refId, sessionToken, userToken, or applicationKey.
         messageId:
-          name: messageId
           schema:
             type: string
           description: >-
             Required: UUID that uniquely identifies the message that carries it.
         messageType:
-          name: messageType
           schema:
             type: string
           description: >-
             Required: One of: RESPONSE or ERROR. If returned HTTP status code is higher than 300 it is expected to be ERROR otherwise RESPONSE.
         navigationCount:
-          name: navigationCount
           schema:
             type: string
           description: >-
             Optional: The total number of objects in the set of results generated by the initial Paged Query that is associated with the returned navigationId.
         navigationId:
-          name: navigationId
           schema:
             type: string
           description: >-
             Optional: Identifies state maintained in the Service Provider for the Consumer issuing the Paged Query Request. If returned, the Consumer must supply the navigationId value when requesting subsequent Pages of that object type from that Service Provider.
         navigationLastPage:
-          name: navigationLastPage
           schema:
             type: string
           description: >-
             Optional: Included by the service provider as an aid for the Consumer in detecting when to stop issuing Paged Query Requests.
         navigationPage:
-          name: navigationPage
           schema:
             type: string
           description: >-
             Required if the consumer issued a paged query and a page is returned. It indicates which page is being returned.
         navigationPageSize:
-          name: navigationPageSize
           schema:
             type: string
           description: >-
             Required if the consumer issued a paged query and a page is returned. It indicates the actual number of objects on the returned Page.
         relativeServicePath:
-          name: relativeServicePath
           schema:
             type: string
           description: >-
             Required for DELAYED responses. Replicates all information contained in the segments of the Request URL. Inlcudes query parameter and matrix parameters.
         requestId:
-          name: requestId
           schema:
             type: string
           description: >-
             Required for DELAYED responses. Used to correlate the delayed (asynchronous) Response with the original Request
         responseAction:
-          name: responseAction
           schema:
             type: string
           description: >-
             Required: This must exactly match the requestAction value contained in the HTTP header of the Request being responded to. Valid values are: CREATE, UPDATE, DELETE, QUERY or HEAD
         serviceType:
-          name: serviceType
           schema:
             type: string
           description: >-
             Optional: Indicates the service type of the response. Valid values are UTILITY, OBJECT, FUNCTIONAL, SERVICEPATH, XQUERYTEMPLATE, SERVICE. Default: OBJECT.
         serviceSubType:
-          name: serviceSubType
-          in: header
           description: >-
             Only applicable if serviceType is OBJECT or FUNCTIONAL. Indicates that the response if for the 'adminDirective' endpoint of the given service rather than the base service. Valid value is 'adminDirective'.
           required: false
           schema:
             type: string
         timestamp:
-          name: timestamp
           schema:
             type: string
           description: >-
             Required: Date / Time of message creation (in ISO-8601 format which is also used as the basis of xs:dateTime).
         vary:
-          name: vary
           schema:
             type: string
           description: >-
