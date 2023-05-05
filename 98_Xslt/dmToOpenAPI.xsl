@@ -9,6 +9,17 @@
 
 	<!-- Take a SIF_DataModel.input.xml file and produce a matching OpenAPI v3.0.0 spec -->
 	<xsl:output method="text" omit-xml-declaration="yes" indent="no"/>
+	
+	<xsl:param name="sifVersion"/>
+    <xsl:param name="sifLocale"/>
+    <xsl:param name="sifObjectList" select="''"/> <!-- Default to empty list -->
+    <xsl:param name="sifObjectGroupList" select="''"/> <!-- Default to empty list -->
+    <xsl:param name="includeAllHeaders" select="'false'" as="xs:string"/> <!-- If false we only show minimum number of headers -->
+    <xsl:param name="includeAdminDirectives" select="'false'" as="xs:string"/> <!-- If true admin directives endpoints will be included. -->
+    <xsl:param name="omitVersionInExamplesFileName" select="'false'" as="xs:string"/> <!-- If true admin directives endpoints will be included. -->
+
+    <!-- NN 20230116 Whether we are compliant with OpenAPI 3.0 JSON Schema (true), or full JSON Schema, i.e. OpenAPI 3.1 (false). -->
+    <xsl:param name="openAPI30" select="'true'" as="xs:string"/> <!-- If true create Open API 3.0 spec which is more strict -->
 
     <!-- Get the Data Model URL from the Title Page -->
 	<xsl:variable name="extDocUrlRoot">
@@ -23,14 +34,16 @@
 		<xsl:value-of select="not(xfn:empty($includeAdminDirectives)) and $includeAdminDirectives = 'true'"/>
 	</xsl:variable>
 
-        <xsl:variable name="exampleFileName">
-                 <xsl:if test="$omitVersionInExamplesFileName = 'true'">
-                   <xsl:value-of select="concat('examples_', $sifLocale, '.yaml')"/>
-                 </xsl:if>
-                 <xsl:if test="not($omitVersionInExamplesFileName = 'true')">
-                   <xsl:value-of select="concat('examples_', $sifLocale, '_' , $sifVersion, '.yaml')"/>
-                 </xsl:if>
-        </xsl:variable>
+	<xsl:variable name="exampleFileName">
+		<xsl:if test="$omitVersionInExamplesFileName = 'true'">
+			<xsl:value-of select="concat('examples_', $sifLocale, '.yaml')" />
+		</xsl:if>
+		<xsl:if test="not($omitVersionInExamplesFileName = 'true')">
+			<xsl:value-of
+				select="concat('examples_', $sifLocale, '_' , $sifVersion, '.yaml')" />
+		</xsl:if>
+	</xsl:variable>
+	
 	<xsl:variable name="generationTimestamp">
 		<xsl:value-of select="current-dateTime()"/>
 	</xsl:variable>
@@ -43,41 +56,49 @@
 		  	<xsl:value-of select="$sifObjectGroupList"/>
 		</xsl:if>
 	</xsl:variable>
-	
-        <xsl:variable name="commonDefsFileName">
-          <xsl:choose>
-            <xsl:when test="$openAPI30 = 'true'">
-		<xsl:if test="$produceAllHeaders">
-			<xsl:value-of select="'commonDefs-OpenAPI3.0-all-headers.yaml'"/>
-		</xsl:if>
-		<xsl:if test="not($produceAllHeaders)">
-			<xsl:value-of select="'commonDefs-OpenAPI3.0-main-headers.yaml'"/>
-                      </xsl:if>
-            </xsl:when>
-              <xsl:otherwise>
-		<xsl:if test="$produceAllHeaders">
-			<xsl:value-of select="'commonDefs-all-headers.yaml'"/>
-		</xsl:if>
-		<xsl:if test="not($produceAllHeaders)">
-			<xsl:value-of select="'commonDefs-main-headers.yaml'"/>
-                      </xsl:if>
-                    </xsl:otherwise>
-                  </xsl:choose>
-              </xsl:variable>
 
-              <xsl:variable name="openapi_version_lbl">
-                <xsl:choose>
-                  <xsl:when test="$openAPI30 = 'true'"><xsl:value-of select="_OpenAPI3.0_"/></xsl:when>
-                  <xsl:otherwise><xsl:value-of select="_OpenAPI3.1_"/></xsl:otherwise>
-                </xsl:choose>
-              </xsl:variable>
-	
-              <xsl:variable name="openapi_version">
-                <xsl:choose>
-                  <xsl:when test="$openAPI30 = 'true'"><xsl:value-of select='"3.0.3"'/></xsl:when>
-                  <xsl:otherwise><xsl:value-of select='"3.1.0"'/></xsl:otherwise>
-                </xsl:choose>
-              </xsl:variable>
+	<xsl:variable name="commonDefsFileName">
+		<xsl:choose>
+			<xsl:when test="$openAPI30 = 'true'">
+				<xsl:if test="$produceAllHeaders">
+					<xsl:value-of select="'commonDefs-OpenAPI3.0-all-headers.yaml'" />
+				</xsl:if>
+				<xsl:if test="not($produceAllHeaders)">
+					<xsl:value-of select="'commonDefs-OpenAPI3.0-main-headers.yaml'" />
+				</xsl:if>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:if test="$produceAllHeaders">
+					<xsl:value-of select="'commonDefs-OpenAPI3.1-all-headers.yaml'" />
+				</xsl:if>
+				<xsl:if test="not($produceAllHeaders)">
+					<xsl:value-of select="'commonDefs-OpenAPI3.1-main-headers.yaml'" />
+				</xsl:if>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+
+	<xsl:variable name="openapi_version_lbl">
+		<xsl:choose>
+			<xsl:when test="$openAPI30 = 'true'">
+				<xsl:value-of select='"_OpenAPI3.0_"' />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select='"_OpenAPI3.1_"' />
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+
+	<xsl:variable name="openapi_version">
+		<xsl:choose>
+			<xsl:when test="$openAPI30 = 'true'">
+				<xsl:value-of select='"3.0.3"' />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select='"3.1.0"' />
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
 	
 	<xsl:template match="/specgen:SIFSpecification">
 		<xsl:text># // Open API file for:&#x0a;</xsl:text>
@@ -87,6 +108,9 @@
 		<xsl:value-of select="concat('# // Limited to Groups: ', $sifObjectGroupList, '&#x0a;')"/>
 		<xsl:value-of select="concat('# // Include all HTTP Headers: ', $produceAllHeaders, '&#x0a;')"/>
 		<xsl:value-of select="concat('# // Include Admin Directive Endpoints: ', $produceAdminDirectives, '&#x0a;')"/>
+		<xsl:value-of select="concat('# // OpenAPI version: ', $openapi_version, '&#x0a;')"/>
+		<xsl:value-of select="concat('# // Referenced Example File Name: ', $exampleFileName, '&#x0a;')"/>
+		<xsl:value-of select="concat('# // Schema File Version Label: ', $openapi_version_lbl, '&#x0a;')"/>
 		<xsl:value-of select="concat('# // File Generated on: ', $generationTimestamp, '&#x0a;')"/>
 		<xsl:text>&#x0a;</xsl:text>
 
@@ -109,16 +133,11 @@
                                       '        description: optional root directory for SIF API&#x0a;',
                                       'security:&#x0a;',
                                       '  - basicAuth: []&#x0a;',
-                                      '## note: SIF supports a range of authentication schemes beyond basic authentication, this is a placeholder&#x0a;',
-                '')"/>
-                <!-- NN 20230124: basicAuth is a dummy placeholder -->
+                                      '  - sifHMACSHA256: []&#x0a;',
+                                      '  - bearerAuth: []&#x0a;',
+                                      '&#x0a;','')"/>
 
-
-                <!-- NN 20221219: bogus elements 
-									  '  host: ', $q, 'apihost.example.com', $q, '&#x0a;',
-                                                                          '  basePath: ', $q, 'v3', $q, '&#x0a;')"/>
-                  -->
-                                                                          <!-- NN 20230116: add servers  -->
+        <!-- NN 20230116: add servers  -->
 			  
 		<!-- =================== -->
 		<!-- Adds Groups section -->
@@ -148,15 +167,25 @@
 		<xsl:apply-templates select=".//specgen:DataObjects" mode="requestPayloadDefinitions"/>
 		<xsl:apply-templates select=".//specgen:DataObjects" mode="responsePayloadDefinitions"/>
 		<xsl:apply-templates select=".//specgen:DataObjects" mode="schemaDefinitions"/>
-              </xsl:template>
+    </xsl:template>
 
-              <!-- NN 20230124 placeholder security scheme -->     
-              <xsl:template match="*" mode="securitySchemes">
+    <!-- NN 20230124 placeholder security scheme -->     
+    <xsl:template match="*" mode="securitySchemes">
 		<xsl:text>  securitySchemes:&#x0a;</xsl:text>
 		<xsl:text>    basicAuth:&#x0a;</xsl:text>
 		<xsl:text>      type: http&#x0a;</xsl:text>
 		<xsl:text>      scheme: basic&#x0a;</xsl:text>
-              </xsl:template>
+		<xsl:text>      description: "Click [here](https://a4ldocumentation.atlassian.net/wiki/spaces/ARCHITECTU/pages/220430337/Authentication+Options#Basic-Authentication) for more details about Basic Authentication."&#x0a;</xsl:text>
+		<xsl:text>    sifHMACSHA256:&#x0a;</xsl:text>
+		<xsl:text>      type: http&#x0a;</xsl:text>
+		<xsl:text>      scheme: SIF_HMACSHA256&#x0a;</xsl:text>
+		<xsl:text>      description: "Click [here](https://a4ldocumentation.atlassian.net/wiki/spaces/ARCHITECTU/pages/220430337/Authentication+Options#HMAC/SHA1-Based-Authentication) for more details about SIF HMAC256 Authentication."&#x0a;</xsl:text>
+		<xsl:text>    bearerAuth:&#x0a;</xsl:text>
+		<xsl:text>      type: http&#x0a;</xsl:text>
+		<xsl:text>      scheme: bearer&#x0a;</xsl:text>
+		<xsl:text>      description: "Click [here](https://a4ldocumentation.atlassian.net/wiki/spaces/ARCHITECTU/pages/220430337/Authentication+Options#OAuth-Authentication) for more details about OAuth Authentication."&#x0a;</xsl:text>
+		<xsl:text>&#x0a;</xsl:text>
+    </xsl:template>
 	
 	<!-- ========================================================= -->
 	<!-- Tag Groups Section -->
@@ -215,15 +244,15 @@
 	<!-- ==================================== -->
 	<!-- Section: Request Payload Definitions -->
 	<!-- ==================================== -->
-        <xsl:template match="specgen:DataObjects" mode="requestPayloadDefinitions">
-                <xsl:text>  requestBodies:&#x0a;</xsl:text>
+	<xsl:template match="specgen:DataObjects" mode="requestPayloadDefinitions">
+		<xsl:text>  requestBodies:&#x0a;</xsl:text>
 		<xsl:text>&#x0a;</xsl:text>
 		<xsl:text>    # /////////////////////////////////&#x0a;</xsl:text>
 		<xsl:text>    # // Request Payload Definitions //&#x0a;</xsl:text>
-                <xsl:text>    # /////////////////////////////////&#x0a;</xsl:text>
-                <!-- NN 20230124 remove nesting of children of components/schemas -->
-                <!-- <xsl:text>    requestPayloads:&#x0a;</xsl:text> -->
-		<xsl:apply-templates select=".//specgen:DataObject" mode="requestPayloadDefinitions"/>
+		<xsl:text>    # /////////////////////////////////&#x0a;</xsl:text>
+		<!-- NN 20230124 remove nesting of children of components/schemas -->
+		<!-- <xsl:text> requestPayloads:&#x0a;</xsl:text> -->
+		<xsl:apply-templates select=".//specgen:DataObject"	mode="requestPayloadDefinitions" />
 	</xsl:template>
 
 	<xsl:template match="specgen:DataObject" mode="requestPayloadDefinitions">
@@ -299,9 +328,9 @@
 				<xsl:apply-templates select="." mode="addResponseHeaders">
 					<xsl:with-param name="pfx"><xsl:text>        </xsl:text></xsl:with-param>
 					<xsl:with-param name="excludeHeaders">
-						<!--xsl:value-of select="concat(specgen:OpenAPI/specgen:GetSingle/specgen:ExcludeResponseHTTPHeaders, ',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, ETag, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize')"/-->
+						<!--xsl:value-of select="concat(specgen:OpenAPI/specgen:GetSingle/specgen:ExcludeResponseHTTPHeaders, ',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize')"/-->
 						<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetSingle/specgen:ExcludeResponseHTTPHeaders, 'serviceSubType',
-						                             xfn:conditinalConcat(not($produceAllHeaders),',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, dataPrivacyMarkerBatchPutResponse, ETag, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize',',requestId'))"/>
+						                             xfn:conditinalConcat(not($produceAllHeaders),',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, dataPrivacyMarkerBatchPutResponse, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize',',requestId'))"/>
 					</xsl:with-param>
 				</xsl:apply-templates>
 				<xsl:text>&#x0a;</xsl:text>
@@ -318,9 +347,9 @@
 				<xsl:apply-templates select="." mode="addResponseHeaders">
 					<xsl:with-param name="pfx"><xsl:text>        </xsl:text></xsl:with-param>
 					<xsl:with-param name="excludeHeaders">
-						<!--xsl:value-of select="concat(specgen:OpenAPI/specgen:PutSingle/specgen:ExcludeResponseHTTPHeaders, ',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, ETag, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize')"/-->
+						<!--xsl:value-of select="concat(specgen:OpenAPI/specgen:PutSingle/specgen:ExcludeResponseHTTPHeaders, ',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize')"/-->
 						<xsl:value-of select="concat(specgen:OpenAPI/specgen:PutSingle/specgen:ExcludeResponseHTTPHeaders, 'serviceSubType',
-						                     xfn:conditinalConcat(not($produceAllHeaders),',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, dataPrivacyMarkerBatchPutResponse, ETag, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize',',requestId'))"/>
+						                     xfn:conditinalConcat(not($produceAllHeaders),',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, dataPrivacyMarkerBatchPutResponse, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize',',requestId'))"/>
 					</xsl:with-param>
 				</xsl:apply-templates>
 				<xsl:text>&#x0a;</xsl:text>
@@ -391,98 +420,98 @@
 		
 		<xsl:if test="$isQBE = 'true'">
 			<xsl:text>              oneOf:&#x0a;</xsl:text>
-                        <xsl:value-of select="concat('                - $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
-                        <!-- NN 20230123 no attributes next to JSON References -->
-                        <xsl:if test="not($openAPI30 = 'true')">
-                          <xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
-                        </xsl:if>
-			<!--xsl:value-of select="concat('                - $ref: ''commonDefs.yaml#/components/schemas/multipleResponses/createMultiSchema', '''&#x0a;')"/-->
+			<xsl:value-of select="concat('                - $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')" />
+            <!-- NN 20230123 no attributes next to JSON References -->
+            <xsl:if test="not($openAPI30 = 'true')">
+                <xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
+            </xsl:if>
+		    <!--xsl:value-of select="concat('                - $ref: ''commonDefs.yaml#/components/schemas/multipleResponses/createMultiSchema', '''&#x0a;')"/-->
 			<xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiSchema', '''&#x0a;')"/>
-                        <xsl:if test="not($openAPI30 = 'true')">
-                          <xsl:value-of select="concat('                  title: createRequest', '&#x0a;')"/>
-                        </xsl:if>
+            <xsl:if test="not($openAPI30 = 'true')">
+                <xsl:value-of select="concat('                  title: createRequest', '&#x0a;')"/>
+            </xsl:if>
 		</xsl:if>
 		<xsl:if test="not($isQBE = 'true')">
-		  <xsl:if test="not($addBatchDeleletRequest = 'true')">
-			<xsl:value-of select="concat('              $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
-		  </xsl:if>
-		  <xsl:if test="$addBatchDeleletRequest = 'true'">
-			<xsl:text>              oneOf:&#x0a;</xsl:text>
-			<xsl:value-of select="concat('                - $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
-                        <xsl:if test="not($openAPI30 = 'true')">
-			<xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
-                        </xsl:if>
-			<xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiSchema', '''&#x0a;')"/>
-                        <xsl:if test="not($openAPI30 = 'true')">
-			<xsl:value-of select="concat('                  title: deleteRequest', '&#x0a;')"/>
-                        </xsl:if>
-		  </xsl:if>
+		    <xsl:if test="not($addBatchDeleletRequest = 'true')">
+			    <xsl:value-of select="concat('              $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
+		    </xsl:if>
+		    <xsl:if test="$addBatchDeleletRequest = 'true'">
+			    <xsl:text>              oneOf:&#x0a;</xsl:text>
+			    <xsl:value-of select="concat('                - $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
+                <xsl:if test="not($openAPI30 = 'true')">
+			        <xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
+                </xsl:if>
+			    <xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiSchema', '''&#x0a;')"/>
+                <xsl:if test="not($openAPI30 = 'true')">
+			        <xsl:value-of select="concat('                  title: deleteRequest', '&#x0a;')"/>
+                </xsl:if>
+		    </xsl:if>
 		</xsl:if>
 		<xsl:text>            examples:&#x0a;</xsl:text>
 		<xsl:if test="$isQBE = 'true'">
 			<xsl:value-of select="concat('              qbe', 'PESC:', '&#x0a;')"/>
-                        <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiExamples/pesc', '''&#x0a;')"/>
-                      <xsl:if test="not($openAPI30 = 'true')">
-			<xsl:value-of select="concat('              qbe', 'Goessner:', '&#x0a;')"/>
-                        <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiExamples/goessner', '''&#x0a;')"/>
-                      </xsl:if>
+            <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiExamples/pesc', '''&#x0a;')"/>
+            <xsl:if test="not($openAPI30 = 'true')">
+			    <xsl:value-of select="concat('              qbe', 'Goessner:', '&#x0a;')"/>
+                <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiExamples/goessner', '''&#x0a;')"/>
+            </xsl:if>
 		</xsl:if>		
 		<xsl:value-of select="concat('              ', $schemaID, 'PESC:', '&#x0a;')"/>
 		<xsl:value-of select="concat('                $ref: ''', $exampleFileName, '#/objectExamples/', $objectName, '/pesc''&#x0a;')"/>
-                      <xsl:if test="not($openAPI30 = 'true')">
-		<xsl:value-of select="concat('              ', $schemaID, 'Goessner:', '&#x0a;')"/>
-                <xsl:value-of select="concat('                $ref: ''', $exampleFileName, '#/objectExamples/', $objectName, '/goessner''&#x0a;')"/>
-              </xsl:if>
+        <xsl:if test="not($openAPI30 = 'true')">
+		    <xsl:value-of select="concat('              ', $schemaID, 'Goessner:', '&#x0a;')"/>
+            <xsl:value-of select="concat('                $ref: ''', $exampleFileName, '#/objectExamples/', $objectName, '/goessner''&#x0a;')"/>
+        </xsl:if>
 	  	<xsl:if test="$addBatchDeleletRequest = 'true'">
 			<xsl:value-of select="concat('              ', 'deletePESC:', '&#x0a;')"/>
 			<xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiExamples/pesc', '''&#x0a;')"/>
-                      <xsl:if test="not($openAPI30 = 'true')">
-			<xsl:value-of select="concat('              ', 'deleteGoessner:', '&#x0a;')"/>
-                        <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiExamples/goessner', '''&#x0a;')"/>
-                      </xsl:if>
+            <xsl:if test="not($openAPI30 = 'true')">
+		        <xsl:value-of select="concat('              ', 'deleteGoessner:', '&#x0a;')"/>
+                <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiExamples/goessner', '''&#x0a;')"/>
+            </xsl:if>
 		</xsl:if>
-                      <xsl:if test="not($openAPI30 = 'true')">
-		<xsl:text>          application/xml:&#x0a;</xsl:text>
-		<xsl:text>            schema:&#x0a;</xsl:text>
-		<xsl:if test="$isQBE = 'true'">
-			<xsl:text>              oneOf:&#x0a;</xsl:text>
-			<xsl:value-of select="concat('                - $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
-                      <xsl:if test="not($openAPI30 = 'true')">
-			<xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
-                      </xsl:if>
-			<xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiSchema', '''&#x0a;')"/>
-                      <xsl:if test="not($openAPI30 = 'true')">
-			<xsl:value-of select="concat('                  title: createRequest', '&#x0a;')"/>
-                      </xsl:if>
-		</xsl:if>
-		<xsl:if test="not($isQBE = 'true')">
-		  <xsl:if test="not($addBatchDeleletRequest = 'true')">
-			<xsl:value-of select="concat('              $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
-		  </xsl:if>
-		  <xsl:if test="$addBatchDeleletRequest = 'true'">
-			<xsl:text>              oneOf:&#x0a;</xsl:text>
-			<xsl:value-of select="concat('                - $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
-                      <xsl:if test="not($openAPI30 = 'true')">
-			<xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
-                      </xsl:if>
-			<xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiSchema', '''&#x0a;')"/>
-                      <xsl:if test="not($openAPI30 = 'true')">
-			<xsl:value-of select="concat('                  title: deleteRequest', '&#x0a;')"/>
-                      </xsl:if>
-		  </xsl:if>
+        <xsl:if test="not($openAPI30 = 'true')">
+		    <xsl:text>          application/xml:&#x0a;</xsl:text>
+		    <xsl:text>            schema:&#x0a;</xsl:text>
+		    <xsl:if test="$isQBE = 'true'">
+			    <xsl:text>              oneOf:&#x0a;</xsl:text>
+			    <xsl:value-of select="concat('                - $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
+                <xsl:if test="not($openAPI30 = 'true')">
+			        <xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
                 </xsl:if>
-		<xsl:text>            examples:&#x0a;</xsl:text>
-		<xsl:if test="$isQBE = 'true'">
-			<xsl:value-of select="concat('              qbe', 'XML:', '&#x0a;')"/>
-			<xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiExamples/xml', '''&#x0a;')"/>
-		</xsl:if>		
-		<xsl:value-of select="concat('              ', $schemaID, 'XML:', '&#x0a;')"/>
-		<xsl:value-of select="concat('                $ref: ''', $exampleFileName, '#/objectExamples/', $objectName, '/xml''&#x0a;')"/>
-	  	<xsl:if test="$addBatchDeleletRequest = 'true'">
-			<xsl:value-of select="concat('              ', 'deleteXML:', '&#x0a;')"/>
-			<xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiExamples/xml', '''&#x0a;')"/>
-                      </xsl:if>
+			    <xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiSchema', '''&#x0a;')"/>
+                <xsl:if test="not($openAPI30 = 'true')">
+			        <xsl:value-of select="concat('                  title: createRequest', '&#x0a;')"/>
+                </xsl:if>
+		    </xsl:if>
+		    <xsl:if test="not($isQBE = 'true')">
+		        <xsl:if test="not($addBatchDeleletRequest = 'true')">
+			        <xsl:value-of select="concat('              $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
+		        </xsl:if>
+		        <xsl:if test="$addBatchDeleletRequest = 'true'">
+			        <xsl:text>              oneOf:&#x0a;</xsl:text>
+			        <xsl:value-of select="concat('                - $ref: ''#/components/schemas/', $schemaID, 'Schema', $objectName, '''&#x0a;')"/>
+                    <xsl:if test="not($openAPI30 = 'true')">
+			            <xsl:value-of select="concat('                  title: ', $objectName, '&#x0a;')"/>
                     </xsl:if>
+			        <xsl:value-of select="concat('                - $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiSchema', '''&#x0a;')"/>
+                    <xsl:if test="not($openAPI30 = 'true')">
+			            <xsl:value-of select="concat('                  title: deleteRequest', '&#x0a;')"/>
+                    </xsl:if>
+		        </xsl:if>
+            </xsl:if>
+		    <xsl:text>            examples:&#x0a;</xsl:text>
+		    <xsl:if test="$isQBE = 'true'">
+			    <xsl:value-of select="concat('              qbe', 'XML:', '&#x0a;')"/>
+			    <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleResponses/createMultiExamples/xml', '''&#x0a;')"/>
+		    </xsl:if>		
+		    <xsl:value-of select="concat('              ', $schemaID, 'XML:', '&#x0a;')"/>
+		    <xsl:value-of select="concat('                $ref: ''', $exampleFileName, '#/objectExamples/', $objectName, '/xml''&#x0a;')"/>
+	  	    <xsl:if test="$addBatchDeleletRequest = 'true'">
+			    <xsl:value-of select="concat('              ', 'deleteXML:', '&#x0a;')"/>
+			    <xsl:value-of select="concat('                $ref: ''',$commonDefsFileName,'#/components/schemas/multipleRequests/deleteMultiExamples/xml', '''&#x0a;')"/>
+            </xsl:if>
+        </xsl:if>
 	</xsl:template>
 
 	<!-- =========================== -->
@@ -541,7 +570,7 @@
         <!-- NN 20221216 exceptionally, LearningResourcePackage is an OBJECT that is an alias of a type, and the type can only be defined once: introduced xfn:refresolve -->
         <!-- NN 20230116 does not apply to object collection types, which are still distinct -->
         <!-- NN 20221219 force schema def to be PESC-conformant for lists, previous instance was Goessner-conformant -->
-        <xsl:template match="specgen:DataObject" mode="collectionSchemaDef">
+    <xsl:template match="specgen:DataObject" mode="collectionSchemaDef">
           <!-- old
 		<xsl:value-of select="concat('      updateSchema', @name, 's:&#x0a;')"/>
 		<xsl:text>        properties:&#x0a;</xsl:text>
@@ -569,12 +598,12 @@
                 <xsl:value-of select="concat('                  $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name), '''&#x0a;')"/>
                 <xsl:text>&#x0a;</xsl:text>
             -->
-                <xsl:value-of select="concat('      updateSchema', @name, 's:&#x0a;')"/>
-                <xsl:text>        properties:&#x0a;</xsl:text>
-                <xsl:value-of select="concat('          ', @name, 's:&#x0a;')"/>
-                <xsl:text>            type: object&#x0a;</xsl:text>
-                <xsl:text>            description: >-&#x0a;</xsl:text>
-                <xsl:value-of select="concat('              A Collection of ', @name, ' objects&#x0a;')"/>
+        <xsl:value-of select="concat('      updateSchema', @name, 's:&#x0a;')"/>
+        <xsl:text>        properties:&#x0a;</xsl:text>
+        <xsl:value-of select="concat('          ', @name, 's:&#x0a;')"/>
+        <xsl:text>            type: object&#x0a;</xsl:text>
+        <xsl:text>            description: >-&#x0a;</xsl:text>
+        <xsl:value-of select="concat('              A Collection of ', @name, ' objects&#x0a;')"/>
                 <!-- NN 20221221 point direct to collections object -->
                 <!--
                 <xsl:text>            properties:&#x0a;</xsl:text>
@@ -583,15 +612,15 @@
                 <xsl:text>                items:&#x0a;</xsl:text>
                   <xsl:value-of select="concat('                    $ref: ''jsonSchema', 'Update_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
                  -->
-                <xsl:value-of select="concat('            $ref: ''jsonSchema', $openapi_version_lbl, 'Update_', $sifLocale, '.yaml#/definitions/', @name,  'Collection''&#x0a;')"/>
-                <xsl:text>&#x0a;</xsl:text>
-                
-                <xsl:value-of select="concat('      createSchema', @name, 's:&#x0a;')"/>
-                <xsl:text>        properties:&#x0a;</xsl:text>
-                <xsl:value-of select="concat('          ', @name, 's:&#x0a;')"/>
-                <xsl:text>            type: object&#x0a;</xsl:text>
-                <xsl:text>            description: >-&#x0a;</xsl:text>
-                <xsl:value-of select="concat('              A Collection of ', @name, ' objects&#x0a;')"/>
+        <xsl:value-of select="concat('            $ref: ''jsonSchema', $openapi_version_lbl, 'Update_', $sifLocale, '.yaml#/definitions/', @name,  'Collection''&#x0a;')"/>
+        <xsl:text>&#x0a;</xsl:text>
+        
+        <xsl:value-of select="concat('      createSchema', @name, 's:&#x0a;')"/>
+        <xsl:text>        properties:&#x0a;</xsl:text>
+        <xsl:value-of select="concat('          ', @name, 's:&#x0a;')"/>
+        <xsl:text>            type: object&#x0a;</xsl:text>
+        <xsl:text>            description: >-&#x0a;</xsl:text>
+        <xsl:value-of select="concat('              A Collection of ', @name, ' objects&#x0a;')"/>
                 <!-- NN 20221221 point direct to collections object -->
                 <!--
                 <xsl:text>            properties:&#x0a;</xsl:text>
@@ -600,8 +629,8 @@
                   <xsl:text>                items:&#x0a;</xsl:text>
                   <xsl:value-of select="concat('                    $ref: ''jsonSchema', 'Create_', $sifLocale, '.yaml#/definitions/', xfn:refresolve(@name),  '''&#x0a;')"/>
                  -->
-                <xsl:value-of select="concat('            $ref: ''jsonSchema', $openapi_version_lbl, 'Create_', $sifLocale, '.yaml#/definitions/', @name,  'Collection''&#x0a;')"/>
-                <xsl:text>&#x0a;</xsl:text>
+        <xsl:value-of select="concat('            $ref: ''jsonSchema', $openapi_version_lbl, 'Create_', $sifLocale, '.yaml#/definitions/', @name,  'Collection''&#x0a;')"/>
+        <xsl:text>&#x0a;</xsl:text>
 	</xsl:template>
 
 	<!-- ============================= -->
@@ -660,12 +689,13 @@
 				<xsl:value-of select="concat($pfx, '  ''environmentURI'':&#x0a;')"/>
 				<xsl:value-of select="concat($pfx, '    $ref: ''',$commonDefsFileName,'#/components/schemas/httpHeaders/response/environmentURI''&#x0a;')"/>
 			</xsl:if>
-	
+
+<!-- 	
 			<xsl:if test="not(contains($excludeHeaders, 'ETag'))">
 				<xsl:value-of select="concat($pfx, '  ''ETag'':&#x0a;')"/>
 				<xsl:value-of select="concat($pfx, '    $ref: ''',$commonDefsFileName,'#/components/schemas/httpHeaders/response/ETag''&#x0a;')"/>
 			</xsl:if>
-	
+-->	
 			<xsl:if test="not(contains($excludeHeaders, 'fingerprint'))">
 				<xsl:value-of select="concat($pfx, '  ''fingerprint'':&#x0a;')"/>
 				<xsl:value-of select="concat($pfx, '    $ref: ''',$commonDefsFileName,'#/components/schemas/httpHeaders/response/fingerprint''&#x0a;')"/>
@@ -821,7 +851,7 @@
 						</xsl:apply-templates>
 		
 						<xsl:apply-templates select="." mode="addErrorCodeList">
-							<xsl:with-param name="inlcudeErrorCodes">401, 403, 410, 413, 415, 500, 501, 503</xsl:with-param>
+							<xsl:with-param name="inlcudeErrorCodes">400, 401, 403, 410, 413, 415, 500, 501, 503</xsl:with-param>
 							<xsl:with-param name="excludeErrorCodes">
 								<xsl:value-of select="specgen:OpenAPI/specgen:GetBatch/specgen:ExcludeErrorCodes"/>
 							</xsl:with-param>
@@ -895,7 +925,7 @@
 						<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 							<xsl:with-param name="excludeHTTPHeaders">
 								<xsl:value-of select="concat(specgen:OpenAPI/specgen:PutBatch/specgen:ExcludeRequestHTTPHeaders,
-								                     ',connectionId, dataPrivacyMarkerStd, ETag, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queryIntention, serviceSubType')"/>
+								                     ',connectionId, dataPrivacyMarkerStd, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queryIntention, serviceSubType')"/>
 							</xsl:with-param>
 						</xsl:apply-templates>
 		
@@ -941,7 +971,7 @@
 						<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 							<xsl:with-param name="excludeHTTPHeaders">
 								<xsl:value-of select="concat(specgen:OpenAPI/specgen:PostBatch/specgen:ExcludeRequestHTTPHeaders,
-								                     ',connectionId, dataPrivacyMarkerBatchPutRequest, ETag, methodOverridePut, navigationId, navigationPage, navigationPageSize, queryIntention, serviceSubType, replacement')"/>
+								                     ',connectionId, dataPrivacyMarkerBatchPutRequest, methodOverridePut, navigationId, navigationPage, navigationPageSize, queryIntention, serviceSubType, replacement')"/>
 							</xsl:with-param>
 						</xsl:apply-templates>
 		
@@ -985,7 +1015,7 @@
 					<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 						<xsl:with-param name="excludeHTTPHeaders">
 							<xsl:value-of select="concat(specgen:OpenAPI/specgen:PostSingle/specgen:ExcludeRequestHTTPHeaders,
-                                                         ',connectionId, dataPrivacyMarkerBatchPutRequest, ETag, methodOverridePut, methodOverridePost, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, replacement, requestType')"/>
+                                                         ',connectionId, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, replacement, requestType')"/>
 						</xsl:with-param>
 					</xsl:apply-templates>
 	
@@ -1030,7 +1060,7 @@
 							<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 								<xsl:with-param name="excludeHTTPHeaders">
 									<xsl:value-of select="concat(specgen:OpenAPI/specgen:PutSingle/specgen:ExcludeRequestHTTPHeaders,
-							                     ',connectionId, dataPrivacyMarkerBatchPutRequest, ETag, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, requestType')"/>
+							                     ',connectionId, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, requestType')"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 		
@@ -1077,7 +1107,7 @@
 							<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 								<xsl:with-param name="excludeHTTPHeaders">
 									<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetSingle/specgen:ExcludeRequestHTTPHeaders,
-							                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, ETag, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, requestType, replacement')"/>
+							                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, requestType, replacement')"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 		
@@ -1087,7 +1117,7 @@
 							</xsl:apply-templates>
 		
 							<xsl:apply-templates select="." mode="addErrorCodeList">
-								<xsl:with-param name="inlcudeErrorCodes">401, 403, 404, 405, 415, 500, 501, 503</xsl:with-param>
+								<xsl:with-param name="inlcudeErrorCodes">400, 401, 403, 404, 405, 415, 500, 501, 503</xsl:with-param>
 								<xsl:with-param name="excludeErrorCodes">
 									<xsl:value-of select="specgen:OpenAPI/specgen:GetSingle/specgen:ExcludeErrorCodes"/>
 								</xsl:with-param>
@@ -1120,7 +1150,7 @@
 							<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 								<xsl:with-param name="excludeHTTPHeaders">
 									<xsl:value-of select="concat(specgen:OpenAPI/specgen:DeleteSingle/specgen:ExcludeRequestHTTPHeaders,
-							                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerStd, dataPrivacyMarkerBatchPutRequest, ETag, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, requestType, replacement, serviceSubType')"/>
+							                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerStd, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, requestType, replacement, serviceSubType')"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 		
@@ -1188,7 +1218,7 @@
 							</xsl:apply-templates>
 			
 							<xsl:apply-templates select="." mode="addErrorCodeList">
-								<xsl:with-param name="inlcudeErrorCodes">401, 403, 410, 413, 415, 500, 501, 503</xsl:with-param>
+								<xsl:with-param name="inlcudeErrorCodes">400, 401, 403, 410, 413, 415, 500, 501, 503</xsl:with-param>
 								<xsl:with-param name="excludeErrorCodes"/>
 							</xsl:apply-templates>
 	
@@ -1518,13 +1548,13 @@
 					<xsl:with-param name="hdrName">dataPrivacyMarkerBatchPutRequest</xsl:with-param>
 				</xsl:apply-templates>
 			</xsl:if>
-
+<!-- 
 			<xsl:if test="not(contains($excludeHTTPHeaders, 'ETag'))">
 				<xsl:apply-templates select="." mode="addRequestHTTPHeaderRef">
 					<xsl:with-param name="hdrName">ETag</xsl:with-param>
 				</xsl:apply-templates>
 			</xsl:if>
-	
+-->	
 			<xsl:if test="not(contains($excludeHTTPHeaders, 'fingerprint'))">
 				<xsl:apply-templates select="." mode="addRequestHTTPHeaderRef">
 					<xsl:with-param name="hdrName">fingerprint</xsl:with-param>
