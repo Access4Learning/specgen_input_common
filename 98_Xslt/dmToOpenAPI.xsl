@@ -58,6 +58,8 @@
 	</xsl:variable>
 
 	<xsl:variable name="commonDefsFileName">
+		<xsl:value-of select="'commonDefs.yaml'" />
+		<!-- 
 		<xsl:choose>
 			<xsl:when test="$openAPI30 = 'true'">
 				<xsl:if test="$produceAllHeaders">
@@ -76,6 +78,7 @@
 				</xsl:if>
 			</xsl:otherwise>
 		</xsl:choose>
+		-->
 	</xsl:variable>
 
 	<xsl:variable name="openapi_version_lbl">
