@@ -21,12 +21,11 @@ This repository has the following files each of which will be detailed in sectio
 - xmlToJson-goessner.xslt
 - xmlToJson.xsl (will produce sif2jsonspecgen.xslt which is local specific)
 
+**yaml Template Files (require pre-processing)**
+- commonDefs.template.yaml
+- infraPaths.temaplate.yaml
+
 **Static yaml Files**
-- commonDefs-OpenAPI3.0-all-headers.yaml
-- commonDefs-OpenAPI3.0-main-headers.yaml
-- commonDefs-OpenAPI3.1-all-headers.yaml
-- commonDefs-OpenAPI3.1-main-headers.yaml
-- infraPaths.temaplate.yaml (requires pre-processing)
 - jsonSchema\_OpenAPI3.0\_Create_IN.yaml
 - jsonSchema\_OpenAPI3.0\_Update_IN.yaml
 - jsonSchema\_OpenAPI3.1\_Create_IN.yaml
@@ -34,7 +33,7 @@ This repository has the following files each of which will be detailed in sectio
 
 # XSLT file Usage
 
-This section outlines the usage of each XSLT file that is part of this repository. Some XSLT file need to be called with the input XML file, while others supporting XSLT files that are called from within a XSLT file.
+This section outlines the usage of each XSLT file that is part of this repository. Some XSLT files need to be called with the input XML file, while others are supporting XSLT files that are called from within a XSLT file.
 
 ### dmToOpenAPI.xsl
 
@@ -61,7 +60,7 @@ The locale specific top-level Open API yaml file. It will have a prefix of OpenA
 
 ### dmToJsonSchema.xsl
 
-This XSLT file is responsible to produce the various data model schemas for a given SIF specification. These schemas are referenced from the top-level Open API yaml file. The various input parameters are of importance to drive the specific schemas. These can be more or less strict in terms of mandatory elements. The schemas for _create_ end-points are more strict than the schemas for _update_ end-points. Generally this XSLT needs to be called twice with a different set of input parameters, so that the _create_ and _update_ schemas are produced because the top-level Open API yaml has references to both schemas.
+This XSLT file is responsible for producing the various data model schemas for a given SIF specification. These schemas are referenced from the top-level Open API yaml file. The various input parameters are of importance to drive the specific schemas. These can be more or less strict in terms of mandatory elements. The schemas for _create_ end-points are more strict than the schemas for _update_ end-points. Generally this XSLT needs to be called twice with a different set of input parameters, so that the _create_ and _update_ schemas are produced because the top-level Open API yaml has references to both schemas.
 
 **Input**
 Locale specific input XML file that was produced by the SpecGen process (e.g. `SIF_DataModel.infra.input-3.5.xml`).
@@ -81,7 +80,7 @@ The locale specific schema yaml files for _create_ and/or _update_ end-points. T
 
 ### dmToExamples.xsl
 
-This XSLT file is responsible to produce the example yaml files in various formats such as PESC JSON, Goessner JSON and XML. The examples are sourced from the locale specific input XML file. These examples in the input XML file are in XML format and therefore must be transformed to potentially two JSON formats. To do so, this XSLT transformation file includes the xmlToJson-goessner.xslt XSLT file to produce Goessner JSON examples and the sif2jsonspecgen.xslt XSLT file to produce the PESC JSON examples.
+This XSLT file is responsible for producing the example yaml files in various formats such as PESC JSON, Goessner JSON and XML. The examples are sourced from the locale specific input XML file. The examples in the input XML file are in XML format and therefore must be transformed to potentially two JSON formats. To do so, this XSLT transformation file includes the xmlToJson-goessner.xslt XSLT file to produce Goessner JSON examples and the sif2jsonspecgen.xslt XSLT file to produce the PESC JSON examples.
 
 **Input**
 Locale specific input XML file that was produced by the SpecGen process (e.g. `SIF_DataModel.infra.input-3.5.xml`).
@@ -106,59 +105,61 @@ This XSLT file is included by the `dmToExamples.xsl` XSLT to produce the Goessne
 This file is required by SpecGen and is used to produce a file called `sif2jsonspecgen.xslt`. This resulting XSLT file is included by the `dmToExamples.xsl` XSLT to produce the PESC JSON based on the XML examples. It convert XML to JSON based on the [PESC transformation rules](https://nebula.wsimg.com/d0589a95b719d81e77b5d20dffba7f02?AccessKeyId=4CF7FAE11697F99C9E6B&disposition=0&alloworigin=1).
 It is important to note that the `sif2jsonspecgen.xslt` is different for each locale data model because the rules in this XSLT files are data model 'schema-aware'.
 
-# Static yaml Files
+# yaml Temaplate Files
 
-Not all artifacts are produced via XSLTs. There are a number of static yaml file that are required to provide a complete Open API specification of a SIF data model. These static yamle files are referenced from the top-level Open API yaml file that is produced by the `dmToOpenAPI.xsl`. Depending whether the Open API specification for version 3.0 or 3.1 is produced the respective set of static yaml files must be provided. 
+The files described in this section are yaml templates and will require pre-processing (hence the template nature of these yaml files). The pre-processing is required to make them valid yaml for either Open API 3.0 or Open API 3.1. The pre-processing of both files consists of replacing certain tags in the file and name the resulting file correctly. The specifics for each yaml file template and the required pre-processing steps are outlined in the following sections.
 
-###  commonDefs-OpenAPI3.0-all-headers.yaml
+## commonDefs.template.yaml
 
-Must be provided if the top-level Open API yaml is produced with the following values as input parameters to `dmToOpenAPI.xsl`:
-- includeAllHeaders=true
-- openAPI30=true
+This yaml template file holds common definitions, such header names, error examples etc. The top level Open API yaml file has many references to this file. Hence this file must be provided as part of a complete Open API specification for any data model. However to make this a valid yaml file it must be pre-processed. The pre-processing consists of replacing a few tags with the correct values as well as naming the final file correctly. The final file name must be called `commonDefs.yaml`. The two sections below describe with what values the tags in the commonDefs.template.yaml need to be replaced with. It largely depends whether the Open API specification is produced for Open API 3.0 or 3.1.
 
+#### Open API 3.0
 
-### commonDefs-OpenAPI3.0-main-headers.yaml
+To make the `commonDefs.yaml` valid for Open API 3.0 the tags in the `commonDefs.temaplate.yaml` need to be replaced with the following values:
+- Replace the `#{OpenAPIVersion}` tag with `3.0`.
+- Replace the `#{CommenOutExmpl}` tag with `#` or remove that line altogether.
+- Replace the `#{CommenOutHdr}` tag with empty string if the top level Open API was produced with the parameter `includeAllHeaders=true`, otherwise replace the tag with `#` or remove that line altogether.
 
-Must be provided if the top-level Open API yaml is produced with the following values as input parameters to `dmToOpenAPI.xsl`:
-- includeAllHeaders=false
-- openAPI30=true
+#### Open API 3.1
 
+To make the `commonDefs.yaml` valid for Open API 3.1 the tags in the `commonDefs.temaplate.yaml` need to be replaced with the following values:
+- Replace the `#{OpenAPIVersion}` tag with `3.1`.
+- Replace the `#{CommenOutExmpl}` tag with an empty string.
+- Replace the `#{CommenOutHdr}` tag with empty string if the top level Open API was produced with the parameter `includeAllHeaders=true`, otherwise replace the tag with `#` or remove that line altogether.
 
-### commonDefs-OpenAPI3.1-all-headers.yaml
+## infraPaths.template.yaml
 
-Must be provided if the top-level Open API yaml is produced with the following values as input parameters to `dmToOpenAPI.xsl`:
-- includeAllHeaders=true
-- openAPI30=false
-
-
-### commonDefs-OpenAPI3.1-main-headers.yaml
-
-Must be provided if the top-level Open API yaml is produced with the following values as input parameters to `dmToOpenAPI.xsl`:
-- includeAllHeaders=false
-- openAPI30=false
-
-
-### infraPaths.temaplate.yaml
-
-This yaml file is a template and is only required for the SIF Infrastructure Open API specification. However, before it is provided as part of the complete Infrastructure Open API it need to be pre-processed (hence the template nature of this yaml file). The pre-processing is required to make this yaml file valid for either Open API 3.0 or Open API 3.1. 
-There are two tags in this template that need to be replaced during the pre-processing step. The resulting file must be named `infraPaths.yaml` to ensure that the references in the top-level Open API yaml file resolve properly.
+This yaml file is a template and is only required for the SIF Infrastructure Open API specification. There are two tags in this template that need to be replaced during the pre-processing step. The resulting file must be named `infraPaths.yaml` to ensure that the references in the top-level Open API yaml file resolve properly.
 
 #### Open API 3.0
 
 To make the `infraPaths.yaml` valid for Open API 3.0 the tags in the `infraPaths.temaplate.yaml` need to be replaced with the following values:
-- Replace the `${OpenAPIVersion}` tag with `3.0`.
-- Replace the `${CommenOut}` tag with `#` or remove that line altogether.
+- Replace the `#{OpenAPIVersion}` tag with `3.0`.
+- Replace the `#{CommenOutExmpl}` tag with `#` or remove that line altogether.
 
 #### Open API 3.1
 
 To make the `infraPaths.yaml` valid for Open API 3.1 the tags in the `infraPaths.temaplate.yaml` need to be replaced with the following values:
-- Replace the `${OpenAPIVersion}` tag with `3.1`.
-- Replace the `${CommenOut}` tag with an empty string.
+- Replace the `#{OpenAPIVersion}` tag with `3.1`.
+- Replace the `#{CommenOutExmpl}` tag with an empty string.
 
 
-### jsonSchema\_OpenAPI\<version\>\_XXX_IN.yaml
+# Static yaml Files
 
-This is a set of static yaml files that need to be added if a locale specific (e.g. AU, NA) Open API specification is produced. These files contain the infrastructure data model schema and are referenced by the `commonDefs-OpenAPI<version>-yyyy-headers.yaml` file. They are provided as part of this repository for convenience reasons. It reduces the steps required to produce a full set of yaml files for a locale specific Open API. Without those yaml files each locale would be required to produce these yaml files with the infrastructure input XML file.
+Not all artifacts are produced via XSLTs or the yaml template files. There are a number of static yaml files that are required to provide a complete Open API specification of a SIF data model. These static yaml files are referenced from the top-level Open API yaml file that is produced by the `dmToOpenAPI.xsl` as well as the `commonDefs.yaml` file. Depending whether the Open API specification for version 3.0 or 3.1 is produced, the respective set of static yaml files must be provided. 
+
+#### Open API 3.0
+
+To complete a locale specific Open API specification add the following static yaml files to the set of generated yaml files:
+- jsonSchema\_OpenAPI3.0\_Create_IN.yaml
+- jsonSchema\_OpenAPI3.0\_Update_IN.yaml
+
+#### Open API 3.1
+
+To complete a locale specific Open API specification add the following static yaml files to the set of generated yaml files:
+- jsonSchema\_OpenAPI3.1\_Create_IN.yaml
+- jsonSchema\_OpenAPI3.1\_Update_IN.yaml
+
 
 # Steps to produce a complete Open API Specification
 
@@ -168,8 +169,8 @@ The steps below are required to produce a complete set of yaml files for the Ope
 2) Produce the 'Create' schema yaml file with the `dmToJsonSchema.xsl`. This creates the `jsonSchema_OpenAPIxx_Create_yy.yaml` file.
 3) Produce the 'Update' schema yaml file with the `dmToJsonSchema.xsl`. This creates the `jsonSchema_OpenAPIxx_Update_yy.yaml` file.
 4) Produce the Example yaml file with the `dmToExamples.xsl`. This creates the `examples.yaml` file.
-5) Add the correct `commonDefs-OpenAPIxx-yyy-headers.yaml`.
+5) Pre-process the `commonDefs.temaplate.yaml` and add the resulting `commonDefs.yaml` file.
 6) One of the sub-steps is required depending whether the infrastructure or a locale data model Open API is produced: 
    - If the Open API yaml files for the Infrastructure are produced, pre-process the `infraPaths.temaplate.yaml` and add the resulting `infraPaths.yaml` file.
-   - If the Open API yaml files are produced for a locale (e.g. AU, NA) then step 2 and step 3 should be repeated with the infrastructure input XML file. This is required because the `commonDefs-OpenAPIxx-yyy-headers.yaml` holds references to infrastructure data models such as the error message structure. The resulting `jsonSchema_OpenAPIxx_Create_IN.yaml` and `jsonSchema_OpenAPIxx_Update_IN.yaml` must be added to complete the Open API specification of a locale data model. To simplify this process these files are part of this repository but will be updated from time to time as the infrastructure specification evolves.
+   - If the Open API yaml files are produced for a locale (e.g. AU, NA) then step 2 and step 3 should be repeated with the infrastructure input XML file. This is required because the `commonDefs.yaml` holds references to infrastructure data models such as the error message structure. The resulting `jsonSchema_OpenAPIxx_Create_IN.yaml` and `jsonSchema_OpenAPIxx_Update_IN.yaml` must be added to complete the Open API specification of a locale data model. To simplify this process these files are part of this repository but will be updated from time to time as the infrastructure specification evolves.
 
