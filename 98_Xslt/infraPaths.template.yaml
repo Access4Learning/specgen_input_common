@@ -24,82 +24,82 @@ infraPaths:
         required: false
         schema:
           type: string
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
       responses:
         '200':
           description: Returns next message. Payload can be any object collection related to the locale's data model.
           headers:
             'content-type':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/content-type'
             'content-encoding':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/content-encoding'
             'content-profile':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/content-profile'
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '204':
           description: No more messages available.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '401':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/403'
         '410':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/410'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/410'
         '413':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/413'
         '415':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/415'
         '500':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/500'
         '501':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/501'
         '503':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/503'
     delete:
       tags:
       - "queue"
@@ -124,55 +124,55 @@ infraPaths:
         required: true
         schema:
           type: string
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
       responses:
         '204':
           description: No more messages available or message deleted.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '401':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/403'
         '410':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/410'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/410'
         '413':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/413'
         '415':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/415'
         '500':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/500'
         '501':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/501'
         '503':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/503'
 
   jobCreatePath:
     post:
@@ -198,46 +198,46 @@ infraPaths:
         required: true
         schema:
           type: string
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
       responses:
         '201':
           $ref: 'OpenAPI_IN.yaml#/components/responses/createjob'
         '400':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/400'
         '401':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/403'
         '409':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/409'
         '412':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/412'
         '415':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/415'
         '500':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/500'
         '501':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/501'
         '503':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/503'
 
   jobPhasePaths:
     get:
@@ -273,79 +273,79 @@ infraPaths:
           description: Phase operation succeeded. Payload defined in the document that describes the specific Job/Workflow.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '202':
           description: Accepted. Returned for DELAYED requests. No payload.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '204':
           description: Phase operation succeeded. No data available.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '401':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/403'
         '413':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/413'
         '415':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/415'
         '500':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/500'
         '501':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/501'
         '503':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/503'
     post:
       tags:
       - "job"
@@ -381,58 +381,58 @@ infraPaths:
           description: Accepted. Returned for DELAYED requests. No payload.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '204':
           description: Phase operation succeeded. Data has been created. No data available.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '401':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/403'
         '413':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/413'
         '415':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/415'
         '500':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/500'
         '501':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/501'
         '503':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/503'
     put:
       tags:
       - "job"
@@ -468,58 +468,58 @@ infraPaths:
           description: Accepted. Returned for DELAYED requests. No payload.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '204':
           description: Phase operation succeeded. Data has been updated. No data available.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '401':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/403'
         '413':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/413'
         '415':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/415'
         '500':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/500'
         '501':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/501'
         '503':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/503'
     delete:
       tags:
       - "job"
@@ -553,79 +553,79 @@ infraPaths:
           description: Phase operation succeeded. Data has been deleted. Response payload defined in the document that describes the specific Job/Workflow.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '202':
           description: Accepted. Returned for DELAYED requests. No payload.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '204':
           description: Phase operation succeeded. Data has been deleted. No data available.
           headers:
             'fingerprint':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
             'messageType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
             'relativeServicePath':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
             'requestId':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
             'responseAction':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
             'serviceType':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
             'timestamp':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
-              $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
         '401':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/403'
         '413':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/413'
         '415':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/415'
         '500':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/500'
         '501':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/501'
         '503':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/503'
   jobPhaseStatesGet:
     get:
       tags:
@@ -655,38 +655,38 @@ infraPaths:
         required: true
         schema:
           type: string
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
       responses:
         '200':
           $ref: '#/components/infraExamples/states'
         '204':
           description: No data available.
         '401':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/403'
         '413':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/413'
         '415':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/415'
         '500':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/500'
         '501':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/501'
         '503':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/503'
   jobPhaseStatesPost:
     post:
       tags:
@@ -716,41 +716,41 @@ infraPaths:
         required: true
         schema:
           type: string
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
-      - $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
       requestBody:
         $ref: '#/components/requestBodies/createstate'
       responses:
         '201':
           $ref: '#/components/responsePayloads/createstate'
         '401':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/403'
         '413':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/413'
         '415':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/415'
         '500':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/500'
         '501':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/501'
         '503':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+          $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/503'
           
 components:
 
@@ -770,14 +770,14 @@ components:
           examples:
             createPESC:
               $ref: '#/components/infraExamples/stateCreateRequest/pesc'
-${CommenOut}            createGoessner:
-${CommenOut}              $ref: '#/components/infraExamples/stateCreateRequest/goessner'
-${CommenOut}        application/xml:
-${CommenOut}          schema:
-${CommenOut}            $ref: '#/components/schemas/createSchemastate'
-${CommenOut}          examples:
-${CommenOut}            createXML:
-${CommenOut}              $ref: '#/components/infraExamples/stateCreateRequest/xml'
+#{CommenOutExmpl}            createGoessner:
+#{CommenOutExmpl}              $ref: '#/components/infraExamples/stateCreateRequest/goessner'
+#{CommenOutExmpl}        application/xml:
+#{CommenOutExmpl}          schema:
+#{CommenOutExmpl}            $ref: '#/components/schemas/createSchemastate'
+#{CommenOutExmpl}          examples:
+#{CommenOutExmpl}            createXML:
+#{CommenOutExmpl}              $ref: '#/components/infraExamples/stateCreateRequest/xml'
 
   # ------------------------------------------
   # -- Response Payloads          
@@ -795,39 +795,39 @@ ${CommenOut}              $ref: '#/components/infraExamples/stateCreateRequest/x
           examples:
             createPESC:
               $ref: '#/components/infraExamples/stateCreateResponse/pesc'
-${CommenOut}            createGoessner:
-${CommenOut}              $ref: '#/components/infraExamples/stateCreateResponse/goessner'
-${CommenOut}        application/xml:
-${CommenOut}          schema:
-${CommenOut}            $ref: '#/components/schemas/createSchemastate'
-${CommenOut}          examples:
-${CommenOut}            createXML:
-${CommenOut}              $ref: '#/components/infraExamples/stateCreateResponse/xml'
+#{CommenOutExmpl}            createGoessner:
+#{CommenOutExmpl}              $ref: '#/components/infraExamples/stateCreateResponse/goessner'
+#{CommenOutExmpl}        application/xml:
+#{CommenOutExmpl}          schema:
+#{CommenOutExmpl}            $ref: '#/components/schemas/createSchemastate'
+#{CommenOutExmpl}          examples:
+#{CommenOutExmpl}            createXML:
+#{CommenOutExmpl}              $ref: '#/components/infraExamples/stateCreateResponse/xml'
       headers:
         'content-type':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/content-type'
         'content-encoding':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/content-encoding'
         'content-profile':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/content-profile'
         'fingerprint':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
         'messageId':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageId'
         'messageType':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/messageType'
         'relativeServicePath':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
         'requestId':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/requestId'
         'responseAction':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/responseAction'
         'serviceType':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/serviceType'
         'timestamp':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
         'vary':
-          $ref: 'commonDefs-OpenAPI${OpenAPIVersion}-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
 
   schemas:
     # ------------------------------------------
@@ -839,7 +839,7 @@ ${CommenOut}              $ref: '#/components/infraExamples/stateCreateResponse/
           type: object
           description: >-
             Payload definition for job phase state
-          $ref: 'jsonSchema_OpenAPI${OpenAPIVersion}_Create_IN.yaml#/definitions/stateCommon'
+          $ref: 'jsonSchema_OpenAPI#{OpenAPIVersion}_Create_IN.yaml#/definitions/stateCommon'
 
   # ------------------------------------------
   # -- Examples specific to paths in this file          
@@ -856,66 +856,66 @@ ${CommenOut}              $ref: '#/components/infraExamples/stateCreateResponse/
                 type: object
                 description: >-
                   A list of states for the given job phase.
-                $ref: 'jsonSchema_OpenAPI${OpenAPIVersion}_Create_IN.yaml#/definitions/stateCollection'
+                $ref: 'jsonSchema_OpenAPI#{OpenAPIVersion}_Create_IN.yaml#/definitions/stateCollection'
           example:
             {"states" : {"state" : [{"id": "5b72f2d4-7a83-4297-a71f-8b5fb26cbf14","type" : "NOTSTARTED","created": "2020-08-29T12:45:10.126Z","lastModified": "2020-08-29T12:50:27.394Z","description": "Merging of students in progress."},{"id": "41953aaa-2811-11e6-b67b-9e71128cae77","type" : "COMPLETED","created": "2020-08-30T02:10:00.000Z","description": "Merging of students completed successfully."}]}}
-${CommenOut}        application/xml:
-${CommenOut}          schema:
-${CommenOut}            type: object
-${CommenOut}            properties:
-${CommenOut}              states:
-${CommenOut}                type: object
-${CommenOut}                description: >-
-${CommenOut}                  A list of states for the given job phase.
-${CommenOut}                $ref: 'jsonSchema_OpenAPI${OpenAPIVersion}_Create_IN.yaml#/definitions/stateCollection'
-${CommenOut}          example: >-
-${CommenOut}            <states>
-${CommenOut}              <state id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-${CommenOut}                <type>INPROGRESS</type>
-${CommenOut}                <created>2020-08-29T12:45:10.126Z</created>
-${CommenOut}                <lastModified>2020-08-29T12:50:27.394Z<lastModified>
-${CommenOut}                <description>Merging of students in progress.</description>
-${CommenOut}              </state> 
-${CommenOut}              <state id="41953aaa-2811-11e6-b67b-9e71128cae77">
-${CommenOut}                <type>COMPLETED</type>
-${CommenOut}                <created>2020-08-30T02:10:00.000Z</created>
-${CommenOut}                <description>Merging of students completed successfully.</description>
-${CommenOut}              </state>
-${CommenOut}            </states>
+#{CommenOutExmpl}        application/xml:
+#{CommenOutExmpl}          schema:
+#{CommenOutExmpl}            type: object
+#{CommenOutExmpl}            properties:
+#{CommenOutExmpl}              states:
+#{CommenOutExmpl}                type: object
+#{CommenOutExmpl}                description: >-
+#{CommenOutExmpl}                  A list of states for the given job phase.
+#{CommenOutExmpl}                $ref: 'jsonSchema_OpenAPI#{OpenAPIVersion}_Create_IN.yaml#/definitions/stateCollection'
+#{CommenOutExmpl}          example: >-
+#{CommenOutExmpl}            <states>
+#{CommenOutExmpl}              <state id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
+#{CommenOutExmpl}                <type>INPROGRESS</type>
+#{CommenOutExmpl}                <created>2020-08-29T12:45:10.126Z</created>
+#{CommenOutExmpl}                <lastModified>2020-08-29T12:50:27.394Z<lastModified>
+#{CommenOutExmpl}                <description>Merging of students in progress.</description>
+#{CommenOutExmpl}              </state> 
+#{CommenOutExmpl}              <state id="41953aaa-2811-11e6-b67b-9e71128cae77">
+#{CommenOutExmpl}                <type>COMPLETED</type>
+#{CommenOutExmpl}                <created>2020-08-30T02:10:00.000Z</created>
+#{CommenOutExmpl}                <description>Merging of students completed successfully.</description>
+#{CommenOutExmpl}              </state>
+#{CommenOutExmpl}            </states>
 
     stateCreateRequest:
       pesc:
         summary: PESC notation for job phase state
         value:
           {"state":{"type": "INPROGRESS", "description": "Merged student data."}}
-${CommenOut}      goessner:
-${CommenOut}        summary: Goessner notation for job phase state
-${CommenOut}        value:
-${CommenOut}          {"state":{"type": "INPROGRESS", "description": "Merged student data."}}
-${CommenOut}      xml:
-${CommenOut}        summary: XML job phase state
-${CommenOut}        value: >-
-${CommenOut}          <state >
-${CommenOut}            <type>INPROGRESS</type>
-${CommenOut}            <description>Merged student data.</description>
-${CommenOut}          </state> 
+#{CommenOutExmpl}      goessner:
+#{CommenOutExmpl}        summary: Goessner notation for job phase state
+#{CommenOutExmpl}        value:
+#{CommenOutExmpl}          {"state":{"type": "INPROGRESS", "description": "Merged student data."}}
+#{CommenOutExmpl}      xml:
+#{CommenOutExmpl}        summary: XML job phase state
+#{CommenOutExmpl}        value: >-
+#{CommenOutExmpl}          <state >
+#{CommenOutExmpl}            <type>INPROGRESS</type>
+#{CommenOutExmpl}            <description>Merged student data.</description>
+#{CommenOutExmpl}          </state> 
 
     stateCreateResponse:
       pesc:
         summary: PESC notation for job phase state
         value:
           {"state":{"id": "5b72f2d4-7a83-4297-a71f-8b5fb26cbf14", "type": "INPROGRESS", "created": "2020-08-29T12:45:10.126Z", "lastModified": "2020-08-29T12:50:27.394Z", "description": "Merged student data."}}
-${CommenOut}      goessner:
-${CommenOut}        summary: Goessner notation for job phase state
-${CommenOut}        value:
-${CommenOut}          {"state":{"@id": "5b72f2d4-7a83-4297-a71f-8b5fb26cbf14", "type": "INPROGRESS", "created": "2020-08-29T12:45:10.126Z", "lastModified": "2020-08-29T12:50:27.394Z", "description": "Merged student data."}}
-${CommenOut}      xml:
-${CommenOut}        summary: XML job phase state
-${CommenOut}        value: >-
-${CommenOut}          <state id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
-${CommenOut}            <type>INPROGRESS</type>
-${CommenOut}            <created>2020-08-29T12:45:10.126Z</created>
-${CommenOut}            <lastModified>2020-08-29T12:50:27.394Z<lastModified>
-${CommenOut}            <description>Merged student data.</description>
-${CommenOut}          </state> 
+#{CommenOutExmpl}      goessner:
+#{CommenOutExmpl}        summary: Goessner notation for job phase state
+#{CommenOutExmpl}        value:
+#{CommenOutExmpl}          {"state":{"@id": "5b72f2d4-7a83-4297-a71f-8b5fb26cbf14", "type": "INPROGRESS", "created": "2020-08-29T12:45:10.126Z", "lastModified": "2020-08-29T12:50:27.394Z", "description": "Merged student data."}}
+#{CommenOutExmpl}      xml:
+#{CommenOutExmpl}        summary: XML job phase state
+#{CommenOutExmpl}        value: >-
+#{CommenOutExmpl}          <state id="5b72f2d4-7a83-4297-a71f-8b5fb26cbf14">
+#{CommenOutExmpl}            <type>INPROGRESS</type>
+#{CommenOutExmpl}            <created>2020-08-29T12:45:10.126Z</created>
+#{CommenOutExmpl}            <lastModified>2020-08-29T12:50:27.394Z<lastModified>
+#{CommenOutExmpl}            <description>Merged student data.</description>
+#{CommenOutExmpl}          </state> 
         
