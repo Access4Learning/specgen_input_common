@@ -1809,7 +1809,7 @@ components:
           name: navigationId
           in: header
           description: >-
-            Informs the Service Provider that if the "suggested" RefId in the Request cannot be assigned to the new object, the Request should be rejected. Valid values are true and false. Used in Create requests to Object Services.
+            Identifies state maintained in the Service Provider for the Consumer issuing the Paged Query Request. If returned, the Consumer must supply the navigationId value when requesting subsequent Pages of that object type from that Service Provider. This should not happen when queryIntention is set to NO-CACHING or ONE-OFF.
           required: false
           schema:
             type: string
