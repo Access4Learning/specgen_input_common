@@ -11,13 +11,27 @@
 	<!-- Take a SIF_DataModel.input.xml file and produce a matching Json Schema -->
 	<xsl:output method="text" omit-xml-declaration="yes" indent="no"/>
 	
-        <!-- variable $openAPI30: Whether we are compliant with OpenAPI 3.0 JSON Schema (true), or full JSON Schema, i.e. OpenAPI 3.1 (false). -->
+	<xsl:param name="sifVersion"/>
+    <xsl:param name="sifLocale"/>
+    
+    <!-- Whether we are compliant with OpenAPI 3.0 JSON Schema (true), or full JSON Schema, i.e. OpenAPI 3.1 (false). -->
+    <xsl:param name="openAPI30" select="'true'" as="xs:string"/> <!-- If true create Open API 3.0 spec which is more strict -->
 
+	<!-- 'required' indicates that the CREATE Schema with mandatory fields are REQUIRED -->
+	<!-- 'optional' indicates that the UPDATE Schema with mandatory fields are OPTIONAL: DEFAULT -->
+	<xsl:param name="mandatoryFields" select="'required'" as="xs:string"/>
+
+	<!-- How many enumeration values to include in descriptions ? -->
+	<xsl:param name="enumCount">12</xsl:param>
 
 	<!-- Shorthand to get a quote character into the output -->
 	<xsl:variable name="q"><xsl:text>"</xsl:text></xsl:variable>
 	<xsl:variable name="sq"><xsl:text>'</xsl:text></xsl:variable>
 
+	<!-- Where is the SIF HTML documentation available for links -->
+	<xsl:variable name="extDocURLBase">
+		<xsl:value-of select="concat('http://specification.sifassociation.org/Implementation/', $sifLocale, '/', translate(replace($sifVersion, ' \(', '-'), ') ', ''), '/')"/>
+	</xsl:variable>
 
 	<!-- ....and off we go -->
 	<xsl:template match="/specgen:SIFSpecification">
@@ -92,20 +106,20 @@
                 </xsl:variable>
 		<xsl:text>  # //////////////////////////////// data object /////////////////////////////&#x0a;</xsl:text>
 		<!-- First up the collection edition -->
-                  <xsl:value-of select="concat('  ', @name, 'Collection:&#x0a;',
-									 '    type: object&#x0a;',
-									 '    properties:&#x0a;',
-									 '      ', @name , ':&#x0a;',
-									 '        type: array&#x0a;',
-									 '        items:&#x0a;',
-									 '          $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
+          <xsl:value-of select="concat('  ', @name, 'Collection:&#x0a;',
+     	 							   '    type: object&#x0a;',
+	     							   '    properties:&#x0a;',
+     	 							   '      ', @name , ':&#x0a;',
+     	 							   '        type: array&#x0a;',
+     	 							   '        items:&#x0a;',
+     	 							   '          $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
 
 
 		<!-- Now do the actual dataObject definition --> 
 		<xsl:value-of select="concat('  ', @name, ':&#x0a;')"/>
 
-                <!-- Maybe some fields are required -->
-                <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
+        <!-- Maybe some fields are required -->
+        <!-- NN 20221219 Ignore any Mandatory requirements on the CommonElement/Item[1], which is the name of the element -->
 		<xsl:if test="$mandatoryFields = 'required'">
 			<xsl:variable name="req">
 				<xsl:apply-templates select="specgen:Item[position() gt 1]|//specgen:CommonElement[@name = current()/specgen:Item[1]/specgen:Type/@name]/specgen:Item[position() gt 1]"
@@ -125,18 +139,19 @@
 		<!-- DataObject maybe extension of a base type -->
 		<!--xsl:text>#DEBUG: DataObject maybe extension of a base type - check for specgen:Item[1]/specgen:Type[@complex]&#x0a;</xsl:text-->
 		<!--xsl:if test="specgen:Item[1]/specgen:Type[@complex]"-->
-              <xsl:if test="specgen:Item[1]/specgen:Type/@complex">
-                        <xsl:variable name="ref">
-                                <xsl:apply-templates select="." mode="refresolve">
-                                        <xsl:with-param name="name" select="specgen:Item[1]/specgen:Type/@name"/>
-                                </xsl:apply-templates>
-                        </xsl:variable>
-			<!--xsl:text>#DEBUG: check: true&#x0a;</xsl:text-->
+        <xsl:if test="specgen:Item[1]/specgen:Type/@complex">
+			<xsl:variable name="ref">
+				<xsl:apply-templates select="." mode="refresolve">
+					<xsl:with-param name="name"
+						select="specgen:Item[1]/specgen:Type/@name" />
+				</xsl:apply-templates>
+			</xsl:variable>
+			<!--xsl:text>#DEBUG: check: true&#x0a;</xsl:text -->
 			<xsl:value-of select="concat('    type: object&#x0a;',
-			                             '    description: &gt;-&#x0a;',
-			                             '      ', $desc, '&#x0a;',
-										 '#   allOfA:&#x0a;',
-										 '    $ref: ''#/definitions/', $ref, '''&#x0a;')"/>
+					                     '    description: &gt;-&#x0a;',
+					                     '      ', $desc, '&#x0a;',
+							             '#   allOfA:&#x0a;',
+							             '    $ref: ''#/definitions/', $ref, '''&#x0a;')" />
 			<!--xsl:value-of select="concat('    type: object&#x0a;',
 										 '    allOfA:&#x0a;',
 										 '    - $ref: ''#/definitions/', xfn:refresolve(xfn:chopType(specgen:Item[1]/specgen:Type/@name)), '''&#x0a;',
@@ -324,7 +339,7 @@
 		<xsl:apply-templates select="specgen:Item[position() gt 1]">
 			<xsl:with-param name="indent" select="'      '"/>
 		</xsl:apply-templates>
-              </xsl:template>
+    </xsl:template>
 
         <!-- NN 20221216: Common type is a codeset value with attributes (no extension) -->
         <xsl:template match="specgen:CommonElement[count(specgen:Item) gt 1 and
@@ -369,12 +384,21 @@
 
 				<!-- NN 20221221 if we are extending a string and not an object, we need to see its distinct type -->
  				<xsl:variable name="ref">
-                                <xsl:apply-templates select="specgen:Item[1]/specgen:Type" mode="typeresolve"/>
+                	<xsl:apply-templates select="specgen:Item[1]/specgen:Type" mode="typeresolve"/>
 				</xsl:variable>
-								<xsl:if test="$ref != 'object'">
-									<xsl:value-of select="concat('        type: ', $ref, '&#x0a;')"/>
-								</xsl:if>
+
+				<!-- JH 20230307: $ref can be empty 'typeresolve' did not find a sub-type. In this case we must assume type: string -->
+				<xsl:if test="xfn:empty($ref)">
+		            <!--xsl:text>#        Assume String (IdRef with attrs):&#x0a;</xsl:text-->
+		            <xsl:text>        type: string&#x0a;</xsl:text>
+				</xsl:if>
 				
+				<xsl:if test="not(xfn:empty($ref))">
+					<xsl:if test="$ref != 'object'">
+						<xsl:value-of select="concat('        type: ', $ref, '&#x0a;')"/>
+					</xsl:if>
+				</xsl:if>
+							
                  <!-- There might be a description -->
                 <xsl:variable name="desc">
                         <xsl:apply-templates select="specgen:Item[1]/specgen:Description"/>
@@ -382,13 +406,15 @@
                 <xsl:if test="string-length($desc) gt 0">
                         <xsl:value-of select="concat('        description: &gt;-&#x0a;          ', $desc, '&#x0a;')"/>
                 </xsl:if>
+                
                 <!-- Translate xs:* type into json schema type -->
                 <xsl:apply-templates select="specgen:Item[1]/specgen:Type">
-                        <xsl:with-param name="indent" select="'        '"/>
+                	<xsl:with-param name="indent" select="'        '"/>
                 </xsl:apply-templates>
+                
                 <!-- Add the attributes -->
                 <xsl:apply-templates select="specgen:Item[position() gt 1]">
-                        <xsl:with-param name="indent" select="'      '"/>
+                	<xsl:with-param name="indent" select="'      '"/>
                 </xsl:apply-templates>
         </xsl:template>
 
@@ -560,6 +586,7 @@
 			</xsl:when>
 			<xsl:when test="specgen:Item[2]/specgen:Type/@name eq 'xs:integer' 
 							or specgen:Item[2]/specgen:Type/@name eq 'xs:int'
+							or specgen:Item[2]/specgen:Type/@name eq 'xs:long'
 							or specgen:Item[2]/specgen:Type/@name eq 'xs:unsignedInt'">
 				<xsl:text>          type: integer&#x0a;</xsl:text>
 			</xsl:when>
@@ -572,6 +599,9 @@
 			</xsl:when>
 			<xsl:when test="specgen:Item[2]/specgen:Type/@name eq 'xs:decimal'">
 				<xsl:text>          type: number&#x0a;</xsl:text>
+			</xsl:when>
+			<xsl:when test="specgen:Item[2]/specgen:Type/@name eq 'xs:anyType'">
+				<xsl:text>          type: object&#x0a;</xsl:text>
 			</xsl:when>
 
 			<!-- array of some other defined type -->
@@ -749,7 +779,7 @@
 				<xsl:value-of select="concat('#', $indent, '  - allOfG:&#x0a;')"/>
 
 				<!-- $ref -->
-<!--xsl:text>#"specgen:Type A</xsl:text-->
+				<!--xsl:text>#"specgen:Type A</xsl:text-->
 
 				<xsl:apply-templates select="specgen:Type">
 					<xsl:with-param name="indent" select="concat($indent, '    ')"/>
@@ -802,33 +832,38 @@
 					</xsl:if>
 				</xsl:if>
 			</xsl:when>
-                        <xsl:otherwise>
-                          <!-- NN 20221220: resolve type recursively -->
-                          <!--<xsl:value-of select="concat($indent, '  type: object&#x0a;')"/> -->
-
+            <xsl:otherwise>
+                <!-- NN 20221220: resolve type recursively -->
+                <!--<xsl:value-of select="concat($indent, '  type: object&#x0a;')"/> -->
 						  
-                          <xsl:choose>
-                            <xsl:when test="specgen:Type/@ref eq 'CodeSets'">
-                              <xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
-                            </xsl:when>
-                            <xsl:when test="specgen:Type/@ref eq 'ExternalCodeSets'">
-                              <xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
-                            </xsl:when>
-                            <xsl:otherwise>
- 						    <xsl:variable name="ref">
-                                <xsl:apply-templates select="specgen:Type" mode="typeresolve"/>
-							</xsl:variable>
-							<!-- NN 20221221 if IdRef or RefId followed by SIF_RefObject, change type to TypedIdRef -->
-							<xsl:choose>
-								<xsl:when test="(specgen:Type/@name = 'RefIdType' or specgen:Type/@name = 'IdRefType') and following-sibling::specgen:Item[1]/specgen:Attribute = 'SIF_RefObject'">
-									<xsl:value-of select="concat($indent, '  type: object&#x0a;')"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="concat($indent, '  type: ', $ref, '&#x0a;')"/>
-								</xsl:otherwise>
-							 </xsl:choose>
-                            </xsl:otherwise>
-                            </xsl:choose>
+                <xsl:choose>
+                	<xsl:when test="specgen:Type/@ref eq 'CodeSets'">
+                    	<xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
+                    </xsl:when>
+                    <xsl:when test="specgen:Type/@ref eq 'ExternalCodeSets'">
+                    	<xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+			    		<xsl:variable name="ref">
+                            <xsl:apply-templates select="specgen:Type" mode="typeresolve"/>
+						</xsl:variable>
+						<!-- NN 20221221 if IdRef or RefId followed by SIF_RefObject, change type to TypedIdRef -->
+						<xsl:choose>
+							<!-- JH 20230307: $ref can be empty 'typeresolve' did not find a sub-type. In this case we 
+							                  must assume type: string -->
+							<xsl:when test="xfn:empty($ref)">
+								<!--xsl:value-of select="concat('#',$indent, '  Assume String: ', $ref, '&#x0a;')"/-->
+								<xsl:value-of select="concat($indent, '  type: string&#x0a;')"/>
+							</xsl:when>
+							<xsl:when test="(specgen:Type/@name = 'RefIdType' or specgen:Type/@name = 'IdRefType') and following-sibling::specgen:Item[1]/specgen:Attribute = 'SIF_RefObject'">
+								<xsl:value-of select="concat($indent, '  type: object&#x0a;')"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="concat($indent, '  type: ', $ref, '&#x0a;')"/>
+							</xsl:otherwise>
+						</xsl:choose>
+                    </xsl:otherwise>
+                </xsl:choose>
 
 				<xsl:if test="normalize-space(specgen:Description) ne ''">
 					<xsl:value-of select="concat($indent, '  description: &gt;-&#x0a;', $indent, '    ')"/>
@@ -1260,31 +1295,29 @@
 		
 		<!-- 20221220 deal with aliases, eliminating chains of JSON Reference -->
 		<xsl:template match="specgen:CommonElement" mode="typeresolve">
-		 <!--OBJ <xsl:value-of select="@name"/> OBJ-->
-          <xsl:choose>
-           <xsl:when test="count(specgen:Item) gt 1">object</xsl:when>
-           <xsl:when test="specgen:Item[1]/specgen:Type/@complex">object</xsl:when>
-           <xsl:when test="specgen:Item[1]/specgen:Union"><xsl:apply-templates select="specgen:Item[1]/specgen:Union/specgen:Type[1]" mode="typeresolve"/></xsl:when>
-			<xsl:otherwise><xsl:apply-templates select="specgen:Item[1]/specgen:Type" mode="typeresolve"/></xsl:otherwise>
-		  </xsl:choose>	
+			<!--OBJ <xsl:value-of select="@name"/> OBJ-->
+          	<xsl:choose>
+           		<xsl:when test="count(specgen:Item) gt 1">object</xsl:when>
+           		<xsl:when test="specgen:Item[1]/specgen:Type/@complex">object</xsl:when>
+           		<xsl:when test="specgen:Item[1]/specgen:Union"><xsl:apply-templates select="specgen:Item[1]/specgen:Union/specgen:Type[1]" mode="typeresolve"/></xsl:when>
+				<xsl:otherwise><xsl:apply-templates select="specgen:Item[1]/specgen:Type" mode="typeresolve"/></xsl:otherwise>
+		  	</xsl:choose>	
 		</xsl:template>
-
-
 
         <!-- 20221220 deal with aliases, resolving type -->
         <xsl:template match="specgen:Type" mode="typeresolve">
-		 <xsl:variable name="name"><xsl:value-of select="@name"/></xsl:variable>
-		 <!--TYPE <xsl:value-of select="@name"/> ENDTYPE-->
-        <xsl:choose>
-            <!-- type is not an alias: -->
-            <xsl:when test="@ref =  'CodeSets'">string</xsl:when>
-            <xsl:when test="@ref =  'ExternalCodeSets'">string</xsl:when>
-            <xsl:when test="starts-with($name, 'xs:')"><xsl:value-of select="xfn:xs_to_type($name)"/></xsl:when>
-            <!-- recurse: follow JSON Reference chain -->
-            <xsl:otherwise>
-				<xsl:apply-templates select="//specgen:CommonElement[@name = $name]" mode="typeresolve"/>
-			</xsl:otherwise>
-          </xsl:choose>
+			<xsl:variable name="name"><xsl:value-of select="@name"/></xsl:variable>
+		 	<!--TYPE <xsl:value-of select="@name"/> ENDTYPE-->
+        	<xsl:choose>
+            	<!-- type is not an alias: -->
+            	<xsl:when test="@ref = 'CodeSets'">string</xsl:when>
+            	<xsl:when test="@ref = 'ExternalCodeSets'">string</xsl:when>
+            	<xsl:when test="starts-with($name, 'xs:')"><xsl:value-of select="xfn:xs_to_type($name)"/></xsl:when>
+            	<!-- recurse: follow JSON Reference chain -->
+            	<xsl:otherwise>
+					<xsl:apply-templates select="//specgen:CommonElement[@name = $name]" mode="typeresolve"/>
+				</xsl:otherwise>
+          	</xsl:choose>
         </xsl:template>
 
 	<!-- Custom function to chop 'Type' off the end of XSD type names -->
@@ -1323,7 +1356,8 @@
 	  		<xsl:choose>
 			<xsl:when test="   $name eq 'xs:integer'
 							or $name eq 'xs:int'
-							or $name eq 'xs:unsignedInt'">integer</xsl:when>
+							or $name eq 'xs:unsignedInt'
+							or $name eq 'xs:long'">integer</xsl:when>
 
 			<xsl:when test="$name eq 'xs:decimal'">number</xsl:when>
 
@@ -1339,6 +1373,7 @@
 			<xsl:when test="$name eq 'xs:anyURI'">string</xsl:when>
 
 			<xsl:when test="$name eq 'xs:base64Binary'">string</xsl:when>
+			<xsl:when test="$name eq 'xs:anyType'">object</xsl:when>
 			<xsl:otherwise><xsl:value-of select="concat($name, ' XXXXX UNRECOGNISED XML TYPE')"/></xsl:otherwise>
 		</xsl:choose>
 
