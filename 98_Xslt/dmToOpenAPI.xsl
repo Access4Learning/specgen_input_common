@@ -15,7 +15,7 @@
     <xsl:param name="sifObjectList" select="''"/> <!-- Default to empty list -->
     <!-- NN 20231102 Insert commas around parameter, for delimiter detection, to prevent spurious substring match -->
     <xsl:variable name="sifObjectList1">
-        <xsl:value-of select="concat(',', $sifObject,',')"/>
+        <xsl:value-of select="concat(',', $sifObjectList,',')"/>
     </xsl:variable>
 
     <xsl:param name="sifObjectGroupList" select="''"/> <!-- Default to empty list -->
@@ -214,7 +214,7 @@
         <xsl:template match="specgen:DataObject" mode="TagGroups">
                 <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
                 <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,','"/>
+                        <xsl:value-of select="concat(',', @name,',')"/>
                 </xsl:variable>
                 <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
@@ -244,7 +244,7 @@
         <xsl:template match="specgen:DataObject" mode="Tags">
                 <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
                 <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,','"/>
+                        <xsl:value-of select="concat(',', @name,',')"/>
                 </xsl:variable>
                 <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
@@ -274,7 +274,7 @@
         <xsl:template match="specgen:DataObject" mode="requestPayloadDefinitions">
                 <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
                 <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,','"/>
+                        <xsl:value-of select="concat(',', @name,',')"/>
                 </xsl:variable>
                 <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
@@ -327,7 +327,7 @@
         <xsl:template match="specgen:DataObject" mode="responsePayloadDefinitions">
                 <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
                 <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,','"/>
+                        <xsl:value-of select="concat(',', @name,',')"/>
                 </xsl:variable>
                 <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
@@ -554,7 +554,7 @@
         <xsl:template match="specgen:DataObject" mode="schemaDefinitions">
                 <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
                 <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,','"/>
+                        <xsl:value-of select="concat(',', @name,',')"/>
                 </xsl:variable>
                 <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
@@ -815,7 +815,7 @@
         <xsl:template match="specgen:DataObject" mode="paths">
                 <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
                 <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,','"/>
+                        <xsl:value-of select="concat(',', @name,',')"/>
                 </xsl:variable>
                 <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
