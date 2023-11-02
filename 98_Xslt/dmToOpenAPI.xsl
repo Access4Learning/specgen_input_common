@@ -13,6 +13,11 @@
 	<xsl:param name="sifVersion"/>
     <xsl:param name="sifLocale"/>
     <xsl:param name="sifObjectList" select="''"/> <!-- Default to empty list -->
+    <!-- NN 20231102 Insert commas around parameter, for delimiter detection, to prevent spurious substring match -->
+    <xsl:variable name="sifObjectList1">
+        <xsl:value-of select="concat(',', $sifObjectList,',')"/>
+    </xsl:variable>
+
     <xsl:param name="sifObjectGroupList" select="''"/> <!-- Default to empty list -->
     <xsl:param name="includeAllHeaders" select="'false'" as="xs:string"/> <!-- If false we only show minimum number of headers -->
     <xsl:param name="includeAdminDirectives" select="'false'" as="xs:string"/> <!-- If true admin directives endpoints will be included. -->
@@ -206,8 +211,12 @@
 	   </xsl:if>
 	</xsl:template>
 	
-	<xsl:template match="specgen:DataObject" mode="TagGroups">
-		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">
+        <xsl:template match="specgen:DataObject" mode="TagGroups">
+                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
+                <xsl:variable name="commadelim_name">
+                        <xsl:value-of select="concat(',', @name,',')"/>
+                </xsl:variable>
+                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 		
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
@@ -232,8 +241,12 @@
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template match="specgen:DataObject" mode="Tags">
-		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">
+        <xsl:template match="specgen:DataObject" mode="Tags">
+                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
+                <xsl:variable name="commadelim_name">
+                        <xsl:value-of select="concat(',', @name,',')"/>
+                </xsl:variable>
+                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 		
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
@@ -258,9 +271,12 @@
 		<xsl:apply-templates select=".//specgen:DataObject"	mode="requestPayloadDefinitions" />
 	</xsl:template>
 
-	<xsl:template match="specgen:DataObject" mode="requestPayloadDefinitions">
-		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">	
-	
+        <xsl:template match="specgen:DataObject" mode="requestPayloadDefinitions">
+                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
+                <xsl:variable name="commadelim_name">
+                        <xsl:value-of select="concat(',', @name,',')"/>
+                </xsl:variable>
+                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 	
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
@@ -308,8 +324,12 @@
 		<xsl:apply-templates select=".//specgen:DataObject" mode="responsePayloadDefinitions"/>
 	</xsl:template>
 
-	<xsl:template match="specgen:DataObject" mode="responsePayloadDefinitions">
-		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">
+        <xsl:template match="specgen:DataObject" mode="responsePayloadDefinitions">
+                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
+                <xsl:variable name="commadelim_name">
+                        <xsl:value-of select="concat(',', @name,',')"/>
+                </xsl:variable>
+                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 	
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
@@ -531,8 +551,12 @@
 		<xsl:apply-templates select=".//specgen:DataObject" mode="schemaDefinitions"/>
 	</xsl:template>
 
-	<xsl:template match="specgen:DataObject" mode="schemaDefinitions">
-		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">	
+        <xsl:template match="specgen:DataObject" mode="schemaDefinitions">
+                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
+                <xsl:variable name="commadelim_name">
+                        <xsl:value-of select="concat(',', @name,',')"/>
+                </xsl:variable>
+                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 	
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
@@ -788,8 +812,12 @@
 	<!-- ======================================= -->
 	<!-- Section with HTTP Operation Definition  -->
 	<!-- ======================================= -->
-	<xsl:template match="specgen:DataObject" mode="paths">
-		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">
+        <xsl:template match="specgen:DataObject" mode="paths">
+                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
+                <xsl:variable name="commadelim_name">
+                        <xsl:value-of select="concat(',', @name,',')"/>
+                </xsl:variable>
+                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 	
 			<!--xsl:variable name="additionalSegments" select="string-join(specgen:OpenAPI/specgen:UrlSegments/specgen:UrlSegment/specgen:Name, '/')"-->

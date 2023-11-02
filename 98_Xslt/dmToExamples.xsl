@@ -12,7 +12,13 @@
 
 	<xsl:param name="sifVersion"/>
 	<xsl:param name="sifLocale"/>
-	<xsl:param name="sifObjectList" select="''"/> <!-- Default to empty list -->
+        <xsl:param name="sifObjectList" select="''"/> <!-- Default to empty list -->
+        <!-- NN 20231102 Insert commas around parameter, for delimiter detection, to prevent spurious substring match -->
+        <xsl:variable name="sifObjectList1">
+                <xsl:value-of select="concat(',', $sifObjectList,',')"/>
+        </xsl:variable>
+
+
 
 	<xsl:import href="./sif2jsonspecgen.xslt"/>
 	<xsl:import href="./xmlToJson-goessner.xslt"/>
@@ -41,8 +47,12 @@
 		<!--/xsl:result-document-->
 	</xsl:template>
 
-	<xsl:template match="specgen:DataObject" mode="objectExamples">
-		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">
+        <xsl:template match="specgen:DataObject" mode="objectExamples">
+                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
+                <xsl:variable name="commadelim_name">
+                        <xsl:value-of select="concat(',', @name,',')"/>
+                </xsl:variable>
+		<xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 	
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
