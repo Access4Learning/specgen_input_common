@@ -15,7 +15,15 @@
         <xsl:param name="sifObjectList" select="''"/> <!-- Default to empty list -->
         <!-- NN 20231102 Insert commas around parameter, for delimiter detection, to prevent spurious substring match -->
         <xsl:variable name="sifObjectList1">
-                <xsl:value-of select="concat(',', $sifObjectList,',')"/>
+         <!-- NN 20231115 But not if it's empty		 -->
+		 <xsl:choose>
+		 <xsl:when test="$sifObjectList = ''">
+		  <xsl:value-of select="$sifObjectList"/>
+		  </xsl:when>
+		 <xsl:otherwise>
+               <xsl:value-of select="concat(',', $sifObjectList,',')"/>
+		 </xsl:otherwise>
+		 </xsl:choose>
         </xsl:variable>
 
 
