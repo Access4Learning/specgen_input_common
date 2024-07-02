@@ -13,11 +13,6 @@
 	<xsl:param name="sifVersion"/>
     <xsl:param name="sifLocale"/>
     <xsl:param name="sifObjectList" select="''"/> <!-- Default to empty list -->
-    <!-- NN 20231102 Insert commas around parameter, for delimiter detection, to prevent spurious substring match -->
-    <xsl:variable name="sifObjectList1">
-        <xsl:value-of select="concat(',', $sifObjectList,',')"/>
-    </xsl:variable>
-
     <xsl:param name="sifObjectGroupList" select="''"/> <!-- Default to empty list -->
     <xsl:param name="includeAllHeaders" select="'false'" as="xs:string"/> <!-- If false we only show minimum number of headers -->
     <xsl:param name="includeAdminDirectives" select="'false'" as="xs:string"/> <!-- If true admin directives endpoints will be included. -->
@@ -211,12 +206,8 @@
 	   </xsl:if>
 	</xsl:template>
 	
-        <xsl:template match="specgen:DataObject" mode="TagGroups">
-                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
-                <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,',')"/>
-                </xsl:variable>
-                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
+	<xsl:template match="specgen:DataObject" mode="TagGroups">
+		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 		
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
@@ -241,12 +232,8 @@
 		</xsl:if>
 	</xsl:template>
 
-        <xsl:template match="specgen:DataObject" mode="Tags">
-                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
-                <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,',')"/>
-                </xsl:variable>
-                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
+	<xsl:template match="specgen:DataObject" mode="Tags">
+		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 		
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
@@ -271,12 +258,9 @@
 		<xsl:apply-templates select=".//specgen:DataObject"	mode="requestPayloadDefinitions" />
 	</xsl:template>
 
-        <xsl:template match="specgen:DataObject" mode="requestPayloadDefinitions">
-                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
-                <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,',')"/>
-                </xsl:variable>
-                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
+	<xsl:template match="specgen:DataObject" mode="requestPayloadDefinitions">
+		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">	
+	
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 	
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
@@ -324,13 +308,23 @@
 		<xsl:apply-templates select=".//specgen:DataObject" mode="responsePayloadDefinitions"/>
 	</xsl:template>
 
-        <xsl:template match="specgen:DataObject" mode="responsePayloadDefinitions">
-                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
-                <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,',')"/>
-                </xsl:variable>
-                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
+	<xsl:template match="specgen:DataObject" mode="responsePayloadDefinitions">
+		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
+			
+			<!-- Check if endpoint supports zoneId and contextId. If not add it to default exclude list of HTTP headers. -->
+			<xsl:variable name="zoneContextHTTPExclusion">
+				<!-- Supported: Do not exclude zoneId and contextId -->
+				<xsl:if test="xfn:emptyOrTrue(specgen:OpenAPI/specgen:ZoneContextSupported)">
+			        <xsl:value-of select="''"/>
+			    </xsl:if>
+			    
+			    <!-- Not Supported: Add zoneId and contextId to default HTTP exclude list.  -->
+			    <xsl:if test="not(xfn:emptyOrTrue(specgen:OpenAPI/specgen:ZoneContextSupported))">
+			        <xsl:value-of select="',zoneId,contextId'"/>
+			    </xsl:if>
+			</xsl:variable>
+			
 	
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
 				<xsl:text>      #//&#x0a;</xsl:text>
@@ -352,7 +346,7 @@
 					<xsl:with-param name="pfx"><xsl:text>        </xsl:text></xsl:with-param>
 					<xsl:with-param name="excludeHeaders">
 						<!--xsl:value-of select="concat(specgen:OpenAPI/specgen:GetSingle/specgen:ExcludeResponseHTTPHeaders, ',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize')"/-->
-						<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetSingle/specgen:ExcludeResponseHTTPHeaders, 'serviceSubType',
+						<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetSingle/specgen:ExcludeResponseHTTPHeaders, 'serviceSubType', $zoneContextHTTPExclusion,
 						                             xfn:conditinalConcat(not($produceAllHeaders),',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, dataPrivacyMarkerBatchPutResponse, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize',',requestId'))"/>
 					</xsl:with-param>
 				</xsl:apply-templates>
@@ -371,7 +365,7 @@
 					<xsl:with-param name="pfx"><xsl:text>        </xsl:text></xsl:with-param>
 					<xsl:with-param name="excludeHeaders">
 						<!--xsl:value-of select="concat(specgen:OpenAPI/specgen:PutSingle/specgen:ExcludeResponseHTTPHeaders, ',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize')"/-->
-						<xsl:value-of select="concat(specgen:OpenAPI/specgen:PutSingle/specgen:ExcludeResponseHTTPHeaders, 'serviceSubType',
+						<xsl:value-of select="concat(specgen:OpenAPI/specgen:PutSingle/specgen:ExcludeResponseHTTPHeaders, 'serviceSubType', $zoneContextHTTPExclusion, 
 						                     xfn:conditinalConcat(not($produceAllHeaders),',accept, accept-encoding, accept-profile, changesSinceMarkerHead,changesSinceMarkerGet, dataPrivacyMarkerBatchPutResponse, navigationCount, navigationId, navigationLastPage, navigationPage, navigationPageSize',',requestId'))"/>
 					</xsl:with-param>
 				</xsl:apply-templates>
@@ -389,7 +383,7 @@
 				<xsl:apply-templates select="." mode="addResponseHeaders">
 					<xsl:with-param name="pfx"><xsl:text>        </xsl:text></xsl:with-param>
 					<xsl:with-param name="excludeHeaders">
-						<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerHead, dataPrivacyMarkerBatchPutResponse, serviceSubType')"/>
+						<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerHead, dataPrivacyMarkerBatchPutResponse, serviceSubType', $zoneContextHTTPExclusion)"/>
 					</xsl:with-param>
 				</xsl:apply-templates>
 				<xsl:text>&#x0a;</xsl:text>
@@ -407,7 +401,7 @@
 				<xsl:apply-templates select="." mode="addResponseHeaders">
 					<xsl:with-param name="pfx"><xsl:text>        </xsl:text></xsl:with-param>
 					<xsl:with-param name="excludeHeaders">
-						<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerHead,changesSinceMarkerGet,dataPrivacyMarkerBatchPutResponse,serviceSubType')"/>
+						<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerHead,changesSinceMarkerGet,dataPrivacyMarkerBatchPutResponse,serviceSubType', $zoneContextHTTPExclusion)"/>
 					</xsl:with-param>
 				</xsl:apply-templates>
 				<xsl:text>&#x0a;</xsl:text>
@@ -551,12 +545,8 @@
 		<xsl:apply-templates select=".//specgen:DataObject" mode="schemaDefinitions"/>
 	</xsl:template>
 
-        <xsl:template match="specgen:DataObject" mode="schemaDefinitions">
-                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
-                <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,',')"/>
-                </xsl:variable>
-                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
+	<xsl:template match="specgen:DataObject" mode="schemaDefinitions">
+		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">	
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
 	
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
@@ -691,6 +681,11 @@
 			</xsl:if>
 		</xsl:if>
 
+		<xsl:if test="not(contains($excludeHeaders, 'contextId'))">
+			<xsl:value-of select="concat($pfx, '  ''contextId'':&#x0a;')"/>
+			<xsl:value-of select="concat($pfx, '    $ref: ''',$commonDefsFileName,'#/components/schemas/httpHeaders/response/contextId''&#x0a;')"/>
+		</xsl:if>
+
 		<xsl:if test="not(contains($excludeHeaders, 'changesSinceMarkerGet'))">
 			<xsl:value-of select="concat($pfx, '  ''changesSinceMarker'':&#x0a;')"/>
 			<xsl:value-of select="concat($pfx, '    $ref: ''',$commonDefsFileName,'#/components/schemas/httpHeaders/response/changesSinceMarkerGet''&#x0a;')"/>
@@ -802,6 +797,12 @@
 				<xsl:value-of select="concat($pfx, '    $ref: ''',$commonDefsFileName,'#/components/schemas/httpHeaders/response/vary''&#x0a;')"/>
 			</xsl:if>
 		</xsl:if>
+		
+		<xsl:if test="not(contains($excludeHeaders, 'zoneId'))">
+			<xsl:value-of select="concat($pfx, '  ''zoneId'':&#x0a;')"/>
+			<xsl:value-of select="concat($pfx, '    $ref: ''',$commonDefsFileName,'#/components/schemas/httpHeaders/response/zoneId''&#x0a;')"/>
+		</xsl:if>
+		
 	</xsl:template>
 	
 	<xsl:template match="specgen:DataObjects" mode="paths">
@@ -812,14 +813,29 @@
 	<!-- ======================================= -->
 	<!-- Section with HTTP Operation Definition  -->
 	<!-- ======================================= -->
-        <xsl:template match="specgen:DataObject" mode="paths">
-                <!-- NN 20231102 Insert commas around @name, for delimiter detection, to prevent spurious substring match -->
-                <xsl:variable name="commadelim_name">
-                        <xsl:value-of select="concat(',', @name,',')"/>
-                </xsl:variable>
-                <xsl:if test="xfn:containsOrEmpty($sifObjectList1, $commadelim_name)">
+	<xsl:template match="specgen:DataObject" mode="paths">
+		<xsl:if test="xfn:containsOrEmpty($sifObjectList, @name)">
 			<xsl:variable name="excludeOps" select="specgen:OpenAPI/specgen:ExcludeOperations"/>
-	
+			
+			<!-- 
+			<xsl:variable name="zoneContextSupported">
+				<xsl:value-of select="xfn:emptyOrTrue(specgen:OpenAPI/specgen:ZoneContextSupported)"/>
+			</xsl:variable>
+			-->
+			
+			<!-- Check if endpoint supports zoneId and contextId. If not add it to default exclude list of HTTP headers. -->
+			<xsl:variable name="zoneContextHTTPExclusion">
+				<!-- Supported: Do not exclude zoneId and contextId -->
+				<xsl:if test="xfn:emptyOrTrue(specgen:OpenAPI/specgen:ZoneContextSupported)">
+			        <xsl:value-of select="''"/>
+			    </xsl:if>
+			    
+			    <!-- Not Supported: Add zoneId and contextId to default HTTP exclude list.  -->
+			    <xsl:if test="not(xfn:emptyOrTrue(specgen:OpenAPI/specgen:ZoneContextSupported))">
+			        <xsl:value-of select="',zoneId,contextId'"/>
+			    </xsl:if>
+			</xsl:variable>
+			
 			<!--xsl:variable name="additionalSegments" select="string-join(specgen:OpenAPI/specgen:UrlSegments/specgen:UrlSegment/specgen:Name, '/')"-->
 			<xsl:variable name="additionalSegments">
    				<xsl:value-of select="specgen:OpenAPI/specgen:UrlSegments/specgen:UrlSegment/specgen:Name" separator="/" />
@@ -842,6 +858,8 @@
 			<xsl:if test="not(contains($excludeOps,'ALL'))">
 				<xsl:text>  # //////////////////////////////////////////////&#x0a;</xsl:text>
 				<xsl:value-of select="concat('  # // ', $objectBasePath, ' Endpoints &#x0a;')"/>
+				<!-- xsl:value-of select="concat('  # // ', 'Zone and Context Supported: ', $zoneContextSupported, '&#x0a;')"/-->
+				<xsl:value-of select="concat('  # // ', 'Exclude HTTP Header: ', $zoneContextHTTPExclusion, '&#x0a;')"/>
 				<xsl:text>  # //////////////////////////////////////////////&#x0a;</xsl:text>
 				
 				<!-- Check if batch end-points are excluded -->
@@ -871,7 +889,7 @@
 						<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 							<xsl:with-param name="excludeHTTPHeaders">
 								<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetBatch/specgen:ExcludeRequestHTTPHeaders,
-								                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, serviceSubType, replacement')"/>
+								                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, serviceSubType, replacement', $zoneContextHTTPExclusion)"/>
 							</xsl:with-param>
 						</xsl:apply-templates>
 		
@@ -906,7 +924,7 @@
 						<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 							<xsl:with-param name="excludeHTTPHeaders">
 								<xsl:value-of select="concat(specgen:OpenAPI/specgen:HeadBatch/specgen:ExcludeRequestHTTPHeaders,
-								                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, serviceSubType, replacement')"/>
+								                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, serviceSubType, replacement', $zoneContextHTTPExclusion)"/>
 							</xsl:with-param>
 						</xsl:apply-templates>
 		
@@ -919,7 +937,7 @@
 						<xsl:apply-templates select="." mode="addResponseHeaders">
 							<xsl:with-param name="pfx"><xsl:text>          </xsl:text></xsl:with-param>
 							<xsl:with-param name="excludeHeaders">
-								<xsl:value-of select="concat(specgen:OpenAPI/specgen:HeadBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerGet, dataPrivacyMarkerBatchPutResponse, serviceSubType')"/>
+								<xsl:value-of select="concat(specgen:OpenAPI/specgen:HeadBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerGet, dataPrivacyMarkerBatchPutResponse, serviceSubType', $zoneContextHTTPExclusion)"/>
 							</xsl:with-param>
 						</xsl:apply-templates>
 		
@@ -930,7 +948,7 @@
 						<xsl:apply-templates select="." mode="addResponseHeaders">
 							<xsl:with-param name="pfx"><xsl:text>          </xsl:text></xsl:with-param>
 							<xsl:with-param name="excludeHeaders">
-								<xsl:value-of select="concat(specgen:OpenAPI/specgen:HeadBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerGet,changesSinceMarkerHead,dataPrivacyMarkerBatchPutResponse,navigationCount,navigationId,navigationLastPage,navigationPageSize,navigationLastPageSize,serviceSubType')"/>
+								<xsl:value-of select="concat(specgen:OpenAPI/specgen:HeadBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerGet,changesSinceMarkerHead,dataPrivacyMarkerBatchPutResponse,navigationCount,navigationId,navigationLastPage,navigationPageSize,navigationLastPageSize,serviceSubType', $zoneContextHTTPExclusion)"/>
 							</xsl:with-param>
 						</xsl:apply-templates>
 					</xsl:if>
@@ -956,7 +974,8 @@
 						<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 							<xsl:with-param name="excludeHTTPHeaders">
 								<xsl:value-of select="concat(specgen:OpenAPI/specgen:PutBatch/specgen:ExcludeRequestHTTPHeaders,
-								                     ',connectionId, dataPrivacyMarkerStd, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queryIntention, serviceSubType')"/>
+								                     ',connectionId, dataPrivacyMarkerStd, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queryIntention, serviceSubType',
+								                     $zoneContextHTTPExclusion)"/>
 							</xsl:with-param>
 						</xsl:apply-templates>
 		
@@ -1002,7 +1021,8 @@
 						<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 							<xsl:with-param name="excludeHTTPHeaders">
 								<xsl:value-of select="concat(specgen:OpenAPI/specgen:PostBatch/specgen:ExcludeRequestHTTPHeaders,
-								                     ',connectionId, dataPrivacyMarkerBatchPutRequest, methodOverridePut, navigationId, navigationPage, navigationPageSize, queryIntention, serviceSubType, replacement')"/>
+								                     ',connectionId, dataPrivacyMarkerBatchPutRequest, methodOverridePut, navigationId, navigationPage, navigationPageSize, queryIntention, serviceSubType, replacement', 
+								                     $zoneContextHTTPExclusion)"/>
 							</xsl:with-param>
 						</xsl:apply-templates>
 		
@@ -1046,7 +1066,8 @@
 					<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 						<xsl:with-param name="excludeHTTPHeaders">
 							<xsl:value-of select="concat(specgen:OpenAPI/specgen:PostSingle/specgen:ExcludeRequestHTTPHeaders,
-                                                         ',connectionId, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, replacement, requestType')"/>
+                                                         ',connectionId, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, replacement, requestType', 
+                                                         $zoneContextHTTPExclusion)"/>
 						</xsl:with-param>
 					</xsl:apply-templates>
 	
@@ -1091,7 +1112,8 @@
 							<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 								<xsl:with-param name="excludeHTTPHeaders">
 									<xsl:value-of select="concat(specgen:OpenAPI/specgen:PutSingle/specgen:ExcludeRequestHTTPHeaders,
-							                     ',connectionId, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, requestType')"/>
+							                     ',connectionId, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, requestType', 
+							                     $zoneContextHTTPExclusion)"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 		
@@ -1138,7 +1160,8 @@
 							<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 								<xsl:with-param name="excludeHTTPHeaders">
 									<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetSingle/specgen:ExcludeRequestHTTPHeaders,
-							                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, requestType, replacement')"/>
+							                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, serviceSubType, requestType, replacement', 
+							                     $zoneContextHTTPExclusion)"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 		
@@ -1181,7 +1204,8 @@
 							<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 								<xsl:with-param name="excludeHTTPHeaders">
 									<xsl:value-of select="concat(specgen:OpenAPI/specgen:DeleteSingle/specgen:ExcludeRequestHTTPHeaders,
-							                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerStd, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, requestType, replacement, serviceSubType')"/>
+							                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerStd, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, navigationId, navigationPage, navigationPageSize, queueId, queryIntention, requestType, replacement, serviceSubType', 
+							                     $zoneContextHTTPExclusion)"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 		
@@ -1193,7 +1217,7 @@
 							<xsl:apply-templates select="." mode="addResponseHeaders">
 								<xsl:with-param name="pfx"><xsl:text>          </xsl:text></xsl:with-param>
 								<xsl:with-param name="excludeHeaders">
-									<xsl:value-of select="xfn:conditinalConcat(not($produceAllHeaders),'changesSinceMarkerGet,changesSinceMarkerHead, dataPrivacyMarkerStd, dataPrivacyMarkerBatchPutResponse, navigationCount,navigationId,navigationLastPage,navigationPage,navigationPageSize',',requestId')"/>
+									<xsl:value-of select="concat($zoneContextHTTPExclusion, xfn:conditinalConcat(not($produceAllHeaders),'changesSinceMarkerGet,changesSinceMarkerHead, dataPrivacyMarkerStd, dataPrivacyMarkerBatchPutResponse, navigationCount,navigationId,navigationLastPage,navigationPage,navigationPageSize',',requestId'))"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 	
@@ -1238,7 +1262,8 @@
 							<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 								<xsl:with-param name="excludeHTTPHeaders">
 									<xsl:value-of select="concat(specgen:OpenAPI/specgen:GetBatch/specgen:ExcludeRequestHTTPHeaders,
-									                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, replacement')"/>
+									                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, replacement', 
+									                     $zoneContextHTTPExclusion)"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 			
@@ -1269,7 +1294,8 @@
 							<xsl:apply-templates select="." mode="addRequestHTTPHeaderList">
 								<xsl:with-param name="excludeHTTPHeaders">
 									<xsl:value-of select="concat(specgen:OpenAPI/specgen:HeadBatch/specgen:ExcludeRequestHTTPHeaders,
-									                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, replacement')"/>
+									                     ',connectionId, content-encoding, content-type, content-profile, dataPrivacyMarkerBatchPutRequest, methodOverridePut, methodOverridePost, mustUseAdvisory, replacement', 
+									                     $zoneContextHTTPExclusion)"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 			
@@ -1282,7 +1308,7 @@
 							<xsl:apply-templates select="." mode="addResponseHeaders">
 								<xsl:with-param name="pfx"><xsl:text>          </xsl:text></xsl:with-param>
 								<xsl:with-param name="excludeHeaders">
-									<xsl:value-of select="concat(specgen:OpenAPI/specgen:HeadBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerGet, dataPrivacyMarkerBatchPutResponse')"/>
+									<xsl:value-of select="concat(specgen:OpenAPI/specgen:HeadBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerGet, dataPrivacyMarkerBatchPutResponse', $zoneContextHTTPExclusion)"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 			
@@ -1293,7 +1319,7 @@
 							<xsl:apply-templates select="." mode="addResponseHeaders">
 								<xsl:with-param name="pfx"><xsl:text>          </xsl:text></xsl:with-param>
 								<xsl:with-param name="excludeHeaders">
-									<xsl:value-of select="concat(specgen:OpenAPI/specgen:HeadBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerGet,changesSinceMarkerHead,dataPrivacyMarkerBatchPutResponse,navigationCount,navigationId,navigationLastPage,navigationPageSize,navigationLastPageSize')"/>
+									<xsl:value-of select="concat(specgen:OpenAPI/specgen:HeadBatch/specgen:ExcludeResponseHTTPHeaders, ',changesSinceMarkerGet,changesSinceMarkerHead,dataPrivacyMarkerBatchPutResponse,navigationCount,navigationId,navigationLastPage,navigationPageSize,navigationLastPageSize', $zoneContextHTTPExclusion)"/>
 								</xsl:with-param>
 							</xsl:apply-templates>
 						</xsl:if>
@@ -1567,7 +1593,15 @@
 					<xsl:with-param name="hdrName">content-profile</xsl:with-param>
 				</xsl:apply-templates>
 			</xsl:if>
-	
+		</xsl:if>
+
+		<xsl:if test="not(contains($excludeHTTPHeaders, 'contextId'))">
+			<xsl:apply-templates select="." mode="addRequestHTTPHeaderRef">
+				<xsl:with-param name="hdrName">contextId</xsl:with-param>
+			</xsl:apply-templates>
+		</xsl:if>
+
+		<xsl:if test="$produceAllHeaders">
 			<xsl:if test="not(contains($excludeHTTPHeaders, 'dataPrivacyMarkerStd'))">
 				<xsl:apply-templates select="." mode="addRequestHTTPHeaderRef">
 					<xsl:with-param name="hdrName">dataPrivacyMarkerStd</xsl:with-param>
@@ -1713,6 +1747,12 @@
 		<xsl:if test="not(contains($excludeHTTPHeaders, 'timestamp'))">
 			<xsl:apply-templates select="." mode="addRequestHTTPHeaderRef">
 				<xsl:with-param name="hdrName">timestamp</xsl:with-param>
+			</xsl:apply-templates>
+		</xsl:if>
+
+		<xsl:if test="not(contains($excludeHTTPHeaders, 'zoneId'))">
+			<xsl:apply-templates select="." mode="addRequestHTTPHeaderRef">
+				<xsl:with-param name="hdrName">zoneId</xsl:with-param>
 			</xsl:apply-templates>
 		</xsl:if>
 

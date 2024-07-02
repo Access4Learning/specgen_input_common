@@ -101,6 +101,8 @@ components:
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}          'content-profile':
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/content-profile'
+          'contextId':
+            $ref: '#/components/schemas/httpHeaders/response/contextId'
           'changesSinceMarker':
             $ref: '#/components/schemas/httpHeaders/response/changesSinceMarkerGet'
 #{CommenOutHdr}          'environmentURI':
@@ -135,6 +137,8 @@ components:
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}          'vary':
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/vary'
+          'zoneId':
+            $ref: '#/components/schemas/httpHeaders/response/zoneId'
 
     # ////////////////////////////////
     # // Batch Response Definitions //
@@ -317,6 +321,8 @@ components:
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}          'content-profile':
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/content-profile'
+          'contextId':
+            $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}          'dataPrivacyMarker':
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/dataPrivacyMarkerBatchPutResponse'
 #{CommenOutHdr}          'environmentURI':
@@ -339,6 +345,8 @@ components:
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}          'vary':
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/vary'
+          'zoneId':
+            $ref: '#/components/schemas/httpHeaders/response/zoneId'
  
       #//
       #// Batch Post Response 
@@ -367,6 +375,8 @@ components:
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}          'content-profile':
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/content-profile'
+          'contextId':
+            $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}          'environmentURI':
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}          'fingerprint':
@@ -387,6 +397,8 @@ components:
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}          'vary':
 #{CommenOutHdr}            $ref: '#/components/schemas/httpHeaders/response/vary'
+          'zoneId':
+            $ref: '#/components/schemas/httpHeaders/response/zoneId'
     
     # ///////////////////////////////
     # // Batch Request Definitions //
@@ -536,6 +548,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -556,6 +570,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         401:
           description: Authorisation failed.
           content:
@@ -612,6 +628,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -632,6 +650,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         403:
           description: Forbidden
           content:
@@ -730,6 +750,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -750,6 +772,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         404:
           description: Not Found
           content:
@@ -806,6 +830,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -826,6 +852,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         405:
           description: Method not Allowed
           content:
@@ -882,6 +910,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -902,6 +932,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         409:
           description: State Conflict
           content:
@@ -964,6 +996,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -984,6 +1018,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         410:
           description: Gone
           content:
@@ -1082,6 +1118,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -1102,6 +1140,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         412:
           description: Precondition Failed
           content:
@@ -1161,6 +1201,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -1181,6 +1223,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         413:
           description: Response or request payload too large. 
           content:
@@ -1262,6 +1306,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -1282,6 +1328,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         415:
           description: Unsupported Media Type
           content:
@@ -1341,6 +1389,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -1361,6 +1411,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         500:
           description: Internal Service Error
           content:
@@ -1420,6 +1472,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -1440,6 +1494,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         501:
           description: Not Implemented
           content:
@@ -1499,6 +1555,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -1519,6 +1577,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
         503:
           description: Service Unavailable
           content:
@@ -1578,6 +1638,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-encoding'
 #{CommenOutHdr}            'content-profile':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/content-profile'
+            'contextId':
+              $ref: '#/components/schemas/httpHeaders/response/contextId'
 #{CommenOutHdr}            'environmentURI':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/environmentURI'
 #{CommenOutHdr}            'fingerprint':
@@ -1598,6 +1660,8 @@ components:
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/timestamp'
 #{CommenOutHdr}            'vary':
 #{CommenOutHdr}              $ref: '#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: '#/components/schemas/httpHeaders/response/zoneId'
     
     # /////////////////////////////////
     # // Query Parameter Definitions //
@@ -1725,6 +1789,14 @@ components:
           required: false
           schema:
             type: string
+        contextId:
+          name: contextId
+          in: header
+          description: >-
+            The 'context' of the service request. The range of possible Context token values for a given Object or Functional type Service is defined by either or both the Data Model which the Environment is supporting, and the administrators of the Zone. If not provided, it will default to DEFAULT.
+          required: false
+          schema:
+            type: string
         dataPrivacyMarkerStd:
           name: dataPrivacyMarker
           in: header
@@ -1738,6 +1810,14 @@ components:
           in: header
           description: >-
             Conditional: If privacy services are in place and enforced then the respective adapter must include this HTTP header in each request for an UPDATE or event. For a DELETE it is not required however.
+          required: false
+          schema:
+            type: string
+        deleteMessageId:
+          name: deleteMessageId
+          in: header
+          description: >-
+            Conditional: The messageId of the last successfully processed message for the specified queue. The message with that id will be deleted from the respective queue.
           required: false
           schema:
             type: string
@@ -1901,6 +1981,14 @@ components:
           required: false
           schema:
             type: string
+        zoneId:
+          name: zoneId
+          in: header
+          description: >-
+            Indicates the Zone the Request should be routed to. If not specified in the Consumer’s Request, the Request Connector will assume the Consumer’s default Zone ID (assigned to the Consumer when it initially created its Environment).  
+          required: false
+          schema:
+            type: string
     
       # ////////////////////////////////
       # // Response Header Definitions //
@@ -1936,6 +2024,11 @@ components:
             type: string
           description: >-
             MIndicate the payload encoding. Valid values are: identity (not compressed) or gzip (compressed).
+        contextId:
+          schema:
+            type: string
+          description: >-
+            The 'context' of the service response. The range of possible Context token values for a given Object or Functional type Service is defined by either or both the Data Model which the Environment is supporting, and the administrators of the Zone. If not provided, it will default to DEFAULT.
         dataPrivacyMarkerStd:
           schema:
             type: string
@@ -2033,4 +2126,9 @@ components:
             type: string
           description: >-
             Optional: This HTTP Header can be set by the provider to indicate that it supports compression. It would only be set by the endpoint provider if the caller request uses uncompressed payloads. It wwould indicate to the caller that the provide could deal with compression. In such a case the HTTP header 'vary' would take the following value: vary: Accept-Encoding
+        zoneId:
+          schema:
+            type: string
+          description: >-
+            Indicates the Zone the orignal consumer request was routed to. If not provided the consumer's default zone must be assumed. 
     

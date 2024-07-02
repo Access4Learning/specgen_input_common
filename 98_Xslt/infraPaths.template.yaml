@@ -1,5 +1,5 @@
 infraPaths:
-  queueMessage:
+  queueMessageGet:
     get:
       tags:
       - "queue"
@@ -14,20 +14,21 @@ infraPaths:
         required: true
         schema:
           type: string
-      - name: deleteMessageIdMatrixParameter
-        in: path
-        description: >-
-          Note this is a matrix parameter. The exact notation to be used for this URL segment is: ';messageId={deleteMessageId}'. 
-          The ';meesageId=" part is a constant string while the '{deleteMessageIdId}' part is the message Id 
-          of message to be deleted from the given queue before the next message is returned. 
-          This message Id must match the messageId HTTP header of the previous response to this endpoint.
-        required: false
-        schema:
-          type: string
+#      - name: deleteMessageIdMatrixParameter
+#        in: path
+#        description: >-
+#          Note this is a matrix parameter. The exact notation to be used for this URL segment is: ';messageId={deleteMessageId}'. 
+#          The ';messageId=" part is a constant string while the '{deleteMessageId}' part is the message Id 
+#          of message to be deleted from the given queue before the next message is returned. 
+#          This message Id must match the messageId HTTP header of the previous response to this endpoint.
+#        required: false
+#        schema:
+#          type: string
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authorization'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/deleteMessageId'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageType'
@@ -100,6 +101,7 @@ infraPaths:
           $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/501'
         '503':
           $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/503'
+  queueMessageDelete:
     delete:
       tags:
       - "queue"
@@ -114,13 +116,10 @@ infraPaths:
         required: true
         schema:
           type: string
-      - name: deleteMessageIdMatrixParameter
+      - name: deleteMessageId
         in: path
         description: >-
-          Note this is a matrix parameter. The exact notation to be used for this URL segment is: ';messageId={deleteMessageId}'. 
-          The ';meesageId=" part is a constant string while the '{deleteMessageIdId}' part is the message Id 
-          of message to be deleted from the given queue. This message Id must match the messageId HTTP header of the previous 
-          response to the "GET" endpoint.
+          The messageId of the message to be deleted from the given queue.
         required: true
         schema:
           type: string
@@ -207,6 +206,7 @@ infraPaths:
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-type'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-encoding'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/contextId'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/generatorId'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
@@ -217,6 +217,7 @@ infraPaths:
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/sourceName'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/zoneId'
       responses:
         '201':
           $ref: 'OpenAPI_IN.yaml#/components/responses/createjob'
@@ -268,10 +269,25 @@ infraPaths:
         required: true
         schema:
           type: string
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/contextId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/zoneId'
       responses:
         '200':
           description: Phase operation succeeded. Payload defined in the document that describes the specific Job/Workflow.
           headers:
+            'contextId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
             'fingerprint':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
@@ -290,9 +306,13 @@ infraPaths:
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
         '202':
           description: Accepted. Returned for DELAYED requests. No payload.
           headers:
+            'contextId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
             'fingerprint':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
@@ -311,9 +331,13 @@ infraPaths:
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
         '204':
           description: Phase operation succeeded. No data available.
           headers:
+            'contextId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
             'fingerprint':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
@@ -332,6 +356,8 @@ infraPaths:
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
         '401':
           $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
@@ -374,12 +400,35 @@ infraPaths:
         required: true
         schema:
           type: string
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/contextId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/zoneId'
       responses:
         '201':
           description: Phase operation succeeded. Data has been posted. Response payload defined in the document that describes the specific Job/Workflow.
         '202':
           description: Accepted. Returned for DELAYED requests. No payload.
           headers:
+            'contextId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
             'fingerprint':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
@@ -398,9 +447,13 @@ infraPaths:
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
         '204':
           description: Phase operation succeeded. Data has been created. No data available.
           headers:
+            'contextId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
             'fingerprint':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
@@ -419,6 +472,8 @@ infraPaths:
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
         '401':
           $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
@@ -461,12 +516,35 @@ infraPaths:
         required: true
         schema:
           type: string
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/contextId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/zoneId'
       responses:
         '200':
           description: Phase operation succeeded. Data has been updated. Response payload defined in the document that describes the specific Job/Workflow.
         '202':
           description: Accepted. Returned for DELAYED requests. No payload.
           headers:
+            'contextId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
             'fingerprint':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
@@ -485,9 +563,13 @@ infraPaths:
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
         '204':
           description: Phase operation succeeded. Data has been updated. No data available.
           headers:
+            'contextId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
             'fingerprint':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
@@ -506,6 +588,8 @@ infraPaths:
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
         '401':
           $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
@@ -548,10 +632,33 @@ infraPaths:
         required: true
         schema:
           type: string
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/contextId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/zoneId'
       responses:
         '200':
           description: Phase operation succeeded. Data has been deleted. Response payload defined in the document that describes the specific Job/Workflow.
           headers:
+            'contextId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
             'fingerprint':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
@@ -570,9 +677,13 @@ infraPaths:
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
         '202':
           description: Accepted. Returned for DELAYED requests. No payload.
           headers:
+            'contextId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
             'fingerprint':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
@@ -591,9 +702,13 @@ infraPaths:
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
         '204':
           description: Phase operation succeeded. Data has been deleted. No data available.
           headers:
+            'contextId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
             'fingerprint':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
             'messageId':
@@ -612,6 +727,8 @@ infraPaths:
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
             'vary':
               $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+            'zoneId':
+              $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
         '401':
           $ref: 'commonDefs.yaml#/components/schemas/errorResponses/responses/401'
         '403':
@@ -659,6 +776,7 @@ infraPaths:
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-encoding'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/contextId'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/generatorId'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
@@ -668,6 +786,7 @@ infraPaths:
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/sourceName'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/zoneId'
       responses:
         '200':
           $ref: '#/components/infraExamples/states'
@@ -723,6 +842,7 @@ infraPaths:
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-type'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-encoding'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/contextId'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/fingerprint'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/generatorId'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/messageId'
@@ -732,6 +852,7 @@ infraPaths:
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/serviceType'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/sourceName'
       - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/timestamp'
+      - $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/request/zoneId'
       requestBody:
         $ref: '#/components/requestBodies/createstate'
       responses:
@@ -810,6 +931,8 @@ components:
           $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/content-encoding'
         'content-profile':
           $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/content-profile'
+        'contextId':
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/contextId'
         'fingerprint':
           $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/fingerprint'
         'messageId':
@@ -828,6 +951,8 @@ components:
           $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/timestamp'
         'vary':
           $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/vary'
+        'zoneId':
+          $ref: 'commonDefs.yaml#/components/schemas/httpHeaders/response/zoneId'
 
   schemas:
     # ------------------------------------------
