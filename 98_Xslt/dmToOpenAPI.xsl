@@ -1440,6 +1440,8 @@
             <xsl:text>        '202':&#x0a;</xsl:text>
             <xsl:text>          description: Accepted. Returned for DELAYED requests. No payload.&#x0a;</xsl:text>
 		</xsl:if>
+		<xsl:text>        '204':&#x0a;</xsl:text>
+        <xsl:text>          description: No Content. The requested query has no matching results. No payload.&#x0a;</xsl:text>
 	</xsl:template>
 
     <!-- ================================ -->
@@ -1473,6 +1475,10 @@
 		<xsl:if test="$includeAccepted">
             <xsl:text>        '202':&#x0a;</xsl:text>
             <xsl:text>          description: Accepted. Returned for DELAYED requests. No payload.&#x0a;</xsl:text>
+		</xsl:if>
+		<xsl:if test="$qbeSupported">
+            <xsl:text>        '204':&#x0a;</xsl:text>
+            <xsl:text>          description: No Content. Only applicable for QBE. No data matched the given QBE query. No payload.&#x0a;</xsl:text>
 		</xsl:if>
 	</xsl:template>
 
